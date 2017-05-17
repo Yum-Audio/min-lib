@@ -1,21 +1,17 @@
-/** @file
-	
-	@ingroup 	jamoma2
-	
-	@brief 		Shared Dataspace Structures
-	
-	@author		Timothy Place
-	@copyright	Copyright (c) 2005-2015 The Jamoma Group, http://jamoma.org.
-	@license	This project is released under the terms of the MIT License.
- */
+/// @file
+///	@ingroup 	minlib
+/// @author		Timothy Place
+///	@copyright	Copyright (c) 2017, Cycling '74
+///	@license	Usage of this file and its contents is governed by the MIT License
 
 #pragma once
 
 
-namespace Jamoma {
+namespace c74 {
+namespace min {
 	namespace Dataspace {
-	
-		
+
+
 		/** Base class for all "Units" defined for a Dataspace. */
 		template <class T>
 		class UnitBase {
@@ -23,8 +19,8 @@ namespace Jamoma {
 			virtual T toNeutral(const T& input) const = 0;
 			virtual T fromNeutral(const T& input) const = 0;
 		};
-		
-		
+
+
 	} // namespace Dataspace
 } // namespace Jamoma
 
@@ -35,19 +31,19 @@ namespace Jamoma {
 
 
 namespace Jamoma {
-	
+
 	// Convenience types for Parameter definitions
 	namespace NativeUnit {
-		
+
 		// None
 		template<typename T>
 		using None			= Dataspace::None <T, Dataspace::NoneUnit::nothing>;
-		
+
 		// Gain
 		using LinearGain	= Dataspace::Gain <double, Dataspace::GainUnit::linear>;
 		using DbGain		= Dataspace::Gain <double, Dataspace::GainUnit::db>;
 		using MidiGain		= Dataspace::Gain <double, Dataspace::GainUnit::midi>;
-		
+
 		// Time
 		using Seconds		= Dataspace::Time <double, Dataspace::TimeUnit::seconds>;
 		using Bark			= Dataspace::Time <double, Dataspace::TimeUnit::bark>;
@@ -61,17 +57,17 @@ namespace Jamoma {
 		using Samples		= Dataspace::Time <double, Dataspace::TimeUnit::samples>;
 		using Speed			= Dataspace::Time <double, Dataspace::TimeUnit::speed>;
 	}
-	
-	
+
+
 	// Units for setting/getting parameters
 	// TODO: it is not dry to duplicate all these -- but we need a common enum in order to have a shared interface for all Parameters
 	enum class Unit : uint32_t {
 		none			= (uint32_t)Dataspace::NoneUnit::nothing,
-		
+
 		linearGain		= (uint32_t)Dataspace::GainUnit::linear,
 		db				= (uint32_t)Dataspace::GainUnit::db,
 		midiGain		= (uint32_t)Dataspace::GainUnit::midi,
-		
+
 		seconds			= (uint32_t)Dataspace::TimeUnit::seconds,
 		s				= (uint32_t)Dataspace::TimeUnit::s,
 		bark			= (uint32_t)Dataspace::TimeUnit::bark,
@@ -87,7 +83,6 @@ namespace Jamoma {
 		samples			= (uint32_t)Dataspace::TimeUnit::samples,
 		speed			= (uint32_t)Dataspace::TimeUnit::speed
 	};
-	
 
-} // namespace Jamoma
 
+}}  // namespace c74::min

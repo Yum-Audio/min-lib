@@ -1,26 +1,22 @@
-/** @file
-	
-	@ingroup	jamoma2
-	
-	@brief		Generic IIR allpass filter
-	
-	@author 	Timothy Place, Trond Lossius
-	@copyright	Copyright (c) 2005-2015 The Jamoma Group, http://jamoma.org.
-	@license	This project is released under the terms of the MIT License.
- */
+/// @file
+///	@ingroup 	minlib
+/// @author		Timothy Place, Trond Lossius
+///	@copyright	Copyright (c) 2017, Cycling '74
+///	@license	Usage of this file and its contents is governed by the MIT License
 
 #pragma once
 
 #include "../core/JamomaAudioObject.h"
 #include "../objects/JamomaLowpassOnePole.h"
 
-namespace Jamoma {
+namespace c74 {
+namespace min {
 
-	
+
 	/**	This AudioObject implements a generalized allpass filter.
 	 */
 	class Allpass1 : public AudioObject {
-		
+
 		const std::size_t			mCapacity;
 		CircularSampleBufferGroup	mFeedforwardHistory;
 		CircularSampleBufferGroup	mFeedbackHistory;
@@ -34,12 +30,12 @@ namespace Jamoma {
 				mFeedbackHistory.resize(channelCount, std::make_pair(mCapacity+frameCount, (size_t)size+frameCount));
 			}
 		}
-		
+
 	public:
 		static constexpr Classname classname = { "allpass.1" };
 		static constexpr auto tags = { "dspFilterLib", "audio", "processor", "filter", "allpass" };
-		
-		
+
+
 		/** TODO: Make capacity dynamic?  It already sort of is when the channel count changes...
 		 */
 		Allpass1(std::size_t capacity = 4410)
@@ -50,7 +46,7 @@ namespace Jamoma {
 			channelCount.addObserver(mChannelCountObserver);
 		}
 
-		
+
 		/** size of the history buffers -- i.e. the delay time
 			TODO: dataspace integration for units other than samples
 		 */
@@ -63,23 +59,23 @@ namespace Jamoma {
 								})
 		};
 
-		
+
 		/** Delay time.
 			An alias of the #size parameter.
 			TODO: dataspace with Native Unit in samples
          */
 		Parameter<int>		delay = { this, "delay", 1, Setter([this] { size = (int)delay; }) };
-		
-	
+
+
 		/** Feedback coefficient.
          */
 		Parameter<double>	gain = { this, "gain", 0.0 };
 
-		
+
 		/**	This algorithm is an IIR filter, meaning that it relies on feedback.  If the filter should
 			not be producing any signal (such as turning audio off and then back on in a host) or if the
 			feedback has become corrupted (such as might happen if a NaN is fed in) then it may be
-			neccesary to clear the filter by calling this method.											
+			neccesary to clear the filter by calling this method.
 		 */
 		Message			clear = { "clear",
 									Synopsis("Reset the Filter History"),
@@ -91,22 +87,22 @@ namespace Jamoma {
 									}
 		};
 
-		
+
 		Sample operator()(Sample x)
 		{
 			return (*this)(x, 0);
 		}
-		
-		
+
+
 		Sample operator()(Sample x, int channel)
 		{
 			Sample x1 = mFeedforwardHistory[channel].tail(-1);
 			Sample y1 = mFeedbackHistory[channel].tail(-1);
 			Sample alpha = gain;
-			
+
 			// Store the input in the feedforward buffer
 			mFeedforwardHistory[channel].write(x);
-			
+
 			// Apply the filter
 			// We start with the equation in standard form:
 			//		y = alpha * x  +  x1  -  alpha * y1;
@@ -117,26 +113,26 @@ namespace Jamoma {
 
 			// The possibility of denormals is always lurking for IIR filters
 			ZeroDenormal(y);
-			
+
 			// Store the output in the feedback buffer
 			mFeedbackHistory[channel].write(y);
-			
+
 			return y;
 		}
-		
-		
+
+
 		SharedSampleBundleGroup operator()(const SampleBundle& x)
 		{
 			auto out = adapt(x);
-			
+
 			for (int channel=0; channel < x.channelCount(); ++channel) {
 				for	(int i=0; i < x.frameCount(); ++i)
 					out[0][channel][i] = (*this)(x[channel][i], channel);
 			}
 			return out;
 		}
-		
-	};
-	
 
-} // namespace Jamoma
+	};
+
+
+}}  // namespace c74::min

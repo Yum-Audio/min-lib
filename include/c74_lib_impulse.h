@@ -1,31 +1,27 @@
-/** @file
-	
-	@ingroup 	jamoma2
-	
-	@brief 		Generate one sample at maximum amplitude for testing.
-	
-	@author		Nathan Wolek
-	@copyright	Copyright (c) 2005-2015 The Jamoma Group, http://jamoma.org.
-	@license	This project is released under the terms of the MIT License.
- */
+/// @file
+///	@ingroup 	minlib
+/// @author		Timothy Place, Nathan Wolek
+///	@copyright	Copyright (c) 2017, Cycling '74
+///	@license	Usage of this file and its contents is governed by the MIT License
 
 #pragma once
 
 #include "../core/JamomaAudioObject.h"
 
 
-namespace Jamoma {
-    
+namespace c74 {
+namespace min {
+
     /** This AudioObject generates a unit impulse function (sometimes called  <a href="https://en.wikipedia.org/wiki/Dirac_delta_function">Dirac function</a> by setting the initial Sample to one and filling the remainder of the SampleBundle with zeros.
         This function is typically used to test the <a href="https://en.wikipedia.org/wiki/Impulse_response">impulse response</a> of a time-invariant filter.
      */
     class UnitImpulse : public AudioObject {
-    
-        
+
+
     public:
         static constexpr Classname classname = { "unitimpulse" };
         static constexpr auto tags = { "dspGeneratorLib", "audio", "generator", "impulse" };
-		
+
         /** Process one sample.
          @param	x	Sample to be processed.
          @return		Processed sample
@@ -34,7 +30,7 @@ namespace Jamoma {
         {
             return 1.0;
         }
-		
+
         /** Process a SharedSampleBundleGroup.
          @param	x	SharedSampleBundleGroup to be processed.
          @return		Processed SharedSampleBundleGroup.
@@ -42,7 +38,7 @@ namespace Jamoma {
         SharedSampleBundleGroup operator()(const SampleBundle& x = kSampleBundleNone)
         {
             auto out = mOutput;
-            
+
             for (int channel=0; channel < channelCount; ++channel) {
                 out[0][channel][0] = 1.0;
                 for	(int i=1; i < x.frameCount(); ++i)
@@ -51,6 +47,6 @@ namespace Jamoma {
             return out;
         }
     };
-    
 
-} // namespace Jamoma
+
+}}  // namespace c74::min

@@ -1,38 +1,36 @@
-/** @file
-	
-	@ingroup 	jamoma2
- 
-	@author		Timothy Place, Nathan Wolek
-	@copyright	Copyright (c) 2005-2015 The Jamoma Group, http://jamoma.org.
-	@license	This project is released under the terms of the MIT License.
- */
+/// @file
+///	@ingroup 	minlib
+/// @author		Timothy Place, Nathan Wolek
+///	@copyright	Copyright (c) 2017, Cycling '74
+///	@license	Usage of this file and its contents is governed by the MIT License
 
 #pragma once
 
 #include "../core/JamomaAudioObject.h"
 
 
-namespace Jamoma {
+namespace c74 {
+namespace min {
 
-	
-	/**	This AudioObject generates a non-bandlimited <a href="https://en.wikipedia.org/wiki/Sawtooth_wave">sawtooth wave</a> oscillator. 
+
+	/**	This AudioObject generates a non-bandlimited <a href="https://en.wikipedia.org/wiki/Sawtooth_wave">sawtooth wave</a> oscillator.
         This function is typically used as a control signal for <a href="https://en.wikipedia.org/wiki/Phase_(waves)">phase</a> ramping.
 	 */
 	class Sync : public AudioObject {
 		double	mPhase = 0.0;
 		double	mStep = 0.0;
-		
+
 		void setStep()
 		{
             mStep = frequency / sampleRate;
 			ZeroDenormal(mStep);
 		}
 
-		
+
 	public:
 		static constexpr Classname classname = { "sync" };
 		static constexpr auto tags = { "dspGeneratorLib", "audio", "generator", "oscillator" };
-		
+
 
 		Parameter<double, Limit::Wrap<double>, NativeUnit::None<double>>	phase		= { this,
 																						"phase",
@@ -42,7 +40,7 @@ namespace Jamoma {
 																							mPhase = phase;
 																						})
 		};
-		
+
 
 		Parameter<double, Limit::Fold<double>, NativeUnit::None<double>>	frequency	= {	this,
 																						"frequency",
@@ -54,19 +52,19 @@ namespace Jamoma {
 																						Synopsis("Rate at which to cycle")
 		};
 
-		
+
 		Parameter<double, Limit::None<double>, NativeUnit::LinearGain>		gain = { this, "gain", 1.0 };		///< scaling applied to the output
 
-		
+
 		Parameter<double>													offset = { this, "offset", 0.0 };	///< shift applied to the output
 
-		
 
-		
+
+
 		// TODO: add offset Parameter from Jamoma1
 		// TODO: add gain Parameter from Jamoma1
-		
-		
+
+
 		/** Process one sample.
 			@param	x	Sample to be processed.
 			@return		Processed sample
@@ -77,14 +75,14 @@ namespace Jamoma {
 				mPhase -= 1.0;
 			else if (mPhase < 0.0)
 				mPhase += 1.0;
-			
+
 			Sample y = mPhase * gain + offset;
-			
+
 			mPhase += mStep;
 			return y;
 		}
-		
-		
+
+
 		/** Process a SharedSampleBundleGroup.
 			@param	x	SharedSampleBundleGroup to be processed.
 			@return		Processed SharedSampleBundleGroup.
@@ -98,7 +96,7 @@ namespace Jamoma {
                     sample = (*this)(0.0);
 			return out;
 		}
-		
+
 	};
 
-} // namespace Jamoma
+}}  // namespace c74::min

@@ -1,25 +1,21 @@
-/** @file
-	
-	@ingroup 	jamoma2
-	
-	@brief 		Block DC offset within samples.
-		
-	@author		Timothy Place, Nathan Wolek
-	@copyright	Copyright (c) 2005-2015 The Jamoma Group, http://jamoma.org.
-	@license	This project is released under the terms of the MIT License.
- */
+/// @file
+///	@ingroup 	minlib
+/// @author		Timothy Place, Nathan Wolek
+///	@copyright	Copyright (c) 2017, Cycling '74
+///	@license	Usage of this file and its contents is governed by the MIT License
 
 #pragma once
 
 #include "../core/JamomaAudioObject.h"
 
 
-namespace Jamoma {
+namespace c74 {
+namespace min {
 
-	
+
 	/**	This AudioObject removes DC offset (sometimes called <a href="https://en.wikipedia.org/wiki/DC_bias">DC bias</a> from a Sample or SampleBundle.
 		The process is acheived by applying a first-order highpass filter to the input.
-	 
+
 		This first-order highpass filter algorithm is used pretty much everywhere (STK, ChucK, RTCMix, SuperCollider, Max, Pd, etc),
 		with the difference equation:
 
@@ -73,19 +69,19 @@ namespace Jamoma {
 		how would a second-order FIR compare to this classical first-order FIR/IIR combination?
 	 */
 	class Dcblock : public AudioObject {
-		
+
 		AdaptingSampleBundle	mX = { this };	///< Input history -- AdaptingSampleBundle type will update channelCount automagically as needed
 		AdaptingSampleBundle	mY = { this };	///< Output history -- AdaptingSampleBundle type will update channelCount automagically as needed
-		
+
 	public:
 		static constexpr Classname classname = { "dcblock" };
 		static constexpr auto tags = { "dspFilterLib", "audio", "filter" };
-		
-		
+
+
 		/**	Resets the DC-Blocking filter.
-			This algorithm uses an IIR filter, meaning that it relies on feedback.  
-			If the filter should not be producing any signal (such as turning audio off and then back on in a host) 
-			or if the feedback has become corrupted (such as might happen if a NaN is fed in) 
+			This algorithm uses an IIR filter, meaning that it relies on feedback.
+			If the filter should not be producing any signal (such as turning audio off and then back on in a host)
+			or if the feedback has become corrupted (such as might happen if a NaN is fed in)
 			then it may be neccesary to clear the filter by calling this method.
 		 */
 		Message			clear = {	"clear",
@@ -95,8 +91,8 @@ namespace Jamoma {
 										mY.fill(0.0);
 									}
 		};
-		
-		
+
+
 		/** Process one sample.
 			@param x					Sample to be processed.
 			@return					Processed sample.
@@ -105,8 +101,8 @@ namespace Jamoma {
 		{
 			return (*this)(x, 0);
 		}
-		
-		
+
+
 		/** Process one sample at a specified channel.
 			@param x					Sample to be processed.
 			@param channel				The channel.
@@ -115,14 +111,14 @@ namespace Jamoma {
 		Sample operator()(Sample x, int channel)
 		{
 			Sample y = x - mX[channel][0] + (mY[channel][0] * 0.9997);
-			
+
 			ZeroDenormal(y);
 			mY[channel][0] = y;
 			mX[channel][0] = x;
 			return y;
 		}
-		
-		
+
+
 		/** Process a SharedSampleBundleGroup.
 			@param	x	SharedSampleBundleGroup to be processed.
 			@return		Processed SharedSampleBundleGroup.
@@ -130,7 +126,7 @@ namespace Jamoma {
 		SharedSampleBundleGroup operator()(const SampleBundle& x)
 		{
 			auto out = adapt(x);
-			
+
 			for (int channel=0; channel < x.channelCount(); ++channel) {
 				for	(int i=0; i < x.frameCount(); ++i)
 					out[0][channel][i] = (*this)(x[channel][i], channel);
@@ -140,4 +136,4 @@ namespace Jamoma {
 
 	};
 
-} // namespace Jamoma
+}}  // namespace c74::min

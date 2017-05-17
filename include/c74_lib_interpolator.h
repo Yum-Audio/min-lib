@@ -1,34 +1,30 @@
-/** @file
-	
-	@ingroup 	jamoma2
-	
-	@brief 		Defines multiple interpolation algorithms
- 
-	@author 	Timothy Place, Nathan Wolek
-	@copyright	Copyright (c) 2005-2015 The Jamoma Group, http://jamoma.org.
-	@license	This project is released under the terms of the MIT License.
- */
+/// @file
+///	@ingroup 	minlib
+/// @author		Timothy Place, Trond Lossius, Nathan Wolek
+///	@copyright	Copyright (c) 2017, Cycling '74
+///	@license	Usage of this file and its contents is governed by the MIT License
 
 #pragma once
 
 
-namespace Jamoma {
+namespace c74 {
+namespace min {
     /** Defines several functions for <a href="http://en.wikipedia.org/wiki/Interpolation">interpolating</a> between discrete data points such as those found in an array or matrix.
      These methods are commonly used in digital audio whenever we alter the rate at which a signal is read.
      These functions require known discrete values to be passed by reference along with a double between 0 and 1 representing the fractional location desired.
      They return the interpolated value.
      */
 	namespace Interpolator {
-		
-		
+
+
 		/**	Shared base class for all interpolation types.	*/
 		class Base {
 		protected:
 			constexpr Base() noexcept {};
 		};
-		
-	
-		/**	No interpolation always returns the first sample passed to it 
+
+
+		/**	No interpolation always returns the first sample passed to it
             @param x0		Unused sample value
             @param x1		Sample value that will be returned
             @param x2		Unused sample value
@@ -40,22 +36,22 @@ namespace Jamoma {
 		class None : Base {
 		public:
 			static const int 	delay = 0;
-			
+
             // NW: will this version ever be used?
 			constexpr T operator()(T x1) noexcept {
 				return x1;
 			}
-            
+
             constexpr T operator()(T x1, T x2, double delta) noexcept {
                 return x1;
             }
-            
+
             constexpr T operator()(T x0, T x1, T x2, T x3, double delta) noexcept {
                 return x1;
             }
 		};
-                
-        /**	Nearest interpolation returns the closest sample by rounding the delta up or down. 
+
+        /**	Nearest interpolation returns the closest sample by rounding the delta up or down.
             @param x0		Unused sample value
             @param x1		Returned sample value when rounding down
             @param x2		Returned sample value when rounding up
@@ -69,17 +65,17 @@ namespace Jamoma {
         class Nearest : Base {
         public:
             static const int 	delay = 0;
-            
+
             // NW: will this version ever be used?
             constexpr T operator()(T x1) noexcept {
                 return x1;
             }
-            
+
             constexpr T operator()(T x1, T x2, double delta) noexcept {
                 T out = delta < 0.5 ? x1 : x2;
                 return out;
             }
-            
+
             constexpr T operator()(T x0, T x1, T x2, T x3, double delta) noexcept {
                 T out = delta < 0.5 ? x1 : x2;
                 return out;
@@ -98,17 +94,17 @@ namespace Jamoma {
 		class Linear : Base {
 		public:
 			static const int 	delay = 1;
-			
+
 			constexpr T operator()(T x1, T x2, double delta) noexcept {
 				return x1 + delta * (x2-x1);
 			}
-            
+
             constexpr T operator()(T x0, T x1, T x2, T x3, double delta) noexcept {
                 // NW: ideally we would call the operator above to remain DRY, but I could not get syntax right
                 return x1 + delta * (x2-x1);
             }
 		};
-                
+
         /** Allpass interpolation
          Testing shows this algorithm will become less accurate the more points it computes between two known samples.
          Also, because it uses an internal history, the reset() function should be used when switching between non-continuous segments of sampled audio data.
@@ -124,28 +120,28 @@ namespace Jamoma {
         class Allpass : Base {
         public:
             static const int 	delay = 1;
-            
+
             constexpr T operator()(T x1, T x2, double delta) noexcept {
                 T out = x1 + delta * (x2-mY1);
                 mY1 = out;
                 return out;
             }
-            
+
             constexpr T operator()(T x0, T x1, T x2, T x3, double delta) noexcept {
                 // NW: ideally we would call the operator above to remain DRY, but I could not get syntax right
                 T out = x1 + delta * (x2-mY1);
                 mY1 = out;
                 return out;
             }
-            
+
             void reset() {
                 mY1 = T(0.0);
             }
-            
+
         private:
             T mY1 = T(0.0);
         };
-		
+
 
 		/** Cosine interpolation
             @param x0		Unused sample value
@@ -159,12 +155,12 @@ namespace Jamoma {
 		class Cosine : Base {
 		public:
 			static const int 	delay = 1;
-			
+
 			constexpr T operator()(T x1, T x2, double delta) noexcept {
 				T a = 0.5 * (1.0 - cos(delta * M_PI));
 				return x1 + a * (x2-x1);
 			}
-            
+
             constexpr T operator()(T x0, T x1, T x2, T x3, double delta) noexcept {
                 // NW: ideally we would call the operator above to remain DRY, but I could not get syntax right
                 T a = 0.5 * (1.0 - cos(delta * M_PI));
@@ -172,7 +168,7 @@ namespace Jamoma {
             }
 		};
 
-		
+
 		/** Cubic interpolation
 			@param x0		Sample value at integer index prior to x0
 			@param x1		Sample value at prior integer index
@@ -185,7 +181,7 @@ namespace Jamoma {
 		class Cubic : Base {
 		public:
 			static const int 	delay = 3;
-			
+
 			constexpr T operator()(T x0, T x1, T x2, T x3, double delta) noexcept {
                 double delta2 = delta*delta;
                 T a = x3 - x2 - x0 + x1;
@@ -194,8 +190,8 @@ namespace Jamoma {
                 return a*delta*delta2 + b*delta2 + c*delta + x1;
 			}
 		};
-		
-		
+
+
 		/** Spline interpolation based on the Breeuwsma catmull-rom spline
 			@param x0	Sample value at integer index prior to x
 			@param x1	Sample value at prior integer index
@@ -217,8 +213,8 @@ namespace Jamoma {
 				return f0*delta*delta2 + f1*delta2 + f2*delta + x1;
 			}
 		};
-		
-		
+
+
 		/** Hermite interpolation
             When bias and tension are both set to 0.0, this algorithm is equivalent to Spline.
 			@param x0	Sample value at integer index prior to x
@@ -250,6 +246,6 @@ namespace Jamoma {
 				return a0*x1 + a1*m0 + a2*m1 + a3*x2;
 			}
 		};
-		
+
 	}	// namespace Interpolator
-}  // namespace Jamoma
+}}  // namespace c74::min
