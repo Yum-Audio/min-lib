@@ -6,9 +6,6 @@
 
 #pragma once
 
-#include "../core/JamomaAudioObject.h"
-#include "../objects/JamomaLowpassOnePole.h"
-
 namespace c74 {
 namespace min {
 

@@ -6,201 +6,152 @@
 
 #pragma once
 
-#include "JamomaDataspace.h"
+#include "c74_lib_dataspace.h"
 
 
 namespace c74 {
 namespace min {
-	namespace Dataspace {
+namespace dataspace {
 
+	class time : public dataspace_base {
+	public:
 
-		/** Names of all units for the time dataspace.
-		 */
-		enum class TimeUnit : uint32_t {
-			seconds			= Hash("second"),		///< seconds (the neutral unit for this dataspace)
-			s				= Hash("s"),			///< seconds
+		// Seconds is the neutral unit, so it is a pass-through
+		class seconds {
+			friend class dataspace_base;
 
-			bark			= Hash("bark"),			///< bark band number ( https://en.wikipedia.org/wiki/Bark_scale )
-
-			bpm				= Hash("bpm"),			///< beats per minute
-
-			cents			= Hash("cents"),		///< cents (pitch)
-
-			mel				= Hash("mel"),			///< mel scale ( https://en.wikipedia.org/wiki/Mel_scale )
-
-			midi			= Hash("midi"),			///< midi pitch number (0-127)
-
-			milliseconds	= Hash("millisecond"),	///< milliseconds
-			ms				= Hash("ms"),			///< milliseconds
-
-			fps				= Hash("fps"),			///< frames per second
-
-			hertz			= Hash("hertz"),		///< hertz -- cycles per second
-			hz				= Hash("hz"),			///< hertz
-
-			samples			= Hash("samples"),		///< samples (dependent upon sample rate)
-
-			speed			= Hash("speed"),		///< speed -- e.g. playback speed relative to 1.0
-		};
-
-
-
-
-		// Linear is the neutral unit, so it is a pass-through
-		template <class T>
-		class Seconds : public UnitBase<T> {
-		public:
-			T toNeutral(const T& input) const
-			{
+			static inline number to_neutral(number input) {
 				return input;
 			}
 
-			T fromNeutral(const T& input) const
-			{
+			static inline number from_neutral(number input) {
 				return input;
 			}
 		};
 
 
-		template <class T>
-		class Bark : public UnitBase<T> {
-		public:
-			T toNeutral(const T& input) const
-			{
+		class bark {
+			friend class dataspace_base;
+
+			static inline number to_neutral(number input) {
 				// code from http://labrosa.ee.columbia.edu/matlab/rastamat/bark2hz.m
 				return 1.0 / (600 * sinh(double(input) / 6));
 			}
 
-			T fromNeutral(const T& input) const
-			{
+			static inline number from_neutral(number input) {
 				// taken from http://labrosa.ee.columbia.edu/matlab/rastamat/hz2bark.m
 				return (6 * asinh(1.0 / (double(input) * 600.0)));
 			}
 		};
 
 
-		template <class T>
-		class Bpm : public UnitBase<T> {
-		public:
-			T toNeutral(const T& input) const
-			{
+		class bpm {
+			friend class dataspace_base;
+
+			static inline number to_neutral(number input) {
 				//TODO: prevent division with zero
 				return 60.0 / double(input);
 			}
 
-			T fromNeutral(const T& input) const
-			{
+			static inline number from_neutral(number input) {
 				//TODO: prevent division with zero
 				return 60.0 / double(input);
 			}
 		};
+		
 
+		class cents {
+			friend class dataspace_base;
 
-		template <class T>
-		class Cents : public UnitBase<T> {
-		public:
-			T toNeutral(const T& input) const
-			{
+			static inline number to_neutral(number input) {
 				return 1.0 / (440.0 * pow(2.0, (double(input)-6900.0) / 1200.0 ));
 			}
 
-			T fromNeutral(const T& input) const
-			{
+			static inline number from_neutral(number input) {
 				return 6900.0 + 1200.0 * log(1.0/(440.0*double(input)))/log(2.0);
 			}
 		};
+		
 
+		class hertz {
+			friend class dataspace_base;
 
-		template <class T>
-		class Hz : public UnitBase<T> {
-		public:
-			T toNeutral(const T& input) const
-			{
+			static inline number to_neutral(number input) {
 				//TODO: prevent division with zero
 				return 1.0 / double(input);
 			}
 
-			T fromNeutral(const T& input) const
-			{
+			static inline number from_neutral(number input) {
 				//TODO: prevent division with zero
 				return 1.0 / double(input);
 			}
 		};
+		
 
+		class mel {
+			friend class dataspace_base;
 
-		template <class T>
-		class Mel : public UnitBase<T> {
-		public:
-			T toNeutral(const T& input) const
-			{
+			static inline number to_neutral(number input) {
 				// HTK-code from http://labrosa.ee.columbia.edu/matlab/rastamat/mel2hz.m
 				return 1.0 / (700.0 *(pow(10,(double(input)/2595.0))-1.0));
 			}
 
-			T fromNeutral(const T& input) const
-			{
+			static inline number from_neutral(number input) {
 				// HTK-code from http://labrosa.ee.columbia.edu/matlab/rastamat/hz2mel.m
 				return 2595.0 * log10(1+1.0/(double(input)*700.0));
 			}
 		};
+		
 
+		class midi {
+			friend class dataspace_base;
 
-		template <class T>
-		class MidiPitch : public UnitBase<T> {
-		public:
-			T toNeutral(const T& input) const
-			{
+			static inline number to_neutral(number input) {
 				return 1. / (440.0 * pow(2.0, (double(input)-69.0) / 12.0 ));
 			}
 
-			T fromNeutral(const T& input) const
-			{
+			static inline number from_neutral(number input) {
 				// return 69.0 + 12.0 * log(1./(440.0*TTFloat64(input)))/log(2.0);
 				// The above can be transformed to the slightly more optimised:
 				return 69.0 - 12.0 * log(440.0*double(input))/log(2.0);
 			}
 		};
+		
 
+		class milliseconds {
+			friend class dataspace_base;
 
-		template <class T>
-		class Milliseconds : public UnitBase<T> {
-		public:
-			T toNeutral(const T& input) const
-			{
+			static inline number to_neutral(number input) {
 				return input * 0.001;
 			}
 
-			T fromNeutral(const T& input) const
-			{
+			static inline number from_neutral(number input) {
 				return input * 1000.0;
 			}
 		};
+		
 
+		class samples {
+			friend class dataspace_base;
 
-		template <class T>
-		class Samples : public UnitBase<T> {
-		public:
-			T toNeutral(const T& input) const
-			{
-				assert(false); // Need to get global sample rate
+			static inline number to_neutral(number input) {
+				assert(false); // TODO: Need to get global sample rate
 				double sampleRate = 96000;
 				return (input) / sampleRate;
 			}
 
-			T fromNeutral(const T& input) const
-			{
-				assert(false); // Need to get global sample rate
+			static inline number from_neutral(number input) {
+				assert(false); // TODO: Need to get global sample rate
 				double sampleRate = 96000;
 				return (input) * sampleRate;
 			}
 		};
+		
 
+		class speed {
+			friend class dataspace_base;
 
-		template <class T>
-		class Speed : public UnitBase<T> {
-		public:
-			T toNeutral(const T& input) const
-			{
+			static inline number to_neutral(number input) {
 				// Here's one way of converting:
 				//
 				// TTFloat64 midi;
@@ -213,8 +164,7 @@ namespace min {
 				return pow(2.0, 69./12.) / (440.0*double(input));
 			}
 
-			T fromNeutral(const T& input) const
-			{
+			static inline number from_neutral(number input) {
 				// Here's one way of converting from second to speed:
 				//
 				// TTFloat64 midi;
@@ -227,58 +177,8 @@ namespace min {
 				return pow(2.0, 69./12.) / (440.0*double(input));
 			}
 		};
+		
+	};
+	
+}}}  // namespace c74::min::dataspace
 
-
-		/**	The Time Dataspace.
-		 */
-		template <class T, TimeUnit U>
-		class Time {
-
-			/**	Mapping from unit names to actual unit converter objects.
-				TODO: make this a static so that we don't have to spend resources on it for all instances
-			 */
-			std::unordered_map<TimeUnit, UnitBase<T>*>	sUnits = {
-				{TimeUnit::seconds	   , new Seconds<T>()},
-				{TimeUnit::s		   , new Seconds<T>()},
-				{TimeUnit::bark		   , new Bark<T>()},
-				{TimeUnit::bpm		   , new Bpm<T>()},
-				{TimeUnit::cents	   , new Cents<T>()},
-				{TimeUnit::mel		   , new Mel<T>()},
-				{TimeUnit::midi		   , new MidiPitch<T>()},
-				{TimeUnit::milliseconds, new Milliseconds<T>()},
-				{TimeUnit::ms	       , new Milliseconds<T>()},
-				{TimeUnit::fps	       , new Hz<T>()},
-				{TimeUnit::hertz       , new Hz<T>()},
-				{TimeUnit::hz	       , new Hz<T>()},
-				{TimeUnit::samples     , new Samples<T>()},
-				{TimeUnit::speed       , new Speed<T>()}
-			};
-
-
-			/**	The native unit to/from which we perform conversions.	*/
-			const UnitBase<T>* mUnit = sUnits[U];
-
-
-		public:
-
-			/**	Conversion function where the unit is passed as enum selection.	*/
-			T operator()(const T& x, const TimeUnit& unit = U)
-			{
-				return mUnit->fromNeutral( sUnits[unit]->toNeutral(x) );
-			}
-
-			T operator()(const T& x, uint32_t& unit)
-			{
-				return (*this)(x, (TimeUnit)unit);
-			}
-
-			/**	Conversion function where the unit is passed as a string.	*/
-			T operator()(const T x, const char* str)
-			{
-				return (*this)( x, (TimeUnit)Hash(str) );
-			}
-
-		};
-
-	} // namespace Dataspace
-}}  // namespace c74::min

@@ -197,7 +197,7 @@ namespace min {
 	};
 
 
-	using CircularSampleBuffer = CircularStorage<Sample>;
+	using CircularSampleBuffer = CircularStorage<sample>;
 	using CircularSampleBufferGroup = std::vector<CircularSampleBuffer>;
 
 
