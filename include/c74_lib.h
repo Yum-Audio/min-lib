@@ -28,4 +28,5 @@ namespace min {
 //#include "c74_lib_lowpass_fourpole.h"
 //#include "c74_lib_lowpass_onepole.h"
 //#include "c74_lib_noise.h"
+#include "c74_lib_saturation.h"
 //#include "c74_lib_sync.h"
