@@ -5,19 +5,9 @@
 
 #pragma once
 
-namespace c74 {
-namespace min {
-
-	const double k_gain_midi_power		{ log(pow(10.0, 10.0/20.0)) / log(127.0/100.0) };
-	const double k_gain_midi_power_r	{ 1.0 / k_gain_midi_power };
-
-}}  // namespace c74::min
-
-
 
 //#include "c74_lib_allpass1.h"
 #include "c74_lib_circular_storage.h"
-#include "c74_lib_dataspace.h"
 #include "c74_lib_dcblocker.h"
 //#include "c74_lib_delay.h"
 //#include "c74_lib_gain.h"
