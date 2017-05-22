@@ -20,8 +20,7 @@ namespace lib {
 	public:
 
 		void clear() {
-			x_1 = 0.0;
-			y_1 = 0.0;
+			x_1 = y_1 = 0.0;
 		}
 
 		sample operator()(sample x) {
