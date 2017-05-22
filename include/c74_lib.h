@@ -18,7 +18,7 @@ namespace min {
 //#include "c74_lib_allpass1.h"
 #include "c74_lib_circular_storage.h"
 #include "c74_lib_dataspace.h"
-//#include "c74_lib_dcblock.h"
+#include "c74_lib_dcblocker.h"
 //#include "c74_lib_delay.h"
 //#include "c74_lib_gain.h"
 //#include "c74_lib_generator.h"
