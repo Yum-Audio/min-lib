@@ -6,14 +6,16 @@
 #pragma once
 
 
-//#include "c74_lib_allpass1.h"
 #include "c74_lib_circular_storage.h"
+#include "c74_lib_interpolator.h"
+//#include "c74_lib_limit.h"
+#include "c74_lib_easing.h"
+#include "c74_lib_filters.h"
+
+#include "c74_lib_allpass.h"
 #include "c74_lib_dcblocker.h"
 //#include "c74_lib_delay.h"
 //#include "c74_lib_generator.h"
-//#include "c74_lib_interpolator.h"
-//#include "c74_lib_limit.h"
-//#include "c74_lib_lowpass_fourpole.h"
 #include "c74_lib_onepole.h"
 #include "c74_lib_saturation.h"
 #include "c74_lib_sync.h"

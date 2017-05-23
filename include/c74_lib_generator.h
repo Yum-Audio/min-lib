@@ -9,6 +9,9 @@
 
 namespace c74 {
 namespace min {
+namespace lib {
+
+
     /** Defines several functions for use with <a href="http://en.cppreference.com/w/cpp/algorithm/generate">std::generate</a> to fill vectors with common shapes used in computer sound.
      */
 	namespace Generator {
@@ -233,4 +236,4 @@ namespace min {
         };
 
 	} // namespace Generator
-}}  // namespace c74::min
+}}}  // namespace c74::min::lib

@@ -9,31 +9,34 @@
 
 namespace c74 {
 namespace min {
-    /** Defines several functions for <a href="http://en.wikipedia.org/wiki/Interpolation">interpolating</a> between discrete data points such as those found in an array or matrix.
-     These methods are commonly used in digital audio whenever we alter the rate at which a signal is read.
-     These functions require known discrete values to be passed by reference along with a double between 0 and 1 representing the fractional location desired.
-     They return the interpolated value.
-     */
-	namespace Interpolator {
+namespace lib {
+
+	/// Defines several methods for <a href="http://en.wikipedia.org/wiki/Interpolation">interpolating</a> between discrete data points such as those found in an array or matrix.
+	/// These methods are commonly used in digital audio whenever we alter the rate at which a signal is read.
+	/// These functions require known discrete values to be passed by reference along with a double between 0 and 1 representing the fractional location desired.
+	/// They return the interpolated value.
+
+	namespace interpolation {
 
 
-		/**	Shared base class for all interpolation types.	*/
-		class Base {
+		///	Shared base class for all interpolation types.
+
+		class base {
 		protected:
-			constexpr Base() noexcept {};
+			constexpr base() noexcept {};
 		};
 
 
-		/**	No interpolation always returns the first sample passed to it
-            @param x0		Unused sample value
-            @param x1		Sample value that will be returned
-            @param x2		Unused sample value
-            @param x3		Unused sample value
-            @param delta	Unused fractional location
-            @return         The interpolated value
-         */
+		///	No interpolation always returns the first sample passed to it
+		/// @param x0		Unused sample value
+ 		/// @param x1		Sample value that will be returned
+		/// @param x2		Unused sample value
+		/// @param x3		Unused sample value
+		/// @param delta	Unused fractional location
+		/// @return         The interpolated value
+
 		template<class T>
-		class None : Base {
+		class none : base {
 		public:
 			static const int 	delay = 0;
 
@@ -51,18 +54,19 @@ namespace min {
             }
 		};
 
-        /**	Nearest interpolation returns the closest sample by rounding the delta up or down.
-            @param x0		Unused sample value
-            @param x1		Returned sample value when rounding down
-            @param x2		Returned sample value when rounding up
-            @param x3		Unused sample value
-            @param delta	Fractional location between x1 and x2 @n
-                            delta < 0.5 => x1 @n
-                            delta >= 0.5 => x2
-            @return         The interpolated value
-         */
+
+		/// Nearest interpolation returns the closest sample by rounding the delta up or down.
+		/// @param x0		Unused sample value
+		/// @param x1		Returned sample value when rounding down
+		/// @param x2		Returned sample value when rounding up
+		/// @param x3		Unused sample value
+		/// @param delta	Fractional location between x1 and x2 @n
+		///                 delta < 0.5 => x1 @n
+		///                 delta >= 0.5 => x2
+		/// @return         The interpolated value
+
         template<class T>
-        class Nearest : Base {
+        class nearest : base {
         public:
             static const int 	delay = 0;
 
@@ -82,16 +86,16 @@ namespace min {
             }
         };
 
-		/** Linear interpolation.
-            @param x0		Unused sample value
-            @param x1		Sample value at prior integer index
-			@param x2		Sample value at next integer index
-            @param x3		Unused sample value
-			@param delta 	Fractional location between x1 (delta=0) and x2 (delta=1)
-			@return			The interpolated value
-		 */
+		/// Linear interpolation.
+		/// @param x0		Unused sample value
+		/// @param x1		Sample value at prior integer index
+		/// @param x2		Sample value at next integer index
+		/// @param x3		Unused sample value
+		/// @param delta 	Fractional location between x1 (delta=0) and x2 (delta=1)
+		/// @return			The interpolated value
+
 		template<class T>
-		class Linear : Base {
+		class linear : base {
 		public:
 			static const int 	delay = 1;
 
@@ -100,24 +104,26 @@ namespace min {
 			}
 
             constexpr T operator()(T x0, T x1, T x2, T x3, double delta) noexcept {
-                // NW: ideally we would call the operator above to remain DRY, but I could not get syntax right
-                return x1 + delta * (x2-x1);
+// NW: ideally we would call the operator above to remain DRY, but I could not get syntax right
+//                return x1 + delta * (x2-x1);
+				return (*this)(x1, x2, delta);
             }
 		};
 
-        /** Allpass interpolation
-         Testing shows this algorithm will become less accurate the more points it computes between two known samples.
-         Also, because it uses an internal history, the reset() function should be used when switching between non-continuous segments of sampled audio data.
-         @param x0		Unused sample value
-         @param x1		Sample value at prior integer index
-         @param x2		Sample value at next integer index
-         @param x3		Unused sample value
-         @param delta 	Fractional location between x1 (delta=0) and x2 (delta=1) @n
-                        Be aware that delta=1.0 may not return the exact value at x2 given the nature of this algorithm.
-         @return			The interpolated value
-         */
+
+        /// Allpass interpolation
+        /// Testing shows this algorithm will become less accurate the more points it computes between two known samples.
+        /// Also, because it uses an internal history, the reset() function should be used when switching between non-continuous segments of sampled audio data.
+        /// @param x0		Unused sample value
+        /// @param x1		Sample value at prior integer index
+        /// @param x2		Sample value at next integer index
+        /// @param x3		Unused sample value
+        /// @param delta 	Fractional location between x1 (delta=0) and x2 (delta=1) @n
+        ///             Be aware that delta=1.0 may not return the exact value at x2 given the nature of this algorithm.
+        /// @return			The interpolated value
+
         template<class T>
-        class Allpass : Base {
+        class allpass : base {
         public:
             static const int 	delay = 1;
 
@@ -128,10 +134,11 @@ namespace min {
             }
 
             constexpr T operator()(T x0, T x1, T x2, T x3, double delta) noexcept {
-                // NW: ideally we would call the operator above to remain DRY, but I could not get syntax right
-                T out = x1 + delta * (x2-mY1);
-                mY1 = out;
-                return out;
+// NW: ideally we would call the operator above to remain DRY, but I could not get syntax right
+//                T out = x1 + delta * (x2-mY1);
+//                mY1 = out;
+//                return out;
+				return (*this)(x1, x2, delta);
             }
 
             void reset() {
@@ -143,16 +150,16 @@ namespace min {
         };
 
 
-		/** Cosine interpolation
-            @param x0		Unused sample value
-            @param x1		Sample value at prior integer index
-			@param x2		Sample value at next integer index
-            @param x3		Unused sample value
-			@param delta 	Fractional location between x1 (delta=0) and x2 (delta=1)
-			@return			The interpolated value
-		 */
+        /// Cosine interpolation
+        /// @param x0		Unused sample value
+		/// @param x1		Sample value at prior integer index
+        /// @param x2		Sample value at next integer index
+        /// @param x3		Unused sample value
+        /// @param delta 	Fractional location between x1 (delta=0) and x2 (delta=1)
+        /// @return			The interpolated value
+
 		template<class T>
-		class Cosine : Base {
+		class cosine : base {
 		public:
 			static const int 	delay = 1;
 
@@ -169,16 +176,16 @@ namespace min {
 		};
 
 
-		/** Cubic interpolation
-			@param x0		Sample value at integer index prior to x0
-			@param x1		Sample value at prior integer index
-			@param x2		Sample value at next integer index
-			@param x3		Sample value at integer index after x2
-			@param delta	Fractional location between x1 (delta=0) and x2 (delta=1)
-			@return		The interpolated value
-		 */
+        /// Cubic interpolation
+        /// @param x0		Sample value at integer index prior to x0
+        /// @param x1		Sample value at prior integer index
+        /// @param x2		Sample value at next integer index
+        /// @param x3		Sample value at integer index after x2
+        /// @param delta	Fractional location between x1 (delta=0) and x2 (delta=1)
+        /// @return		The interpolated value
+
 		template<class T>
-		class Cubic : Base {
+		class cubic : base {
 		public:
 			static const int 	delay = 3;
 
@@ -192,16 +199,16 @@ namespace min {
 		};
 
 
-		/** Spline interpolation based on the Breeuwsma catmull-rom spline
-			@param x0	Sample value at integer index prior to x
-			@param x1	Sample value at prior integer index
-			@param x2	Sample value at next integer index
-			@param x3	Sample value at integer index after y
-			@param delta	Fractional location between x1 (delta=0) and x2 (delta=1)
-			@return		The interpolated value.
-		 */
+        /// Spline interpolation based on the Breeuwsma catmull-rom spline
+        /// @param x0	Sample value at integer index prior to x
+        /// @param x1	Sample value at prior integer index
+        /// @param x2	Sample value at next integer index
+        /// @param x3	Sample value at integer index after y
+        /// @param delta	Fractional location between x1 (delta=0) and x2 (delta=1)
+        /// @return		The interpolated value.
+
 		template<class T>
-		class Spline : Base {
+		class spline : base {
 		public:
 			static const int 	delay = 3;
 
@@ -215,17 +222,17 @@ namespace min {
 		};
 
 
-		/** Hermite interpolation
-            When bias and tension are both set to 0.0, this algorithm is equivalent to Spline.
-			@param x0	Sample value at integer index prior to x
-			@param x1	Sample value at prior integer index
-			@param x2	Sample value at next integer index
-			@param x3	Sample value at integer index after y
-			@param delta	Fractional location between x1 (delta=0) and x2 (delta=1)
-			@return		The interpolated value.
-		 */
+        /// Hermite interpolation
+        /// When bias and tension are both set to 0.0, this algorithm is equivalent to Spline.
+        /// @param x0	Sample value at integer index prior to x
+        /// @param x1	Sample value at prior integer index
+        /// @param x2	Sample value at next integer index
+        /// @param x3	Sample value at integer index after y
+        /// @param delta	Fractional location between x1 (delta=0) and x2 (delta=1)
+        /// @return		The interpolated value.
+
 		template<class T>
-		class Hermite : Base {
+		class hermite : base {
 		public:
 			static const int 	delay = 3;
 			double				bias = 0.0;		// attribute
@@ -247,5 +254,5 @@ namespace min {
 			}
 		};
 
-	}	// namespace Interpolator
-}}  // namespace c74::min
+	}	// namespace interpolation
+}}}  // namespace c74::min::lib

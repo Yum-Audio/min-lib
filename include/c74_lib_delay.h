@@ -6,11 +6,10 @@
 
 #pragma once
 
-#include "../core/JamomaAudioObject.h"
 
 namespace c74 {
 namespace min {
-
+namespace lib {
 
 	/**	A multichannel non-interpolating delay line.
 		TODO: make this a template class specialized with an interpolation template parameter?
@@ -218,4 +217,4 @@ namespace min {
     };
 
 
-}}  // namespace c74::min
+}}}  // namespace c74::min::lib
