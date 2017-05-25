@@ -9,23 +9,26 @@
 
 namespace c74 {
 namespace min {
+namespace lib {
 
 
-	/**	Determine id a value is a power-of-two. Only works for ints. */
+	///	Determine if a value is a power-of-two. Only works for ints.
+	// TODO: static_assert is_integral
+
 	template<class T>
-	bool IsPowerOfTwo(T value)
-	{
+	bool is_power_of_two(T value) {
 		return (value > 0) && ((value & (value-1)) == 0);
 	}
 
 
-	/**	Limit input to power-of-two values.
-	 			Non-power-of-two values are increased to the next-highest power-of-two upon return.
-	 			Only works for ints up to 32-bits.
-	 			@seealso http://graphics.stanford.edu/~seander/bithacks.html#RoundUpPowerOf2
-	*/
+	///	Limit input to power-of-two values.
+	/// Non-power-of-two values are increased to the next-highest power-of-two upon return.
+	/// Only works for ints up to 32-bits.
+	/// @seealso http://graphics.stanford.edu/~seander/bithacks.html#RoundUpPowerOf2
+	// TODO: static_assert correct type
+
 	template<class T>
-	void TTLimitPowerOfTwo(T value) {
+	void limit_to_power_of_two(T value) {
 		value--;
 		value |= value >> 1;
 		value |= value >> 2;
@@ -37,19 +40,10 @@ namespace min {
 	}
 
 
+	/// This routine wrapping around the range as much as necessary
 
-
-	template <typename T>
-	T Clip(T input, T low, T high)
-	{
-		return std::min(std::max(input, low), high);
-	}
-
-
-	/** This routine wrapping around the range as much as necessary */
 	template<class T>
-	T Wrap(T input, const T low_bound, const T high_bound)
-	{
+	T wrap(T input, const T low_bound, const T high_bound) {
 		if ((input >= low_bound) && (input < high_bound))
 			return input; //nothing to wrap
 		else if (input - low_bound >= 0)
@@ -59,11 +53,12 @@ namespace min {
 	}
 
 
-	/** A fast routine for wrapping around the range once.  This is faster than doing an expensive module, where you know the range of the input
-	 will not equal or exceed twice the range. */
+	/// A fast routine for wrapping around the range once.
+	/// This is faster than doing an expensive module, where you know the range of the input
+	/// will not equal or exceed twice the range.
+
 	template<class T>
-	T WrapOnce(T input, const T low_bound, const T high_bound)
-	{
+	T wrap_once(T input, const T low_bound, const T high_bound) {
 		if ((input >= low_bound) && (input < high_bound))
 			return input;
 		else if (input >= high_bound)
@@ -73,10 +68,10 @@ namespace min {
 	}
 
 
-	/** This routine folds numbers into the data range */
+	/// This routine folds numbers into the data range
+
 	template<typename T>
-	T Fold(T input, const T low_bound, const T high_bound)
-	{
+	T fold(T input, const T low_bound, const T high_bound) {
 		double foldRange;
 
 		if ((input >= low_bound) && (input <= high_bound))
@@ -88,10 +83,9 @@ namespace min {
 	}
 
 
-	/** A utility for scaling one range of values onto another range of values. */
+	/// A utility for scaling one range of values onto another range of values.
 	template<class T>
-	static T Scale(T value, T inlow, T inhigh, T outlow, T outhigh)
-	{
+	static T scale(T value, T inlow, T inhigh, T outlow, T outhigh) {
 		double inscale, outdiff;
 
 		inscale = 1 / (inhigh - inlow);
@@ -103,18 +97,12 @@ namespace min {
 	}
 
 
-	/** Rounding utility. */
-	template<class T>
-	auto Round(T value)
-	{
-		if (value > 0)
-			return((long)(value + 0.5));
-		else
-			return((long)(value - 0.5));
-	}
-
-	/** Defines several functions for constraining values within specified boundaries and preventing unwanted values. A variety of behaviors are offered, including clipping, wrapping and folding.@n@n
-	 * Exercise caution when using the functions defined here with unsigned values. Negative, signed integers have the potential to become very large numbers when casting to unsigned integers. This can cause errors during a boundary check, such as values clipping to the high boundary instead of the low boundary or numerous iterations of loop to bring a wrapped value back into the acceptable range.
+	/** Defines several functions for constraining values within specified boundaries and preventing unwanted values. 
+	 A variety of behaviors are offered, including clipping, wrapping and folding.@n@n
+	 * Exercise caution when using the functions defined here with unsigned values. 
+	 Negative, signed integers have the potential to become very large numbers when casting to unsigned integers. 
+	 This can cause errors during a boundary check, such as values clipping to the high boundary instead of the 
+	 low boundary or numerous iterations of loop to bring a wrapped value back into the acceptable range.
 	*/
 	namespace Limit {
 
@@ -142,7 +130,7 @@ namespace min {
 		class Clip : public Base<T> {
 		public:
 			static T apply(T input, T low, T high) {
-				return Jamoma::Clip<T>(input, low, high);
+				return max::clamp<T>(input, low, high);
 			}
 
 			T operator()(T input, T low, T high) {
@@ -155,7 +143,7 @@ namespace min {
 		class Wrap : public Base<T> {
 		public:
 			static T apply(T input, T low, T high) {
-				return Jamoma::Wrap(input, low, high);
+				return wrap(input, low, high);
 			}
 
 			T operator()(T input, T low, T high) {
@@ -167,7 +155,7 @@ namespace min {
 		class WrapOnce : public Base<T> {
 		public:
 			static T apply(T input, T low, T high) {
-				return Jamoma::WrapOnce(input, low, high);
+				return wrap_once(input, low, high);
 			}
 
 			T operator()(T input, T low, T high) {
@@ -179,7 +167,7 @@ namespace min {
 		class Fold : public Base<T> {
 		public:
 			static T apply(T input, T low, T high) {
-				return Jamoma::Fold(input, low, high);
+				return fold(input, low, high);
 			}
 
 			T operator()(T input, T low, T high) {
@@ -193,4 +181,4 @@ namespace min {
 
 
 
-}}  // namespace c74::min
+}}}  // namespace c74::min::lib
