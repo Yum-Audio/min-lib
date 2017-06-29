@@ -6,7 +6,6 @@
 
 #pragma once
 
-
 namespace c74 {
 namespace min {
 namespace lib {
@@ -17,20 +16,26 @@ namespace lib {
 	class sync {
 	public:
 
+		/// Set the frequency of the oscillator.
+		/// @param	oscillator_frequency	The frequency of the oscillator in hertz.
+		/// @param	sampling_frequency		The sampling frequency of the environment in hertz.
+
 		void frequency(number oscillator_frequency, number sampling_frequency) {
 			oscillator_frequency = MIN_CLAMP(oscillator_frequency, sampling_frequency * -0.5, sampling_frequency * 0.5),
 			m_step = oscillator_frequency / sampling_frequency;
 
 		}
 
-		//number frequency() {
-		//	return m_frequency;
-		//}
 
+		/// Set the phase of the oscillator
+		///	@param	new_phase	The new phase to which the oscillator will be set. Range is [0.0, 1.0).
 
 		void phase(number new_phase) {
 			m_phase = MIN_CLAMP(new_phase, 0.0, 1.0);
 		}
+
+		/// Get the current phase of the oscillator
+		/// @return	The current phase of the oscillator in the range [0.0, 1.0).
 
 		number phase() {
 			return m_phase;
@@ -41,11 +46,10 @@ namespace lib {
 		// TODO: add gain Parameter from Jamoma1
 
 
-		/// Process one sample.
-		///	@param	x	Sample to be processed.
-		///	@return		Processed sample
+		/// Calculate one sample.
+		///	@return		Calculated sample
 
-		sample operator()(sample x) {
+		sample operator()() {
 			if (m_phase > 1.0)
 				m_phase -= 1.0;
 			else if (m_phase < 0.0)
@@ -57,15 +61,12 @@ namespace lib {
 			return y;
 		}
 
-
 	private:
 
 		number	m_gain		{ 1.0 };
 		number	m_offset	{};
 		number	m_phase		{};
 		number	m_step		{};
-
 	};
-
 
 }}}  // namespace c74::min::lib
