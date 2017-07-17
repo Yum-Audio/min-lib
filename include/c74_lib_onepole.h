@@ -19,14 +19,25 @@ namespace lib {
 	public:
 
 		/// Set filter coefficient directly.
+		/// @param new_coefficient	The new value of the feedback coefficient in the range [0.0, 1.0].
 
 		void coefficient(number new_coefficient) {
 			new_coefficient = MIN_CLAMP(new_coefficient, 0.0, 1.0);
-			a_0 = new_coefficient;
-			b_1 = 1 - new_coefficient;
+			b_1 = new_coefficient;
+			a_0 = 1 - new_coefficient;
 		}
 
+		/// Get the current coefficent of the filter.
+		/// @return	The value of the feedback coefficient.
+
+		number coefficient() {
+			return b_1;
+		}
+
+
 		/// Set filter coefficient using a cutoff frequency.
+		/// @param cutoff_frequency		The cutoff frequency in hertz.
+		/// @param sampling_frequency	The sample frequency in hertz.
 		///	@see http://musicdsp.org/showArchiveComment.php?ArchiveID=237
 
 		void frequency(number cutoff_frequency, number sampling_frequency) {
@@ -34,10 +45,23 @@ namespace lib {
 		}
 
 
+		/// Clear the filter's history
+
 		void clear() {
 			y_1 = 0.0;
 		}
 
+		
+		/// Retrieve the filter's history
+		/// @return	The value stored in the filter's history.
+
+		sample history() {
+			return y_1;
+		}
+
+
+		/// Calculate one sample.
+		///	@return		Calculated sample
 
 		sample operator()(sample x) {
 			auto y = (x * a_0) + (y_1 * b_1);
@@ -51,6 +75,4 @@ namespace lib {
 		sample y_1 {};		///< previous output sample
 	};
 
-
 }}}  // namespace c74::min::lib
-
