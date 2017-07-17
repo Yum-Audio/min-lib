@@ -24,17 +24,14 @@ add_custom_target( LIB ALL
 #add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/test/mock)
 
 
-#enable_testing()
+enable_testing()
 
-#SUBDIRLIST(TESTDIRS ${CMAKE_CURRENT_SOURCE_DIR}/test)
-#foreach(testdir ${TESTDIRS})
-#	if (${testdir} STREQUAL "mock")
-#	else ()
-#		if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/test/${testdir}/CMakeLists.txt")
-#			message("Generating Unit Test: ${testdir}")
-#			add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/test/${testdir})
-#	 	endif ()
-#	endif()
-#endforeach()
+SUBDIRLIST(TESTDIRS ${CMAKE_CURRENT_SOURCE_DIR}/test)
+foreach(testdir ${TESTDIRS})
+		if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/test/${testdir}/CMakeLists.txt")
+			message("Generating Unit Test: ${testdir}")
+			add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/test/${testdir})
+	 	endif ()
+endforeach()
 
 
