@@ -19,9 +19,15 @@ namespace lib {
 	class dcblocker {
 	public:
 
+		/// Clear the filter's history
+
 		void clear() {
 			x_1 = y_1 = 0.0;
 		}
+
+
+		/// Calculate one sample.
+		///	@return		Calculated sample
 
 		sample operator()(sample x) {
 			auto y = x - x_1 + y_1 * 0.9997;
@@ -31,8 +37,8 @@ namespace lib {
 		}
 
 	private:
-		sample x_1 {};
-		sample y_1 {};
+		sample x_1 {};	///< feedforward history
+		sample y_1 {};	///< feedback history
 	};
 
 
