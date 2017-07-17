@@ -1,10 +1,7 @@
 ///	@brief 		Unit test for the Sync class
 ///	@author		Timothy Place, Nathan Wolek
-///	@copyright	Copyright (c) 2005-2015 The Jamoma Group, http://jamoma.org.
+//	@copyright	Copyright (c) 2017, Cycling '74
 ///	@license	This project is released under the terms of the MIT License.
-
-//#include "c74_min_unittest.h"		// required unit test header
-//#include "min.phasor_tilde.cpp"		// need the source of our object so that we can access it
 
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"

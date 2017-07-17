@@ -50,10 +50,6 @@ namespace lib {
 		}
 
 
-		// TODO: add offset Parameter from Jamoma1
-		// TODO: add gain Parameter from Jamoma1
-
-
 		/// Calculate one sample.
 		///	@return		Calculated sample
 
@@ -63,20 +59,16 @@ namespace lib {
 			else if (m_phase < 0.0)
 				m_phase += 1.0;
 
-			auto y = m_phase * m_gain + m_offset;
-
+			auto y = m_phase;
 			m_phase += m_step;
 			return y;
 		}
 
 	private:
-
-		number	m_gain		{ 1.0 };
-		number	m_offset	{};
-		number	m_phase		{};
-		number	m_step		{};
-		number	m_f			{};	// frequency
-		number	m_fs		{};	// sampling frequency
+		number	m_phase		{};		///< current phase
+		number	m_step		{};		///< increment for each sample iteration
+		number	m_f			{};		///< oscillator frequency
+		number	m_fs		{};		///< sampling frequency
 	};
 
 }}}  // namespace c74::min::lib
