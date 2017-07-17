@@ -1,29 +1,5 @@
-/** @file
-	@ingroup 	jamoma2
- 
-	@brief 		Unit test for the Dcblocker class
- 
-	@author		Timothy Place, Nathan Wolek
-	@copyright	Copyright (c) 2005-2015 The Jamoma Group, http://jamoma.org.
-	@license	This project is released under the terms of the MIT License.
-
- */
-
-#include "Jamoma.h"
 
 
-class DcblockTest {
-	
-	Jamoma::UnitTest<DcblockTest>*	mTest;
-	
-public:
-	DcblockTest(Jamoma::UnitTest<DcblockTest>* test)
-	: mTest(test)
-	{
-		testImpulseResponse();
-	}
-
-	
 	void testImpulseResponse()
 	{
 		Jamoma::Dcblock			my_dcblock;
@@ -91,12 +67,3 @@ public:
 		}
 		return y;
 	}
-	
-};
-
-
-int main(int argc, const char * argv[])
-{
-	Jamoma::UnitTest<DcblockTest>	aUnitTestInstance;
-	return aUnitTestInstance.failureCount();
-}
