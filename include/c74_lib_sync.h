@@ -21,9 +21,17 @@ namespace lib {
 		/// @param	sampling_frequency		The sampling frequency of the environment in hertz.
 
 		void frequency(number oscillator_frequency, number sampling_frequency) {
-			oscillator_frequency = MIN_CLAMP(oscillator_frequency, sampling_frequency * -0.5, sampling_frequency * 0.5),
-			m_step = oscillator_frequency / sampling_frequency;
+			m_fs = sampling_frequency;
+			auto f_nyquist = sampling_frequency * 0.5;
+			m_f = fold(oscillator_frequency, -f_nyquist, f_nyquist);
+			m_step = m_f / m_fs;
+		}
 
+		/// Get the current frequency of the oscillator.
+		/// @return	The current frequency of the oscillator in the range [0.0, f_s].
+
+		number frequency() {
+			return m_f;
 		}
 
 
@@ -31,7 +39,7 @@ namespace lib {
 		///	@param	new_phase	The new phase to which the oscillator will be set. Range is [0.0, 1.0).
 
 		void phase(number new_phase) {
-			m_phase = MIN_CLAMP(new_phase, 0.0, 1.0);
+			m_phase = wrap(new_phase, 0.0, 1.0);
 		}
 
 		/// Get the current phase of the oscillator
@@ -67,6 +75,8 @@ namespace lib {
 		number	m_offset	{};
 		number	m_phase		{};
 		number	m_step		{};
+		number	m_f			{};	// frequency
+		number	m_fs		{};	// sampling frequency
 	};
 
 }}}  // namespace c74::min::lib
