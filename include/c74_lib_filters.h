@@ -9,8 +9,6 @@
 namespace c74 {
 namespace min {
 
-
-
 	namespace filters {
 	
 		/// Utility: generate an impulse response from a set of coefficients
@@ -43,14 +41,7 @@ namespace min {
 			}
 			return y;
 		}
-		
-		
 
-
-
-	
 	} // namespace filters
-
-	
 
 }} // namespace c74::min
