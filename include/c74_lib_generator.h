@@ -11,229 +11,237 @@ namespace c74 {
 namespace min {
 namespace lib {
 
+    /// Defines several functions for use with <a href="http://en.cppreference.com/w/cpp/algorithm/generate">std::generate</a> to fill vectors with common shapes used in computer sound.
 
-    /** Defines several functions for use with <a href="http://en.cppreference.com/w/cpp/algorithm/generate">std::generate</a> to fill vectors with common shapes used in computer sound.
-     */
-	namespace Generator {
+	namespace generator {
 
-        /** Generates a line from -1 to 1 with consistent slope
-         @param T       render output as this datatype. algorithm was designed to assume the use of floating point.
-         @param size    size of the target vector
-         */
+
+        /// Generates a line from -1 to 1 with consistent slope
+        /// @param T       render output as this datatype. algorithm was designed to assume the use of floating point.
+        /// @param size    size of the target vector
+
         template <typename T>
-        class Ramp {
+        class ramp {
         public:
-            Ramp (int size)
-            : mCycleSize(size)
+            ramp (int size)
+            : m_cycle_size(size)
             {
                 //TODO: we need way to protect against zero. static_assert did not work.
             }
 
             T operator()() {
-                ++mCurrent;
-                return ( T(mCurrent) * 2.0 / mCycleSize) - 1.0;
+                ++m_current;
+                return ( T(m_current) * 2.0 / m_cycle_size) - 1.0;
             }
 
         private:
-            int mCurrent = -1;
-            int mCycleSize; // required by constructor
+			int m_current { -1 };
+            int m_cycle_size; // required by constructor
         };
 
-        /** Generates an ideal sawtooth waveform from -1 to 1. Not anti-aliased.
-         @param T       render output as this datatype. algorithm was designed to assume the use of floating point.
-         @param size    size of the target vector
-         */
-        template <typename T>
-        using Sawtooth     = Generator::Ramp<T>;
 
-        /** Generates a line from 0 to 1 with consistent slope
-         @param T       render output as this datatype. algorithm was designed to assume the use of floating point.
-         @param size    size of the target vector
-         */
+        /// Generates an ideal sawtooth waveform from -1 to 1. Not anti-aliased.
+        /// @param T       render output as this datatype. algorithm was designed to assume the use of floating point.
+        /// @param size    size of the target vector
+
+        template <typename T>
+        using sawtooth = generator::ramp<T>;
+
+
+        /// Generates a line from 0 to 1 with consistent slope
+        /// @param T       render output as this datatype. algorithm was designed to assume the use of floating point.
+        /// @param size    size of the target vector
+
 		template <typename T>
-		class UnipolarRamp {
+		class ramp_unipolar {
 		public:
-			UnipolarRamp (int size)
-			: mCycleSize(size)
+			ramp_unipolar (int size)
+			: m_cycle_size(size)
 			{
                 //TODO: we need way to protect against zero. static_assert did not work.
             }
 
 			T operator()() {
-				++mCurrent;
-				return T(mCurrent) / mCycleSize;
+				++m_current;
+				return T(m_current) / m_cycle_size;
 			}
 
 		private:
-			int mCurrent = -1;
-			int mCycleSize; // required by constructor
+			int m_current { -1 };
+			int m_cycle_size; // required by constructor
 		};
 
-        /** Generates an ideal sawtooth waveform from 0 to 1. Not anti-aliased.
-         @param T       render output as this datatype. algorithm was designed to assume the use of floating point.
-         @param size    size of the target vector
-         */
-        template <typename T>
-        using UnipolarSawtooth     = Generator::UnipolarRamp<T>;
 
-        /** Generates a sine wave constrained between -1 to 1
-         @param T       render output as this datatype. algorithm was designed to assume the use of floating point.
-         @param size    size of the target vector
-         */
+        /// Generates an ideal sawtooth waveform from 0 to 1. Not anti-aliased.
+        /// @param T       render output as this datatype. algorithm was designed to assume the use of floating point.
+        /// @param size    size of the target vector
+
+        template <typename T>
+        using sawtooth_unipolar = generator::ramp_unipolar<T>;
+
+
+        /// Generates a sine wave constrained between -1 to 1
+        /// @param T       render output as this datatype. algorithm was designed to assume the use of floating point.
+        /// @param size    size of the target vector
+
 		template <typename T>
-		class Sine {
+		class sine {
 		public:
-			Sine (int size)
-			: mCycleSize(size)
+			sine (int size)
+			: m_cycle_size(size)
             {
                 //TODO: we need way to protect against zero. static_assert did not work.
             }
 
 			T operator()() {
-				++mCurrent;
-				auto output = std::sin(mCurrent * kTwoPi / mCycleSize);
+				++m_current;
+				auto output = std::sin(m_current * (2.0 * M_PI) / m_cycle_size);
 				return T(output);
 			}
 
 		private:
-			int mCurrent = -1;
-			int mCycleSize; // required by constructor
+			int m_current { -1 };
+			int m_cycle_size; // required by constructor
 		};
 
-        /** Generates a sine wave constrained between 0 to 1
-         @param T       render output as this datatype. algorithm was designed to assume the use of floating point.
-         @param size    size of the target vector
-         */
+
+        /// Generates a sine wave constrained between 0 to 1
+        /// @param T       render output as this datatype. algorithm was designed to assume the use of floating point.
+        /// @param size    size of the target vector
+
         template <typename T>
-        class UnipolarSine {
+        class sine_unipolar {
         public:
-            UnipolarSine (int size)
-            : mCycleSize(size)
+            sine_unipolar (int size)
+            : m_cycle_size(size)
             {
                 //TODO: we need way to protect against zero. static_assert did not work.
             }
 
             T operator()() {
-                ++mCurrent;
-                auto output = 0.5 * std::sin(mCurrent * kTwoPi / mCycleSize);
+                ++m_current;
+                auto output = 0.5 * std::sin(m_current * (2.0 * M_PI) / m_cycle_size);
                 return T(output) + 0.5;
             }
 
         private:
-            int mCurrent = -1;
-            int mCycleSize; // required by constructor
+			int m_current { -1 };
+			int m_cycle_size; // required by constructor
         };
 
-        /** Generates a cosine wave constrained between -1 to 1
-         @param T       render output as this datatype. algorithm was designed to assume the use of floating point.
-         @param size    size of the target vector
-         */
+
+        /// Generates a cosine wave constrained between -1 to 1
+        /// @param T       render output as this datatype. algorithm was designed to assume the use of floating point.
+        /// @param size    size of the target vector
+
         template <typename T>
-        class Cosine {
+        class cosine {
         public:
-            Cosine (int size)
-            : mCycleSize(size)
+            cosine (int size)
+            : m_cycle_size(size)
             {
                 //TODO: we need way to protect against zero. static_assert did not work.
             }
 
             T operator()() {
-                ++mCurrent;
-                auto output = std::cos(mCurrent * kTwoPi / mCycleSize);
+                ++m_current;
+                auto output = std::cos(m_current * (2.0 * M_PI) / m_cycle_size);
                 return T(output);
             }
 
         private:
-            int mCurrent = -1;
-            int mCycleSize; // required by constructor
+			int m_current { -1 };
+			int m_cycle_size; // required by constructor
         };
 
-        /** Generates a cosine wave constrained between 0 to 1
-         @param T       render output as this datatype. algorithm was designed to assume the use of floating point.
-         @param size    size of the target vector
-         */
+
+        /// Generates a cosine wave constrained between 0 to 1
+        /// @param T       render output as this datatype. algorithm was designed to assume the use of floating point.
+        /// @param size    size of the target vector
+
         template <typename T>
-        class UnipolarCosine {
+        class cosine_unipolar {
         public:
-            UnipolarCosine (int size)
-            : mCycleSize(size)
+            cosine_unipolar (int size)
+            : m_cycle_size(size)
             {
                 //TODO: we need way to protect against zero. static_assert did not work.
             }
 
             T operator()() {
-                ++mCurrent;
-                auto output = 0.5 + 0.5 * std::cos(mCurrent * kTwoPi / mCycleSize);
+                ++m_current;
+                auto output = 0.5 + 0.5 * std::cos(m_current * (2.0 * M_PI) / m_cycle_size);
                 return T(output);
             }
 
         private:
-            int mCurrent = -1;
-            int mCycleSize; // required by constructor
+			int m_current { -1 };
+			int m_cycle_size; // required by constructor
         };
 
 
-        /** Generates a triangle wave constrained between -1 to 1
-         @param T       render output as this datatype. algorithm was designed to assume the use of floating point.
-         @param size    size of the target vector
-         */
+        /// Generates a triangle wave constrained between -1 to 1
+        /// @param T       render output as this datatype. algorithm was designed to assume the use of floating point.
+        /// @param size    size of the target vector
+
 		template <typename T>
-		class Triangle {
+		class triangle {
 		public:
-			Triangle (int size)
-			: mCycleSize(size)
+			triangle (int size)
+			: m_cycle_size(size)
             {
                 //TODO: we need way to protect against zero. static_assert did not work.
             }
 
 			T operator()() {
 				T out = 0.0;
-				++mCurrent;
+				++m_current;
 
-				if (mCurrent <= mCycleSize/4)
-					out = 4.0 * mCurrent / mCycleSize;
-				else if (mCurrent >= 3 * mCycleSize / 4)
-					out = -4.0 + 4.0 * mCurrent / mCycleSize;
+				if (m_current <= m_cycle_size/4)
+					out = 4.0 * m_current / m_cycle_size;
+				else if (m_current >= 3 * m_cycle_size / 4)
+					out = -4.0 + 4.0 * m_current / m_cycle_size;
 				else
-					out = 2.0 - 4.0 * mCurrent / mCycleSize;
+					out = 2.0 - 4.0 * m_current / m_cycle_size;
 				return out;
 			}
 
 		private:
-			int mCurrent = -1;
-			int mCycleSize; // required by constructor
+			int m_current { -1 };
+			int m_cycle_size; // required by constructor
 		};
 
-        /** Generates a triangle wave constrained between 0 to 1
-         @param T       render output as this datatype. algorithm was designed to assume the use of floating point.
-         @param size    size of the target vector
-         */
+
+        /// Generates a triangle wave constrained between 0 to 1
+        /// @param T       render output as this datatype. algorithm was designed to assume the use of floating point.
+        /// @param size    size of the target vector
+
         template <typename T>
-        class UnipolarTriangle {
+        class triangle_unipolar {
         public:
-            UnipolarTriangle (int size)
-            : mCycleSize(size)
-            {
+            triangle_unipolar (int size)
+            : m_cycle_size(size)
+			{
                 //TODO: we need way to protect against zero. static_assert did not work.
             }
 
             T operator()() {
                 T out = 0.0;
-                ++mCurrent;
+                ++m_current;
 
-                if (mCurrent <= mCycleSize/4)
-                    out = 2.0 * mCurrent / mCycleSize;
-                else if (mCurrent >= 3 * mCycleSize / 4)
-                    out = -2.0 + 2.0 * mCurrent / mCycleSize;
+                if (m_current <= m_cycle_size/4)
+                    out = 2.0 * m_current / m_cycle_size;
+                else if (m_current >= 3 * m_cycle_size / 4)
+                    out = -2.0 + 2.0 * m_current / m_cycle_size;
                 else
-                    out = 1.0 - 2.0 * mCurrent / mCycleSize;
+                    out = 1.0 - 2.0 * m_current / m_cycle_size;
                 return 0.5 + out;
             }
 
         private:
-            int mCurrent = -1;
-            int mCycleSize; // required by constructor
+			int m_current { -1 };
+			int m_cycle_size; // required by constructor
         };
 
-	} // namespace Generator
+	} // namespace generator
 }}}  // namespace c74::min::lib
