@@ -234,24 +234,42 @@ namespace lib {
 		template<class T>
 		class hermite : base {
 		public:
-			static const int 	delay = 3;
-			double				bias = 0.0;		// attribute
-			double				tension = 0.0;	// attribute
+			static const int 	delay	{ 3 };
+
+			void bias(double new_bias) {
+				m_bias = new_bias;
+			}
+
+			double bias() {
+				return m_bias;
+			}
+
+			void tension(double new_tension) {
+				m_tension = new_tension;
+			}
+
+			double tension() {
+				return m_tension;
+			}
 
 			constexpr T operator()(T x0, T x1, T x2, T x3, double delta) noexcept {
-				T delta2 = delta*delta;
-				T delta3 = delta*delta2;
-				T bp = 1+bias;
-				T bm = 1-bias;
-				T mt = (1-tension)*0.5;
-				T m0 = ((x1-x0)*bp + (x2-x1)*bm) * mt;
-				T m1 = ((x2-x1)*bp + (x3-x2)*bm) * mt;
-				T a0 = 2*delta3 - 3*delta2 + 1;
-				T a1 = delta3 - 2*delta2 + delta;
+				T delta2 = delta * delta;
+				T delta3 = delta * delta2;
+				T bp = 1 + m_bias;
+				T bm = 1 - m_bias;
+				T mt = (1 - m_tension)*0.5;
+				T m0 = ((x1-x0) * bp + (x2-x1) * bm) * mt;
+				T m1 = ((x2-x1) * bp + (x3-x2) * bm) * mt;
+				T a0 = 2 * delta3 - 3 * delta2 + 1;
+				T a1 = delta3 - 2 * delta2 + delta;
 				T a2 = delta3 - delta2;
-				T a3 = -2*delta3 + 3*delta2;
-				return a0*x1 + a1*m0 + a2*m1 + a3*x2;
+				T a3 = -2 * delta3 + 3 * delta2;
+				return a0 * x1 + a1 * m0 + a2 * m1 + a3 * x2;
 			}
+
+		private:
+			double m_bias		{ 0.0 };	// attribute
+			double m_tension	{ 0.0 };	// attribute
 		};
 
 	}	// namespace interpolation

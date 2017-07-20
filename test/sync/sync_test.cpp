@@ -4,8 +4,7 @@
 ///	@license	This project is released under the terms of the MIT License.
 
 #define CATCH_CONFIG_MAIN
-#include "catch.hpp"
-#include "c74_min.h"
+#include "c74_min_catch.h"
 
 
 SCENARIO ("responds appropriately to messages and attrs") {
