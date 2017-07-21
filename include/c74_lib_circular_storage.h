@@ -18,16 +18,16 @@ namespace lib {
 	///
 	///	Allows items of a single datatype to be written into a vector that wraps around to the beginning whenever the end is exceeded.
 	///	Reading items from the vector can then return chunks of the N most recent items.
-	///	The initial design of this class was for use as an audio sample delay buffer,
+	///	The initial design of this class is for use as an audio sample delay buffer,
 	///	however it's functionality has been generalized to allow for other datatypes and applications.
 
 	template <class T>
 	class circular_storage {
-//		friend class CircularStorageTest;
-
 	public:
+
 		/// Constructor specifies a fixed amount of storage for the container.
 		///	If you want a different amount of storage, create a new container and dispose of the one you don't want.
+		/// @param	itemcount	The number of items to be stored in the container.
 
 		explicit circular_storage(std::size_t itemcount)
 		: m_items(itemcount)
@@ -41,12 +41,8 @@ namespace lib {
 		{}
 
 
-//		virtual ~circular_storage()
-//		{}
-
-
-		/// Write a block of things into the container.
-		///	@param	newInput	A block of things to add. May not be larger than the size of the buffer.
+		/// Write a block of items into the container.
+		///	@param	new_input	A block of items to add. May not be more items than the size (itemcount) of the container.
 
 		void write(const std::vector<T>& new_input) {
 			assert(std::this_thread::get_id() == m_thread);
@@ -74,6 +70,9 @@ namespace lib {
 		}
 
 
+		/// Write a single item into the container.
+		///	@param	new_input	An item to add.
+
 		void write(const T& new_input) {
 			assert(std::this_thread::get_id() == m_thread);
 
@@ -84,22 +83,23 @@ namespace lib {
 		}
 
 
-		/// Read a block of things out from the container.
+		/// Read a block of items out from the container. This is the same as calling the head() method.
 		///	These will be the N most recent items added to the history.
-		///	@param	output	A place to write the block of things from the buffer.
-		///					The size of this buffer will determine the number of things to request.
-		///					May not be larger than the size of the buffer.
+		///	@param	output	A place to write the block of items from the buffer.
+		///					The size of this buffer will determine the number of items to request.
+		///					May not be larger than the size of the container.
+		/// @see	head()
 
 		void read(std::vector<T>& output) {
 			head(output);
 		}
 
 
-		/// Read a block of things out from the container.
+		/// Read a block of items out from the container.
 		///	These will be the N most recent items added to the history.
 		///	@param	output	A place to write the block of things from the buffer.
-		///					The size of this buffer will determine the number of things to request.
-		///					May not be larger than the size of the buffer.
+		///					The size of this buffer will determine the number of items to request.
+		///					May not be larger than the size of the container.
 		///	@see	tail()
 
 		void head(std::vector<T>& output) {
@@ -127,11 +127,11 @@ namespace lib {
 		}
 
 
-		/// Read a block of things out from the container.
+		/// Read a block of items out from the container.
 		///	These will be the N oldest items added in the history.
-		///	@param	output	A place to write the block of things from the buffer.
-		///					The size of this buffer will determine the number of things to request.
-		///					May not be larger than the size of the buffer.
+		///	@param	output	A place to write the block of items from the buffer.
+		///					The size of this buffer will determine the number of items to request.
+		///					May not be larger than the size of the container.
 		///	@see	head()
 
 		void tail(std::vector<T>& output) {
@@ -158,6 +158,12 @@ namespace lib {
 		}
 
 
+		/// Read a single item out from the container.
+		///	This will be the oldest item in the history.
+		/// @param	offset	An optional parameter for getting an item that is N items newer than the oldest value.
+		///	@return	output	The item from the buffer.
+		///	@see	head()
+
 		T tail(int offset = 0)  {
 			// TODO: benchmark / evaluate use of modulo here
 			return m_items[ (m_index+offset) % size() ];
@@ -172,19 +178,34 @@ namespace lib {
 		}
 
 
-		///	The number of items in the buffer.
+		///	Return the item count of the container.
+		/// @return	The item count of the container.
 
 		std::size_t size() {
 			return m_size;
 		}
 
 
-		///	Change the number of items in the buffer.
+		///	Change the number of items in the container.
+		/// Note that this does not change the capacity of the container,
+		/// which can only be set when the container is created.
+		/// @param	new_size	The new item count for the circular storage container.
 
 		void resize(std::size_t	new_size) {
 			assert(new_size <= m_items.size());
 			m_size = new_size;
 		}
+
+
+		/// Get a reference to an individual item by index from the container.
+		/// @param	index	The index of the item to fetch.
+		/// @return			A reference to the item.
+
+		T& item(std::size_t index) {
+			assert(index <= m_items.size());
+			return m_items[index];
+		}
+
 
 	private:
 		std::vector<T>		m_items;									///< storage for the circular buffer's data
