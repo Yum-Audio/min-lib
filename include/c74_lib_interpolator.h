@@ -35,7 +35,7 @@ namespace lib {
 		/// @param delta	Unused fractional location
 		/// @return         The interpolated value
 
-		template<class T>
+		template<class T = number>
 		class none : base {
 		public:
 			static const int 	delay = 0;
@@ -65,7 +65,7 @@ namespace lib {
 		///                 delta >= 0.5 => x2
 		/// @return         The interpolated value
 
-        template<class T>
+		template<class T = number>
         class nearest : base {
         public:
             static const int 	delay = 0;
@@ -94,7 +94,7 @@ namespace lib {
 		/// @param delta 	Fractional location between x1 (delta=0) and x2 (delta=1)
 		/// @return			The interpolated value
 
-		template<class T>
+		template<class T = number>
 		class linear : base {
 		public:
 			static const int 	delay = 1;
@@ -122,7 +122,7 @@ namespace lib {
         ///             Be aware that delta=1.0 may not return the exact value at x2 given the nature of this algorithm.
         /// @return			The interpolated value
 
-        template<class T>
+		template<class T = number>
         class allpass : base {
         public:
             static const int 	delay = 1;
@@ -158,7 +158,7 @@ namespace lib {
         /// @param delta 	Fractional location between x1 (delta=0) and x2 (delta=1)
         /// @return			The interpolated value
 
-		template<class T>
+		template<class T = number>
 		class cosine : base {
 		public:
 			static const int 	delay = 1;
@@ -184,7 +184,7 @@ namespace lib {
         /// @param delta	Fractional location between x1 (delta=0) and x2 (delta=1)
         /// @return		The interpolated value
 
-		template<class T>
+		template<class T = number>
 		class cubic : base {
 		public:
 			static const int 	delay = 3;
@@ -207,7 +207,7 @@ namespace lib {
         /// @param delta	Fractional location between x1 (delta=0) and x2 (delta=1)
         /// @return		The interpolated value.
 
-		template<class T>
+		template<class T = number>
 		class spline : base {
 		public:
 			static const int 	delay = 3;
@@ -231,7 +231,7 @@ namespace lib {
         /// @param delta	Fractional location between x1 (delta=0) and x2 (delta=1)
         /// @return		The interpolated value.
 
-		template<class T>
+		template<class T = number>
 		class hermite : base {
 		public:
 			static const int 	delay	{ 3 };

@@ -14,7 +14,7 @@
 
 #include "c74_lib_allpass.h"
 #include "c74_lib_dcblocker.h"
-//#include "c74_lib_delay.h"
+#include "c74_lib_delay.h"
 #include "c74_lib_generator.h"
 #include "c74_lib_onepole.h"
 #include "c74_lib_saturation.h"

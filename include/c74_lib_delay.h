@@ -11,210 +11,80 @@ namespace c74 {
 namespace min {
 namespace lib {
 
-	/**	A multichannel non-interpolating delay line.
-		TODO: make this a template class specialized with an interpolation template parameter?
-	 */
-	class Delay : public AudioObject {
 
-		const std::size_t			mCapacity;
-		CircularSampleBufferGroup	mHistory;
+	///	A multichannel interpolating delay line.
+	/// @tparam The type of interpolation. The default is no interpolation.
 
-        Observer				mChannelCountObserver = { std::bind(&Delay::resizeHistory, this) };
-
-        void resizeHistory() {
-            if ((mHistory.size() && mHistory[0].size() != size+frameCount) || mHistory.size() != (size_t)channelCount) {
-                mHistory.clear(); // ugly: doing this to force the reconstruction of the storage to the correct size
-				mHistory.resize(channelCount, std::make_pair(mCapacity+frameCount, (size_t)size+frameCount));
-			}
-		}
-
+	template <class interpolation_type = interpolation::none<>>
+	class delay {
 	public:
-		static constexpr Classname classname = { "delay" };
-		static constexpr auto tags = { "dspEffectsLib", "audio", "processor", "delay" };
+
+		/// Capacity of the delay is fixed at instantiation
+		/// @param capacity	The number of samples to allocate for the delay line. Default is 256.
+
+		delay(number capacity = 256)
+		: m_history(capacity + 5) // 5 extra samples to accomodate the 'now' sample + up to 4 interpolation samples
+		, m_size(capacity)
+		{}
 
 
-		/** Capacity of the delay is fixed at instantiation
-		 */
-		Delay(std::size_t capacity = 256)
-		: mCapacity(capacity)
-		, mHistory(1, capacity)
-		{
-			channelCount.addObserver(mChannelCountObserver);
+		/// Set a new delay time in samples.
+		/// @param	new_size	The new delay time in samples.
+
+		void size(number new_size) {
+			m_size = new_size;
+			m_size_fractional = m_size - static_cast<std::size_t>(m_size);
+		}
+
+		/// Return the current delay time in samples.
+		/// @return The delay time in samples.
+
+		number size() const {
+			return m_size;
+		}
+
+		/// Return the integer part of the current delay time in samples.
+		/// @return The integer part of the delay time in samples.
+
+		std::size_t integral_size() {
+			return m_size;
+		}
+
+		/// Return the fractional part of the current delay time in samples.
+		/// @return The fractional part of the delay time in samples.
+
+		double fractional_size() {
+			return m_size_fractional;
 		}
 
 
-		/** length of the delay
-			TODO: dataspace integration for units other than samples
-         */
-		Parameter<int>	size = { this, "size", 1,
-								Setter([this]{
-									for (auto& channel : mHistory)
-										channel.resize((int)size);
-								})
-		};
+		/// Erase the delay history.
 
-
-		Message			clear = { "clear",
-									Synopsis("Erase the delay history"),
-									[this]{
-										for (auto& channel : mHistory)
-											channel.clear();
-									}
-		};
-
-
-		Sample operator()(Sample x)
-		{
-			return (*this)(x, 0);
+		void clear() {
+			m_history.clear();
 		}
 
 
-		Sample operator()(Sample x, int channel)
-		{
-			mHistory[channel].resize(size+1); // need delay samples plus "now"
-			mHistory[channel].write(x);
-			return mHistory[channel].tail();
+		/// Calculate one sample.
+		///	@return		Calculated sample
+
+		sample operator()(sample x) {
+			// must resize in the audio thread because circular storage requires single-threaded access
+			// need delay samples plus 2 "now" samples for interpolation
+			m_history.resize(m_size+2);
+			m_size_fractional = m_size - static_cast<std::size_t>(m_size);
+
+			// write first (then read) so that we can acheive a zero-sample delay
+			m_history.write(x);
+			return m_interpolator(m_history.tail(1), m_history.tail(), m_size_fractional);
 		}
 
-
-		SharedSampleBundleGroup operator()(const SampleBundle& x)
-		{
-			auto out = adapt(x);
-
-			for (int channel=0; channel < x.channelCount(); ++channel) {
-				// write first (then read) so that we can acheive a zero-sample delay
-				mHistory[channel].write(x[channel]);
-				mHistory[channel].tail(out[0][channel]);
-			}
-			return out;
-		}
-
+	private:
+		circular_storage<sample>		m_history;
+		number							m_size;
+		double							m_size_fractional;
+		interpolation_type				m_interpolator;
 	};
-
-    /**	A multichannel interpolating delay line.
-     @warning This class is experimental. May be eventually be replaced with template design in Delay class.
-     */
-    class DelayWithLinearInterpolation : public AudioObject {
-
-        const std::size_t			mCapacity;
-        CircularSampleBufferGroup	mHistory;
-        std::size_t                                     mIntegralDelay;
-        double                                          mFractionalDelay;
-        Jamoma::Interpolator::Linear<Jamoma::Sample>   mInterpolation;
-
-        // NW: according to TAP this ensures that mHistory is resized when necessary
-        Observer				mChannelCountObserver = { std::bind(&DelayWithLinearInterpolation::resizeHistory, this) };
-
-        void resizeHistory() {
-            if ((mHistory.size() && mHistory[0].size() != mIntegralDelay+frameCount) || mHistory.size() != (size_t)channelCount) {
-                mHistory.clear(); // ugly: doing this to force the reconstruction of the storage to the correct size
-                mHistory.resize(channelCount, std::make_pair(mCapacity+frameCount, (size_t)size+frameCount));
-            }
-        }
-
-    public:
-        static constexpr Classname classname = { "delayWithLinearInterpolation" };
-        static constexpr auto tags = { "dspEffectsLib", "audio", "processor", "delay" };
-
-
-        /** Capacity of the delay is fixed at instantiation
-         */
-        DelayWithLinearInterpolation(std::size_t capacity = 256)
-        : mCapacity(capacity)
-        , mHistory(1, capacity)
-        {
-            channelCount.addObserver(mChannelCountObserver);
-        }
-
-
-        /** length of the delay
-         TODO: dataspace integration for units other than samples
-         */
-        Parameter<double>	size = { this, "size", 1.0,
-            Setter([this]{
-                mIntegralDelay = (int)size;
-                mFractionalDelay = size - mIntegralDelay;
-
-                for (auto& channel : mHistory)
-                    channel.resize(mIntegralDelay);
-			})
-		};
-
-
-        Message			clear = { "clear",
-            Synopsis("Erase the delay history"),
-            [this]{
-                for (auto& channel : mHistory)
-                    channel.clear();
-                    }
-        };
-
-        Sample operator()(Sample x)
-        {
-            return (*this)(x, 0);
-        }
-
-
-        Sample operator()(Sample x, int channel)
-        {
-            mHistory[channel].resize(size+2); // need delay samples plus 2 "now" samples for interpolation
-            mHistory[channel].write(x);
-            return mInterpolation(mHistory[channel].tail(1),
-                                  mHistory[channel].tail(),
-                                  fractionalDelay());
-        }
-
-        SharedSampleBundleGroup operator()(const SampleBundle& x)
-        {
-            auto out = adapt(x);
-
-            // we need one extra frame for interpolation
-            // so we configure a SampleBundle to this size
-            Jamoma::SampleBundle tailPull(x.channelCount(), x.frameCount()+1);
-
-            // this Sample will be used to compute the first out Sample
-            Jamoma::Sample tailBeforeWrite = 0.0;
-
-            for (int channel=0; channel < x.channelCount(); ++channel) {
-
-                // we need to grab one sample before the write operation
-                // to protect delay sizes that span two SampleBundles
-                tailBeforeWrite = mHistory[channel].tail(0-mIntegralDelay-1);
-
-                // write first (then read) so that we can acheive a zero-sample delay
-                mHistory[channel].write(x[channel]);
-                mHistory[channel].tail(tailPull[channel]);
-
-                // compute the first out Sample with the value we stashed in tailBeforeWrite
-                out[0][channel][0] =
-                    mInterpolation(tailPull[channel][0],
-                                   tailBeforeWrite,
-                                   fractionalDelay());
-
-                // then for loop through the rest with the tailPull SampleBundle
-                for (int frame=1; frame < x.frameCount(); ++frame) {
-                    out[0][channel][frame] =
-                        mInterpolation (tailPull[channel][frame],
-                                        tailPull[channel][frame-1],
-                                        fractionalDelay());
-
-                }
-
-            }
-
-            return out;
-        }
-
-        std::size_t integralDelay() {
-            return mIntegralDelay;
-        }
-
-        double fractionalDelay() {
-            return mFractionalDelay;
-        }
-
-
-    };
 
 
 }}}  // namespace c74::min::lib

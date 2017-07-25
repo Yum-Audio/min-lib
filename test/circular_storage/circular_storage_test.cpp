@@ -1,4 +1,4 @@
-///	@brief 		Unit test for the interpolator classes
+///	@brief 		Unit test for the circular storage container class
 ///	@author		Timothy Place, Nathan Wolek
 //	@copyright	Copyright (c) 2017, Cycling '74
 ///	@license	This project is released under the terms of the MIT License.
