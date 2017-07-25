@@ -1,8 +1,3 @@
-
-
-
-
-
 /// @file
 ///	@ingroup 	minapi
 ///	@copyright	Copyright (c) 2016, Cycling '74
