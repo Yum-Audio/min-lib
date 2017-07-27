@@ -16,11 +16,7 @@ SCENARIO ("Using No Interpolation") {
 		auto x2 = 1.0;
 		auto x3 = 4.0;
 
-		WHEN("Called with 1 sample of input") {
-			THEN("The output and input are the same");
-			REQUIRE( f(x1) == x1 );
-		}
-		AND_WHEN("Called with 2 samples of input and a low delta value") {
+		WHEN("Called with 2 samples of input and a low delta value") {
 			THEN("The output is the same as the prime input (no interpolation)");
 			REQUIRE( f(x1, x2, 0.25) == x1 );
 		}
@@ -49,11 +45,7 @@ SCENARIO ("Using 'Nearest' Interpolation") {
 		auto x2 = 1.0;
 		auto x3 = 4.0;
 
-		WHEN("Called with 1 sample of input") {
-			THEN("The output and input are the same");
-			REQUIRE( f(x1) == x1 );
-		}
-		AND_WHEN("Called with 2 samples of input and a low delta value") {
+		WHEN("Called with 2 samples of input and a low delta value") {
 			THEN("The output is the lower input");
 			REQUIRE( f(x1, x2, 0.25) == x1 );
 		}

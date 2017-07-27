@@ -40,11 +40,6 @@ namespace lib {
 		public:
 			static const int 	delay = 0;
 
-            // NW: will this version ever be used?
-			constexpr T operator()(T x1) noexcept {
-				return x1;
-			}
-
             constexpr T operator()(T x1, T x2, double delta) noexcept {
                 return x1;
             }
@@ -69,11 +64,6 @@ namespace lib {
         class nearest : base {
         public:
             static const int 	delay = 0;
-
-            // NW: will this version ever be used?
-            constexpr T operator()(T x1) noexcept {
-                return x1;
-            }
 
             constexpr T operator()(T x1, T x2, double delta) noexcept {
                 T out = delta < 0.5 ? x1 : x2;
@@ -104,8 +94,6 @@ namespace lib {
 			}
 
             constexpr T operator()(T x0, T x1, T x2, T x3, double delta) noexcept {
-// NW: ideally we would call the operator above to remain DRY, but I could not get syntax right
-//                return x1 + delta * (x2-x1);
 				return (*this)(x1, x2, delta);
             }
 		};
@@ -134,10 +122,6 @@ namespace lib {
             }
 
             constexpr T operator()(T x0, T x1, T x2, T x3, double delta) noexcept {
-// NW: ideally we would call the operator above to remain DRY, but I could not get syntax right
-//                T out = x1 + delta * (x2-mY1);
-//                mY1 = out;
-//                return out;
 				return (*this)(x1, x2, delta);
             }
 
@@ -169,10 +153,8 @@ namespace lib {
 			}
 
             constexpr T operator()(T x0, T x1, T x2, T x3, double delta) noexcept {
-                // NW: ideally we would call the operator above to remain DRY, but I could not get syntax right
-                T a = 0.5 * (1.0 - cos(delta * M_PI));
-                return x1 + a * (x2-x1);
-            }
+				return (*this)(x1, x2, delta);
+			}
 		};
 
 
