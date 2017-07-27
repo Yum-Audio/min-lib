@@ -6,6 +6,12 @@
 
 #pragma once
 
+// Visual Studio 2015 doesn't have full support for constexpr
+#if !defined(_MSC_VER) || ( _MSC_VER > 1900 )
+#define MIN_CONSTEXPR constexpr
+#else
+#define MIN_CONSTEXPR
+#endif
 
 namespace c74 {
 namespace min {
@@ -23,7 +29,7 @@ namespace lib {
 
 		class base {
 		protected:
-			constexpr base() noexcept {};
+			MIN_CONSTEXPR base() noexcept {};
 		};
 
 
@@ -40,11 +46,11 @@ namespace lib {
 		public:
 			static const int 	delay = 0;
 
-            constexpr T operator()(T x1, T x2, double delta) noexcept {
+			MIN_CONSTEXPR T operator()(T x1, T x2, double delta) noexcept {
                 return x1;
             }
 
-            constexpr T operator()(T x0, T x1, T x2, T x3, double delta) noexcept {
+			MIN_CONSTEXPR T operator()(T x0, T x1, T x2, T x3, double delta) noexcept {
                 return x1;
             }
 		};
@@ -65,12 +71,12 @@ namespace lib {
         public:
             static const int 	delay = 0;
 
-            constexpr T operator()(T x1, T x2, double delta) noexcept {
+			MIN_CONSTEXPR T operator()(T x1, T x2, double delta) noexcept {
                 T out = delta < 0.5 ? x1 : x2;
                 return out;
             }
 
-            constexpr T operator()(T x0, T x1, T x2, T x3, double delta) noexcept {
+			MIN_CONSTEXPR T operator()(T x0, T x1, T x2, T x3, double delta) noexcept {
                 T out = delta < 0.5 ? x1 : x2;
                 return out;
             }
@@ -89,11 +95,11 @@ namespace lib {
 		public:
 			static const int 	delay = 1;
 
-			constexpr T operator()(T x1, T x2, double delta) noexcept {
+			MIN_CONSTEXPR T operator()(T x1, T x2, double delta) noexcept {
 				return x1 + delta * (x2-x1);
 			}
 
-            constexpr T operator()(T x0, T x1, T x2, T x3, double delta) noexcept {
+			MIN_CONSTEXPR T operator()(T x0, T x1, T x2, T x3, double delta) noexcept {
 				return (*this)(x1, x2, delta);
             }
 		};
@@ -115,13 +121,13 @@ namespace lib {
         public:
             static const int 	delay = 1;
 
-            constexpr T operator()(T x1, T x2, double delta) noexcept {
+			MIN_CONSTEXPR T operator()(T x1, T x2, double delta) noexcept {
                 T out = x1 + delta * (x2-mY1);
                 mY1 = out;
                 return out;
             }
 
-            constexpr T operator()(T x0, T x1, T x2, T x3, double delta) noexcept {
+			MIN_CONSTEXPR T operator()(T x0, T x1, T x2, T x3, double delta) noexcept {
 				return (*this)(x1, x2, delta);
             }
 
@@ -147,12 +153,12 @@ namespace lib {
 		public:
 			static const int 	delay = 1;
 
-			constexpr T operator()(T x1, T x2, double delta) noexcept {
+			MIN_CONSTEXPR T operator()(T x1, T x2, double delta) noexcept {
 				T a = 0.5 * (1.0 - cos(delta * M_PI));
 				return x1 + a * (x2-x1);
 			}
 
-            constexpr T operator()(T x0, T x1, T x2, T x3, double delta) noexcept {
+			MIN_CONSTEXPR T operator()(T x0, T x1, T x2, T x3, double delta) noexcept {
 				return (*this)(x1, x2, delta);
 			}
 		};
@@ -171,7 +177,7 @@ namespace lib {
 		public:
 			static const int 	delay = 3;
 
-			constexpr T operator()(T x0, T x1, T x2, T x3, double delta) noexcept {
+			MIN_CONSTEXPR T operator()(T x0, T x1, T x2, T x3, double delta) noexcept {
                 double delta2 = delta*delta;
                 T a = x3 - x2 - x0 + x1;
                 T b = x0 - x1 - a;
@@ -194,7 +200,7 @@ namespace lib {
 		public:
 			static const int 	delay = 3;
 
-			constexpr T operator()(T x0, T x1, T x2, T x3, double delta) noexcept {
+			MIN_CONSTEXPR T operator()(T x0, T x1, T x2, T x3, double delta) noexcept {
 				T delta2 = delta*delta;
 				T f0 = -0.5*x0 + 1.5*x1 - 1.5*x2 + 0.5*x3;
 				T f1 = x0 - 2.5*x1 + 2.0*x2 - 0.5*x3;
@@ -234,7 +240,7 @@ namespace lib {
 				return m_tension;
 			}
 
-			constexpr T operator()(T x0, T x1, T x2, T x3, double delta) noexcept {
+			MIN_CONSTEXPR T operator()(T x0, T x1, T x2, T x3, double delta) noexcept {
 				T delta2 = delta * delta;
 				T delta3 = delta * delta2;
 				T bp = 1 + m_bias;
