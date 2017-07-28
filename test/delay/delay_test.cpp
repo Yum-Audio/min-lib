@@ -189,7 +189,9 @@ TEST_CASE ("Delay times less than 1 vector-size, part 2") {
 }
 
 
+#ifdef MAC_VERSION
 #pragma mark -
+#endif
 
 
 TEST_CASE ("Setting an interpolating delay") {

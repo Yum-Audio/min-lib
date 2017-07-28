@@ -23,7 +23,7 @@ namespace lib {
 		/// @param capacity	The number of samples to allocate for the delay line. Default is 256.
 
 		delay(number capacity = 256)
-		: m_history(capacity + 5) // 5 extra samples to accomodate the 'now' sample + up to 4 interpolation samples
+		: m_history(static_cast<size_t>(capacity + 5)) // 5 extra samples to accomodate the 'now' sample + up to 4 interpolation samples
 		, m_size(capacity)
 		{}
 
@@ -47,7 +47,7 @@ namespace lib {
 		/// @return The integer part of the delay time in samples.
 
 		std::size_t integral_size() {
-			return m_size;
+			return static_cast<std::size_t>(m_size);
 		}
 
 		/// Return the fractional part of the current delay time in samples.
@@ -71,7 +71,8 @@ namespace lib {
 		sample operator()(sample x) {
 			// must resize in the audio thread because circular storage requires single-threaded access
 			// need delay samples plus 2 "now" samples for interpolation
-			m_history.resize(m_size+2);
+			auto new_size = static_cast<size_t>(m_size) + 2;
+			m_history.resize(new_size);
 			m_size_fractional = m_size - static_cast<std::size_t>(m_size);
 
 			// write first (then read) so that we can acheive a zero-sample delay

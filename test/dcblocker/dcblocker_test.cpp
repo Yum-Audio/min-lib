@@ -33,7 +33,7 @@ SCENARIO ("produce the correct impulse response") {
 			// get a reference impulse response to compare against
 			auto reference = c74::min::filters::generate_impulse_response({1.0,-1.0}, {1.0,-0.9997}, buffersize);
 
-			THEN("The result produced matches an externally produced reference impulse");
+			THEN("The result produced matches an externally produced reference impulse")
 			REQUIRE( output == reference );
 		}
 	}

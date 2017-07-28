@@ -106,13 +106,13 @@ namespace lib {
 			assert(std::this_thread::get_id() == m_thread);
 			assert(size() >= output.size());
 
-			long	count = output.size();
-			long	start = m_index - count;
-			bool	wrap = false;
+			auto count = static_cast<long>( output.size() );
+			auto start = static_cast<long>( m_index - count );
+			bool wrap = false;
 
 			if (start<0) {
 				count = -start;
-				start = size() + start;
+				start = static_cast<long>(size()) + start;
 				wrap = true;
 			}
 
@@ -121,7 +121,7 @@ namespace lib {
 			if (wrap) {
 				std::size_t offset = count;
 
-				count = output.size() - offset;
+				count = static_cast<long>(output.size() - offset);
 				std::copy_n(m_items.begin(), count, output.begin()+offset);
 			}
 		}
@@ -138,12 +138,12 @@ namespace lib {
 			assert(std::this_thread::get_id() == m_thread);
 			assert(size() >= output.size());
 
-			long	count = output.size();
-			long	start = m_index % size();
-			bool	wrap = false;
+			auto count = static_cast<long>( output.size() );
+			auto start = static_cast<long>( m_index % size() );
+			bool wrap = false;
 
 			if (start+count > size()) {
-				count = size() - start;
+				count = static_cast<long>(size()) - start;
 				wrap = true;
 			}
 
@@ -152,7 +152,7 @@ namespace lib {
 			if (wrap) {
 				std::size_t offset = count;
 
-				count = output.size() - offset;
+				count = static_cast<long>(output.size() - offset);
 				std::copy_n(m_items.begin(), count, output.begin()+offset);
 			}
 		}

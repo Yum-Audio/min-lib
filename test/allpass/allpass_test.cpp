@@ -107,7 +107,7 @@ SCENARIO ("Produce the correct impulse response") {
 				1.62630325872826e-19
 			};
 
-			THEN("The result produced matches an externally produced reference impulse");
+			THEN("The result produced matches an externally produced reference impulse")
 
 			// check it
 			REQUIRE_VECTOR_APPROX(output, reference);

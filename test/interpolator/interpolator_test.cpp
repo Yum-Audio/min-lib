@@ -17,19 +17,19 @@ SCENARIO ("Using No Interpolation") {
 		auto x3 = 4.0;
 
 		WHEN("Called with 2 samples of input and a low delta value") {
-			THEN("The output is the same as the prime input (no interpolation)");
+			THEN("The output is the same as the prime input (no interpolation)")
 			REQUIRE( f(x1, x2, 0.25) == x1 );
 		}
 		AND_WHEN("Called with 2 samples of input and a high delta value") {
-			THEN("The output is the same as the prime input (no interpolation)");
+			THEN("The output is the same as the prime input (no interpolation)")
 			REQUIRE( f(x1, x2, 0.75) == x1 );
 		}
 		AND_WHEN("Called with 4 samples of input and a low delta value") {
-			THEN("The output is the same as the prime input (no interpolation)");
+			THEN("The output is the same as the prime input (no interpolation)")
 			REQUIRE( f(x0, x1, x2, x3, 0.25) == x1 );
 		}
 		AND_WHEN("Called with 4 samples of input and a high delta value") {
-			THEN("The output is the same as the prime input (no interpolation)");
+			THEN("The output is the same as the prime input (no interpolation)")
 			REQUIRE( f(x0, x1, x2, x3, 0.75) == x1 );
 		}
 	}
@@ -46,27 +46,27 @@ SCENARIO ("Using 'Nearest' Interpolation") {
 		auto x3 = 4.0;
 
 		WHEN("Called with 2 samples of input and a low delta value") {
-			THEN("The output is the lower input");
+			THEN("The output is the lower input")
 			REQUIRE( f(x1, x2, 0.25) == x1 );
 		}
 		AND_WHEN("Called with 2 samples of input and a high delta value") {
-			THEN("The output is the upper input");
+			THEN("The output is the upper input")
 			REQUIRE( f(x1, x2, 0.75) == x2 );
 		}
 		AND_WHEN("Called with 2 samples of input and a 0.5 delta value") {
-			THEN("The output is the upper input");
+			THEN("The output is the upper input")
 			REQUIRE( f(x1, x2, 0.5) == x2 );
 		}
 		AND_WHEN("Called with 4 samples of input and a low delta value") {
-			THEN("The output is the lower input");
+			THEN("The output is the lower input")
 			REQUIRE( f(x0, x1, x2, x3, 0.25) == x1 );
 		}
 		AND_WHEN("Called with 4 samples of input and a high delta value") {
-			THEN("The output is the upper input");
+			THEN("The output is the upper input")
 			REQUIRE( f(x0, x1, x2, x3, 0.75) == x2 );
 		}
 		AND_WHEN("Called with 4 samples of input and a 0.5 delta value") {
-			THEN("The output is the upper input");
+			THEN("The output is the upper input")
 			REQUIRE( f(x0, x1, x2, x3, 0.5) == x2 );
 		}
 	}
@@ -158,7 +158,7 @@ SCENARIO ("Using Linear Interpolation") {
 				auto delta = (i + 1.0) / 64.0;
 				output.push_back( f(x1, x2, delta) );
 			}
-			THEN("The output matches an externally generated reference set");
+			THEN("The output matches an externally generated reference set")
 			REQUIRE_VECTOR_APPROX( output, reference );
 		}
 		AND_WHEN("iterpolating between 4 inputs in 64 different locations between the two") {
@@ -168,7 +168,7 @@ SCENARIO ("Using Linear Interpolation") {
 				auto delta = (i + 1.0) / 64.0;
 				output.push_back( f(x0, x1, x2, x3, delta) );
 			}
-			THEN("The output matches an the same generated reference set (because only 2 points are used)");
+			THEN("The output matches an the same generated reference set (because only 2 points are used)")
 			REQUIRE_VECTOR_APPROX( output , reference );
 		}
 	}
@@ -260,7 +260,7 @@ SCENARIO ("Using Allpass Interpolation") {
 				auto delta = (i + 1.0) / 64.0;
 				output.push_back( f(x1, x2, delta) );
 			}
-			THEN("The output matches an externally generated reference set");
+			THEN("The output matches an externally generated reference set")
 			REQUIRE_VECTOR_APPROX( output, reference );
 		}
 		AND_WHEN("iterpolating between 4 inputs in 64 different locations between the two") {
@@ -270,7 +270,7 @@ SCENARIO ("Using Allpass Interpolation") {
 				auto delta = (i + 1.0) / 64.0;
 				output.push_back( f(x0, x1, x2, x3, delta) );
 			}
-			THEN("The output matches an the same generated reference set (because only 2 points are used)");
+			THEN("The output matches an the same generated reference set (because only 2 points are used)")
 			REQUIRE_VECTOR_APPROX( output, reference );
 		}
 	}
@@ -362,7 +362,7 @@ SCENARIO ("Using Cosine Interpolation") {
 				auto delta = (i + 1.0) / 64.0;
 				output.push_back( f(x1, x2, delta) );
 			}
-			THEN("The output matches an externally generated reference set");
+			THEN("The output matches an externally generated reference set")
 			REQUIRE_VECTOR_APPROX( output, reference );
 		}
 		AND_WHEN("iterpolating between 4 inputs in 64 different locations between the two") {
@@ -372,7 +372,7 @@ SCENARIO ("Using Cosine Interpolation") {
 				auto delta = (i + 1.0) / 64.0;
 				output.push_back( f(x0, x1, x2, x3, delta) );
 			}
-			THEN("The output matches an the same generated reference set (because only 2 points are used)");
+			THEN("The output matches an the same generated reference set (because only 2 points are used)")
 			REQUIRE_VECTOR_APPROX( output, reference );
 		}
 	}
@@ -466,7 +466,7 @@ SCENARIO ("Using Cubic Interpolation") {
 				auto delta = (i + 1.0) / 64.0;
 				output.push_back( f(x0, x1, x2, x3, delta) );
 			}
-			THEN("The output matches an the same generated reference set (because only 2 points are used)");
+			THEN("The output matches an the same generated reference set (because only 2 points are used)")
 			REQUIRE_VECTOR_APPROX( output, reference );
 		}
 	}
@@ -483,7 +483,7 @@ SCENARIO ("Using Hermite Interpolation") {
 		auto x3 = 4.0;
 
 		WHEN("Initially instantiated") {
-			THEN("The bias and tension are set to zero");
+			THEN("The bias and tension are set to zero")
 			REQUIRE( f.bias() == 0.0 );
 			REQUIRE( f.tension() == 0.0 );
 		}
@@ -569,7 +569,7 @@ SCENARIO ("Using Hermite Interpolation") {
 				auto delta = (i + 1.0) / 64.0;
 				output.push_back( f(x0, x1, x2, x3, delta) );
 			}
-			THEN("The output matches an the same generated reference set (because only 2 points are used)");
+			THEN("The output matches an the same generated reference set (because only 2 points are used)")
 			REQUIRE_VECTOR_APPROX( output, reference );
 		}
 	}
@@ -663,7 +663,7 @@ SCENARIO ("Using Spline Interpolation") {
 				auto delta = (i + 1.0) / 64.0;
 				output.push_back( f(x0, x1, x2, x3, delta) );
 			}
-			THEN("The output matches an the same generated reference set (because only 2 points are used)");
+			THEN("The output matches an the same generated reference set (because only 2 points are used)")
 			REQUIRE_VECTOR_APPROX( output, reference );
 		}
 	}

@@ -103,7 +103,7 @@ SCENARIO ("produce the correct impulse response") {
 				5.421010862427522E-20
 			};
 
-			THEN("The result produced matches an externally produced reference impulse");
+			THEN("The result produced matches an externally produced reference impulse")
 
 			// check it
 			REQUIRE( output == reference );
@@ -119,17 +119,17 @@ SCENARIO ("responds appropriately to messages and attrs") {
 
 		WHEN ("coefficient is set within a valid range") {
 			f.coefficient(0.7);
-			THEN("coefficient is set to the value specified");
+			THEN("coefficient is set to the value specified")
 			REQUIRE( f.coefficient() == Approx(0.7) );
 		}
 		AND_WHEN ("coefficient phase param over range") {
 			f.coefficient(1.2);
-			THEN("coefficient is clamped to the range" );
+			THEN("coefficient is clamped to the range" )
 			REQUIRE( f.coefficient() == Approx(1.0) );
 		}
 		AND_WHEN ("coefficient phase param under range") {
 			f.coefficient(-1.0);
-			THEN( "phase is wrapped into range" );
+			THEN( "phase is wrapped into range" )
 			REQUIRE( f.coefficient() == Approx(0.0) );
 		}
 	}
@@ -200,22 +200,22 @@ SCENARIO ("responds appropriately to messages and attrs") {
 
 		WHEN ("frequency is set to 1K fc @ 96K fs") {
 			f.frequency(1000.0, 96000.0);
-			THEN("coefficient is set correctly");
+			THEN("coefficient is set correctly")
 			REQUIRE( f.coefficient() == Approx(0.06335217076965427) );
 		}
 		AND_WHEN ("frequency is set to 4K fc @ 96K fs") {
 			f.frequency(4000.0, 96000.0);
-			THEN("coefficient is set correctly");
+			THEN("coefficient is set correctly")
 			REQUIRE( f.coefficient() == Approx(0.23032864479520065) );
 		}
 		AND_WHEN ("frequency is set to 1K fc @ 44.1K fs") {
 			f.frequency(1000.0, 44100.0);
-			THEN("coefficient is set correctly");
+			THEN("coefficient is set correctly")
 			REQUIRE( f.coefficient() == Approx(0.132787865213287) );
 		}
 		AND_WHEN ("frequency is set to 4K fc @ 44.1K fs") {
 			f.frequency(4000.0, 44100.0);
-			THEN("coefficient is set correctly");
+			THEN("coefficient is set correctly")
 			REQUIRE( f.coefficient() == Approx(0.43441043913502342) );
 		}
 	}

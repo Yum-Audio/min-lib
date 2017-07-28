@@ -23,7 +23,7 @@ namespace lib {
         template <typename T>
         class ramp {
         public:
-            ramp (int size)
+            ramp (size_t size)
             : m_cycle_size(size)
             {
                 //TODO: we need way to protect against zero. static_assert did not work.
@@ -36,7 +36,7 @@ namespace lib {
 
         private:
 			int m_current { -1 };
-            int m_cycle_size; // required by constructor
+			size_t m_cycle_size; // required by constructor
         };
 
 
@@ -55,7 +55,7 @@ namespace lib {
 		template <typename T>
 		class ramp_unipolar {
 		public:
-			ramp_unipolar (int size)
+			ramp_unipolar (size_t size)
 			: m_cycle_size(size)
 			{
                 //TODO: we need way to protect against zero. static_assert did not work.
@@ -68,7 +68,7 @@ namespace lib {
 
 		private:
 			int m_current { -1 };
-			int m_cycle_size; // required by constructor
+			size_t m_cycle_size; // required by constructor
 		};
 
 
@@ -87,7 +87,7 @@ namespace lib {
 		template <typename T>
 		class sine {
 		public:
-			sine (int size)
+			sine (size_t size)
 			: m_cycle_size(size)
             {
                 //TODO: we need way to protect against zero. static_assert did not work.
@@ -101,7 +101,7 @@ namespace lib {
 
 		private:
 			int m_current { -1 };
-			int m_cycle_size; // required by constructor
+			size_t m_cycle_size; // required by constructor
 		};
 
 
@@ -112,7 +112,7 @@ namespace lib {
         template <typename T>
         class sine_unipolar {
         public:
-            sine_unipolar (int size)
+            sine_unipolar (size_t size)
             : m_cycle_size(size)
             {
                 //TODO: we need way to protect against zero. static_assert did not work.
@@ -126,7 +126,7 @@ namespace lib {
 
         private:
 			int m_current { -1 };
-			int m_cycle_size; // required by constructor
+			size_t m_cycle_size; // required by constructor
         };
 
 
@@ -137,7 +137,7 @@ namespace lib {
         template <typename T>
         class cosine {
         public:
-            cosine (int size)
+            cosine (size_t size)
             : m_cycle_size(size)
             {
                 //TODO: we need way to protect against zero. static_assert did not work.
@@ -151,7 +151,7 @@ namespace lib {
 
         private:
 			int m_current { -1 };
-			int m_cycle_size; // required by constructor
+			size_t m_cycle_size; // required by constructor
         };
 
 
@@ -162,7 +162,7 @@ namespace lib {
         template <typename T>
         class cosine_unipolar {
         public:
-            cosine_unipolar (int size)
+            cosine_unipolar (size_t size)
             : m_cycle_size(size)
             {
                 //TODO: we need way to protect against zero. static_assert did not work.
@@ -176,7 +176,7 @@ namespace lib {
 
         private:
 			int m_current { -1 };
-			int m_cycle_size; // required by constructor
+			size_t m_cycle_size; // required by constructor
         };
 
 
@@ -187,7 +187,7 @@ namespace lib {
 		template <typename T>
 		class triangle {
 		public:
-			triangle (int size)
+			triangle (size_t size)
 			: m_cycle_size(size)
             {
                 //TODO: we need way to protect against zero. static_assert did not work.
@@ -208,7 +208,7 @@ namespace lib {
 
 		private:
 			int m_current { -1 };
-			int m_cycle_size; // required by constructor
+			size_t m_cycle_size; // required by constructor
 		};
 
 
@@ -219,7 +219,7 @@ namespace lib {
         template <typename T>
         class triangle_unipolar {
         public:
-            triangle_unipolar (int size)
+            triangle_unipolar (size_t size)
             : m_cycle_size(size)
 			{
                 //TODO: we need way to protect against zero. static_assert did not work.
@@ -240,7 +240,7 @@ namespace lib {
 
         private:
 			int m_current { -1 };
-			int m_cycle_size; // required by constructor
+			size_t m_cycle_size; // required by constructor
         };
 
 	} // namespace generator

@@ -32,7 +32,7 @@ namespace lib {
 		};
 
 
-		number delay() {
+		size_t delay() {
 			return m_feedforward_history.size();
 		};
 

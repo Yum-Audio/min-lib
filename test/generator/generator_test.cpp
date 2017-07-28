@@ -12,7 +12,7 @@ SCENARIO ("Generate a Ramp") {
 		c74::min::sample_vector	v(64);
 
 		WHEN("The entire length is filled by a 'ramp' generator for the sample type.") {
-			THEN("The output matches an externally generated reference set.");
+			THEN("The output matches an externally generated reference set.")
 
 			std::generate(v.begin(), v.end(), c74::min::lib::generator::ramp<c74::min::sample>(v.size()));
 
@@ -95,7 +95,7 @@ SCENARIO ("Generate a Sawtooth") {
 		c74::min::sample_vector	v(64);
 
 		WHEN("The entire length is filled by a 'sawtooth' generator for the sample type.") {
-			THEN("The output matches an externally generated reference set.");
+			THEN("The output matches an externally generated reference set.")
 
 			std::generate(v.begin(), v.end(), c74::min::lib::generator::sawtooth<c74::min::sample>(v.size()));
 
@@ -178,7 +178,7 @@ SCENARIO ("Generate a Unipolar Ramp") {
 		c74::min::sample_vector	v(64);
 
 		WHEN("The entire length is filled by a 'ramp_unipolar' generator for the sample type.") {
-			THEN("The output matches an externally generated reference set.");
+			THEN("The output matches an externally generated reference set.")
 
 			std::generate(v.begin(), v.end(), c74::min::lib::generator::ramp_unipolar<c74::min::sample>(v.size()));
 
@@ -261,7 +261,7 @@ SCENARIO ("Generate a Unipolar Sawtooth") {
 		c74::min::sample_vector	v(64);
 
 		WHEN("The entire length is filled by a 'sawtooth_unipolar' generator for the sample type.") {
-			THEN("The output matches an externally generated reference set.");
+			THEN("The output matches an externally generated reference set.")
 
 			std::generate(v.begin(), v.end(), c74::min::lib::generator::sawtooth_unipolar<c74::min::sample>(v.size()));
 
@@ -345,7 +345,7 @@ SCENARIO ("Generate a Sine") {
 		c74::min::sample_vector	v(64);
 
 		WHEN("The entire length is filled by a 'sine' generator for the sample type.") {
-			THEN("The output matches an externally generated reference set.");
+			THEN("The output matches an externally generated reference set.")
 
 			std::generate(v.begin(), v.end(), c74::min::lib::generator::sine<c74::min::sample>(v.size()));
 
@@ -428,7 +428,7 @@ SCENARIO ("Generate a Unipolar Sine") {
 		c74::min::sample_vector	v(64);
 
 		WHEN("The entire length is filled by a 'sine_unipolar' generator for the sample type.") {
-			THEN("The output matches an externally generated reference set.");
+			THEN("The output matches an externally generated reference set.")
 
 			std::generate(v.begin(), v.end(), c74::min::lib::generator::sine_unipolar<c74::min::sample>(v.size()));
 
@@ -511,7 +511,7 @@ SCENARIO ("Generate a Cosine") {
 		c74::min::sample_vector	v(64);
 
 		WHEN("The entire length is filled by a 'cosine' generator for the sample type.") {
-			THEN("The output matches an externally generated reference set.");
+			THEN("The output matches an externally generated reference set.")
 
 			std::generate(v.begin(), v.end(), c74::min::lib::generator::cosine<c74::min::sample>(v.size()));
 
@@ -594,7 +594,7 @@ SCENARIO ("Generate a Unipolar Cosine") {
 		c74::min::sample_vector	v(64);
 
 		WHEN("The entire length is filled by a 'cosine_unipolar' generator for the sample type.") {
-			THEN("The output matches an externally generated reference set.");
+			THEN("The output matches an externally generated reference set.")
 
 			std::generate(v.begin(), v.end(), c74::min::lib::generator::cosine_unipolar<c74::min::sample>(v.size()));
 
@@ -688,7 +688,7 @@ SCENARIO ("Generate a Triangle") {
 		c74::min::sample_vector	v(64);
 
 		WHEN("The entire length is filled by a 'triangle' generator for the sample type.") {
-			THEN("The output matches an externally generated reference set.");
+			THEN("The output matches an externally generated reference set.")
 
 			std::generate(v.begin(), v.end(), c74::min::lib::generator::triangle<c74::min::sample>(v.size()));
 
@@ -771,7 +771,7 @@ SCENARIO ("Generate a Unipolar Triangle") {
 		c74::min::sample_vector	v(64);
 
 		WHEN("The entire length is filled by a 'triangle_unipolar' generator for the sample type.") {
-			THEN("The output matches an externally generated reference set.");
+			THEN("The output matches an externally generated reference set.")
 
 			std::generate(v.begin(), v.end(), c74::min::lib::generator::triangle_unipolar<c74::min::sample>(v.size()));
 
