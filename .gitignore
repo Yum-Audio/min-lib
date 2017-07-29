@@ -84,3 +84,5 @@ dependencies/portaudio/tmp
 
 # Octave output files
 *.mat
+
+tmp
