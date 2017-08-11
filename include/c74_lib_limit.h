@@ -97,24 +97,24 @@ namespace lib {
 	}
 
 
-	/** Defines several functions for constraining values within specified boundaries and preventing unwanted values. 
-	 A variety of behaviors are offered, including clipping, wrapping and folding.@n@n
-	 * Exercise caution when using the functions defined here with unsigned values. 
-	 Negative, signed integers have the potential to become very large numbers when casting to unsigned integers. 
-	 This can cause errors during a boundary check, such as values clipping to the high boundary instead of the 
-	 low boundary or numerous iterations of loop to bring a wrapped value back into the acceptable range.
-	*/
-	namespace Limit {
+	/// Defines several functions for constraining values within specified boundaries and preventing unwanted values.
+	/// A variety of behaviors are offered, including clipping, wrapping and folding.
+	/// Exercise caution when using the functions defined here with unsigned values.
+	/// Negative, signed integers have the potential to become very large numbers when casting to unsigned integers.
+	/// This can cause errors during a boundary check, such as values clipping to the high boundary instead of the
+	/// low boundary or numerous iterations of loop to bring a wrapped value back into the acceptable range.
+
+	namespace limit {
 
 		template <typename T>
-		class Base {
+		class base {
 		public:
-			Base() = delete;
+			base() = delete;
 		};
 
 
 		template <typename T>
-		class None : public Base<T> {
+		class none : public base<T> {
 		public:
 			static T apply(T input, T low, T high) {
 				return input;
@@ -127,7 +127,7 @@ namespace lib {
 
 
 		template <typename T>
-		class Clip : public Base<T> {
+		class clip : public base<T> {
 		public:
 			static T apply(T input, T low, T high) {
 				return max::clamp<T>(input, low, high);
@@ -140,10 +140,10 @@ namespace lib {
 
 
 		template <typename T>
-		class Wrap : public Base<T> {
+		class wrap : public base<T> {
 		public:
 			static T apply(T input, T low, T high) {
-				return wrap(input, low, high);
+				return lib::wrap(input, low, high);
 			}
 
 			T operator()(T input, T low, T high) {
@@ -152,10 +152,10 @@ namespace lib {
 		};
 
 		template <typename T>
-		class WrapOnce : public Base<T> {
+		class wrap_once : public base<T> {
 		public:
 			static T apply(T input, T low, T high) {
-				return wrap_once(input, low, high);
+				return lib::wrap_once(input, low, high);
 			}
 
 			T operator()(T input, T low, T high) {
@@ -164,21 +164,18 @@ namespace lib {
 		};
 
 		template <typename T>
-		class Fold : public Base<T> {
+		class fold : public base<T> {
 		public:
 			static T apply(T input, T low, T high) {
-				return fold(input, low, high);
+				return lib::fold(input, low, high);
 			}
 
 			T operator()(T input, T low, T high) {
 				return apply(input, low, high);
 			}
 		};
-
 
 	} // namespace Limit
-
-
 
 
 }}}  // namespace c74::min::lib
