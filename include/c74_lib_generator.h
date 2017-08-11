@@ -23,11 +23,19 @@ namespace lib {
         template <typename T>
         class ramp {
         public:
+
+			/// Create an instance of a generator to calculate an output with N points.
+			/// @param	size	The number of points over which the generator will produce a function.
+
             ramp (size_t size)
             : m_cycle_size(size)
             {
                 //TODO: we need way to protect against zero. static_assert did not work.
             }
+
+
+			/// Called by std::generate to produce the next value in the series to produce this function.
+			///	@return	The next value in the series.
 
             T operator()() {
                 ++m_current;
@@ -55,11 +63,19 @@ namespace lib {
 		template <typename T>
 		class ramp_unipolar {
 		public:
+
+			/// Create an instance of a generator to calculate an output with N points.
+			/// @param	size	The number of points over which the generator will produce a function.
+
 			ramp_unipolar (size_t size)
 			: m_cycle_size(size)
 			{
                 //TODO: we need way to protect against zero. static_assert did not work.
             }
+
+
+			/// Called by std::generate to produce the next value in the series to produce this function.
+			///	@return	The next value in the series.
 
 			T operator()() {
 				++m_current;
@@ -87,11 +103,19 @@ namespace lib {
 		template <typename T>
 		class sine {
 		public:
+
+			/// Create an instance of a generator to calculate an output with N points.
+			/// @param	size	The number of points over which the generator will produce a function.
+
 			sine (size_t size)
 			: m_cycle_size(size)
             {
                 //TODO: we need way to protect against zero. static_assert did not work.
             }
+
+
+			/// Called by std::generate to produce the next value in the series to produce this function.
+			///	@return	The next value in the series.
 
 			T operator()() {
 				++m_current;
@@ -112,11 +136,19 @@ namespace lib {
         template <typename T>
         class sine_unipolar {
         public:
-            sine_unipolar (size_t size)
+
+			/// Create an instance of a generator to calculate an output with N points.
+			/// @param	size	The number of points over which the generator will produce a function.
+
+           sine_unipolar (size_t size)
             : m_cycle_size(size)
             {
                 //TODO: we need way to protect against zero. static_assert did not work.
             }
+
+
+			/// Called by std::generate to produce the next value in the series to produce this function.
+			///	@return	The next value in the series.
 
             T operator()() {
                 ++m_current;
@@ -137,13 +169,21 @@ namespace lib {
         template <typename T>
         class cosine {
         public:
+
+			/// Create an instance of a generator to calculate an output with N points.
+			/// @param	size	The number of points over which the generator will produce a function.
+
             cosine (size_t size)
             : m_cycle_size(size)
             {
                 //TODO: we need way to protect against zero. static_assert did not work.
             }
 
-            T operator()() {
+
+			/// Called by std::generate to produce the next value in the series to produce this function.
+			///	@return	The next value in the series.
+
+           T operator()() {
                 ++m_current;
                 auto output = std::cos(m_current * (2.0 * M_PI) / m_cycle_size);
                 return T(output);
@@ -162,13 +202,21 @@ namespace lib {
         template <typename T>
         class cosine_unipolar {
         public:
+
+			/// Create an instance of a generator to calculate an output with N points.
+			/// @param	size	The number of points over which the generator will produce a function.
+
             cosine_unipolar (size_t size)
             : m_cycle_size(size)
             {
                 //TODO: we need way to protect against zero. static_assert did not work.
             }
 
-            T operator()() {
+
+			/// Called by std::generate to produce the next value in the series to produce this function.
+			///	@return	The next value in the series.
+
+           T operator()() {
                 ++m_current;
                 auto output = 0.5 + 0.5 * std::cos(m_current * (2.0 * M_PI) / m_cycle_size);
                 return T(output);
@@ -187,11 +235,19 @@ namespace lib {
 		template <typename T>
 		class triangle {
 		public:
+
+			/// Create an instance of a generator to calculate an output with N points.
+			/// @param	size	The number of points over which the generator will produce a function.
+
 			triangle (size_t size)
 			: m_cycle_size(size)
             {
                 //TODO: we need way to protect against zero. static_assert did not work.
             }
+
+
+			/// Called by std::generate to produce the next value in the series to produce this function.
+			///	@return	The next value in the series.
 
 			T operator()() {
 				T out = 0.0;
@@ -219,13 +275,21 @@ namespace lib {
         template <typename T>
         class triangle_unipolar {
         public:
-            triangle_unipolar (size_t size)
+
+			/// Create an instance of a generator to calculate an output with N points.
+			/// @param	size	The number of points over which the generator will produce a function.
+
+           triangle_unipolar (size_t size)
             : m_cycle_size(size)
 			{
                 //TODO: we need way to protect against zero. static_assert did not work.
             }
 
-            T operator()() {
+
+			/// Called by std::generate to produce the next value in the series to produce this function.
+			///	@return	The next value in the series.
+
+           T operator()() {
                 T out = 0.0;
                 ++m_current;
 
