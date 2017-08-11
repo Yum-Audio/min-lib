@@ -197,7 +197,7 @@ TEST_CASE ("Delay times less than 1 vector-size, part 2") {
 TEST_CASE ("Setting an interpolating delay") {
 	using namespace c74::min;
 	using namespace c74::min::lib;
-	delay<interpolation::linear<>> my_delay;
+	delay<interpolator::linear<>> my_delay;
 
 	my_delay.size(3.2);
 	REQUIRE( my_delay.size() == 3.2 );
@@ -214,7 +214,7 @@ TEST_CASE ("Linear interpolation delay times greater than 1 vector-size") {
 	sample_vector					input		{ 0,1,0,0,		0,0,0,0,	2,0,0,0,		0,0,3,0 };
 	sample_vector					output;
 	sample_vector					reference	{ 0,0,0,0.9,	0.1,0,0,0,	0,0,1.8,0.2,	0,0,0,0	};
-	delay<interpolation::linear<>>	my_delay(2.1);
+	delay<interpolator::linear<>>	my_delay(2.1);
 
 	INFO ("We process 1 vector of audio...");
 	for (auto& s : input)
@@ -232,7 +232,7 @@ TEST_CASE ("Linear interpolation delay times less than 1 sample") {
 	sample_vector					input		{ 0,1,0,0,		0,0,0,0,	2,0,0,0,		0,0,3,0 };
 	sample_vector					output;
 	sample_vector					reference	{ 0,0.6,0.4,0,	0,0,0,0,	1.2,0.8,0,0,	0,0,1.8,1.2 };
-	delay<interpolation::linear<>>	my_delay(0.4);
+	delay<interpolator::linear<>>	my_delay(0.4);
 
 	INFO ("We process 1 vector of audio...");
 	for (auto& s : input)
@@ -249,7 +249,7 @@ TEST_CASE ("Linear interpolation delay time of zero") {
 
 	sample_vector					input		{ 0,1,0,0,		0,0,0,0,	2,0,0,0,		0,0,3,0 };
 	sample_vector					output;
-	delay<interpolation::linear<>>	my_delay(0);
+	delay<interpolator::linear<>>	my_delay(0);
 
 	INFO ("We process 1 vector of audio...");
 	for (auto& s : input)
@@ -268,7 +268,7 @@ TEST_CASE ("Linear interpolation delay times less than 1 vector-size") {
 	sample_vector impulse(64, 0.0);
 	impulse[0] = 1.0;
 
-	delay<interpolation::linear<>> my_delay;
+	delay<interpolator::linear<>> my_delay;
 	my_delay.size(100.20000000000000284);
 
 	INFO ("We process 3 vectors of audio...");
@@ -311,7 +311,7 @@ TEST_CASE ("Linear interpolation delay time at the edge of a vector") {
 	sample_vector impulse(64, 0.0);
 	impulse[0] = 1.0;
 
-	delay<interpolation::linear<>> my_delay;
+	delay<interpolator::linear<>> my_delay;
 	my_delay.size(63.70000000000000284);
 
 	INFO ("We process 3 vectors of audio...");
