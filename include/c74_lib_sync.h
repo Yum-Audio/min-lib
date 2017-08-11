@@ -27,6 +27,7 @@ namespace lib {
 			m_step = m_f / m_fs;
 		}
 
+
 		/// Get the current frequency of the oscillator.
 		/// @return	The current frequency of the oscillator in the range [0.0, f_s].
 
@@ -41,6 +42,7 @@ namespace lib {
 		void phase(number new_phase) {
 			m_phase = wrap(new_phase, 0.0, 1.0);
 		}
+
 
 		/// Get the current phase of the oscillator
 		/// @return	The current phase of the oscillator in the range [0.0, 1.0).
@@ -70,5 +72,6 @@ namespace lib {
 		number	m_f			{};		///< oscillator frequency
 		number	m_fs		{};		///< sampling frequency
 	};
+
 
 }}}  // namespace c74::min::lib
