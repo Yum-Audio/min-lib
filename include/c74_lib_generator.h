@@ -17,8 +17,7 @@ namespace lib {
 
 
         /// Generates a line from -1 to 1 with consistent slope
-        /// @param T       render output as this datatype. algorithm was designed to assume the use of floating point.
-        /// @param size    size of the target vector
+        /// @tparam T       render output as this datatype. algorithm was designed to assume the use of floating point.
 
         template <typename T>
         class ramp {
@@ -26,9 +25,11 @@ namespace lib {
 
 			/// Create an instance of a generator to calculate an output with N points.
 			/// @param	size	The number of points over which the generator will produce a function.
+			///	@param	count	number of cycles of the wave to generate across the vector. default is 1.
 
-            ramp (size_t size)
-            : m_cycle_size(size)
+            ramp (size_t size, double count = 1.0)
+			: m_cycle_size	{ size	}
+			, m_cycle_count	{ count }
             {
                 //TODO: we need way to protect against zero. static_assert did not work.
             }
@@ -43,22 +44,21 @@ namespace lib {
             }
 
         private:
-			int m_current { -1 };
-			size_t m_cycle_size; // required by constructor
+			int		m_current { -1 };
+			size_t	m_cycle_size;
+			number	m_cycle_count;
         };
 
 
         /// Generates an ideal sawtooth waveform from -1 to 1. Not anti-aliased.
-        /// @param T       render output as this datatype. algorithm was designed to assume the use of floating point.
-        /// @param size    size of the target vector
+        /// @tparam T       render output as this datatype. algorithm was designed to assume the use of floating point.
 
         template <typename T>
         using sawtooth = generator::ramp<T>;
 
 
         /// Generates a line from 0 to 1 with consistent slope
-        /// @param T       render output as this datatype. algorithm was designed to assume the use of floating point.
-        /// @param size    size of the target vector
+        /// @tparam T       render output as this datatype. algorithm was designed to assume the use of floating point.
 
 		template <typename T>
 		class ramp_unipolar {
@@ -66,9 +66,11 @@ namespace lib {
 
 			/// Create an instance of a generator to calculate an output with N points.
 			/// @param	size	The number of points over which the generator will produce a function.
+			///	@param	count	number of cycles of the wave to generate across the vector. default is 1.
 
-			ramp_unipolar (size_t size)
-			: m_cycle_size(size)
+			ramp_unipolar (size_t size, double count = 1.0)
+			: m_cycle_size	{ size	}
+			, m_cycle_count	{ count }
 			{
                 //TODO: we need way to protect against zero. static_assert did not work.
             }
@@ -83,22 +85,21 @@ namespace lib {
 			}
 
 		private:
-			int m_current { -1 };
-			size_t m_cycle_size; // required by constructor
+			int		m_current { -1 };
+			size_t	m_cycle_size;
+			number	m_cycle_count;
 		};
 
 
         /// Generates an ideal sawtooth waveform from 0 to 1. Not anti-aliased.
-        /// @param T       render output as this datatype. algorithm was designed to assume the use of floating point.
-        /// @param size    size of the target vector
+        /// @tparam T       render output as this datatype. algorithm was designed to assume the use of floating point.
 
         template <typename T>
         using sawtooth_unipolar = generator::ramp_unipolar<T>;
 
 
         /// Generates a sine wave constrained between -1 to 1
-        /// @param T       render output as this datatype. algorithm was designed to assume the use of floating point.
-        /// @param size    size of the target vector
+        /// @tparam T       render output as this datatype. algorithm was designed to assume the use of floating point.
 
 		template <typename T>
 		class sine {
@@ -106,9 +107,11 @@ namespace lib {
 
 			/// Create an instance of a generator to calculate an output with N points.
 			/// @param	size	The number of points over which the generator will produce a function.
+			///	@param	count	number of cycles of the wave to generate across the vector. default is 1.
 
-			sine (size_t size)
-			: m_cycle_size(size)
+			sine (size_t size, double count = 1.0)
+			: m_cycle_size	{ size	}
+			, m_cycle_count	{ count }
             {
                 //TODO: we need way to protect against zero. static_assert did not work.
             }
@@ -119,19 +122,19 @@ namespace lib {
 
 			T operator()() {
 				++m_current;
-				auto output = std::sin(m_current * (2.0 * M_PI) / m_cycle_size);
+				auto output = std::sin(m_current*m_cycle_count * (2.0 * M_PI) / m_cycle_size);
 				return T(output);
 			}
 
 		private:
-			int m_current { -1 };
-			size_t m_cycle_size; // required by constructor
+			int		m_current { -1 };
+			size_t	m_cycle_size;
+			number	m_cycle_count;
 		};
 
 
         /// Generates a sine wave constrained between 0 to 1
-        /// @param T       render output as this datatype. algorithm was designed to assume the use of floating point.
-        /// @param size    size of the target vector
+        /// @tparam T       render output as this datatype. algorithm was designed to assume the use of floating point.
 
         template <typename T>
         class sine_unipolar {
@@ -139,9 +142,11 @@ namespace lib {
 
 			/// Create an instance of a generator to calculate an output with N points.
 			/// @param	size	The number of points over which the generator will produce a function.
+			///	@param	count	number of cycles of the wave to generate across the vector. default is 1.
 
-           sine_unipolar (size_t size)
-            : m_cycle_size(size)
+           sine_unipolar (size_t size, double count = 1.0)
+			: m_cycle_size	{ size	}
+			, m_cycle_count	{ count }
             {
                 //TODO: we need way to protect against zero. static_assert did not work.
             }
@@ -152,19 +157,19 @@ namespace lib {
 
             T operator()() {
                 ++m_current;
-                auto output = 0.5 * std::sin(m_current * (2.0 * M_PI) / m_cycle_size);
+                auto output = 0.5 * std::sin(m_current*m_cycle_count * (2.0 * M_PI) / m_cycle_size);
                 return T(output) + 0.5;
             }
 
         private:
-			int m_current { -1 };
-			size_t m_cycle_size; // required by constructor
+			int		m_current { -1 };
+			size_t	m_cycle_size;
+			number	m_cycle_count;
         };
 
 
         /// Generates a cosine wave constrained between -1 to 1
-        /// @param T       render output as this datatype. algorithm was designed to assume the use of floating point.
-        /// @param size    size of the target vector
+        /// @tparam T       render output as this datatype. algorithm was designed to assume the use of floating point.
 
         template <typename T>
         class cosine {
@@ -172,9 +177,11 @@ namespace lib {
 
 			/// Create an instance of a generator to calculate an output with N points.
 			/// @param	size	The number of points over which the generator will produce a function.
+			///	@param	count	number of cycles of the wave to generate across the vector. default is 1.
 
-            cosine (size_t size)
-            : m_cycle_size(size)
+            cosine (size_t size, double count = 1.0)
+			: m_cycle_size	{ size	}
+			, m_cycle_count	{ count }
             {
                 //TODO: we need way to protect against zero. static_assert did not work.
             }
@@ -185,19 +192,19 @@ namespace lib {
 
            T operator()() {
                 ++m_current;
-                auto output = std::cos(m_current * (2.0 * M_PI) / m_cycle_size);
+                auto output = std::cos(m_current*m_cycle_count * (2.0 * M_PI) / m_cycle_size);
                 return T(output);
             }
 
         private:
-			int m_current { -1 };
-			size_t m_cycle_size; // required by constructor
+			int		m_current { -1 };
+			size_t	m_cycle_size;
+			number	m_cycle_count;
         };
 
 
         /// Generates a cosine wave constrained between 0 to 1
-        /// @param T       render output as this datatype. algorithm was designed to assume the use of floating point.
-        /// @param size    size of the target vector
+        /// @tparam T       render output as this datatype. algorithm was designed to assume the use of floating point.
 
         template <typename T>
         class cosine_unipolar {
@@ -205,9 +212,11 @@ namespace lib {
 
 			/// Create an instance of a generator to calculate an output with N points.
 			/// @param	size	The number of points over which the generator will produce a function.
+			///	@param	count	number of cycles of the wave to generate across the vector. default is 1.
 
-            cosine_unipolar (size_t size)
-            : m_cycle_size(size)
+            cosine_unipolar (size_t size, double count = 1.0)
+			: m_cycle_size	{ size	}
+			, m_cycle_count	{ count }
             {
                 //TODO: we need way to protect against zero. static_assert did not work.
             }
@@ -218,19 +227,19 @@ namespace lib {
 
            T operator()() {
                 ++m_current;
-                auto output = 0.5 + 0.5 * std::cos(m_current * (2.0 * M_PI) / m_cycle_size);
+                auto output = 0.5 + 0.5 * std::cos(m_current*m_cycle_count * (2.0 * M_PI) / m_cycle_size);
                 return T(output);
             }
 
         private:
-			int m_current { -1 };
-			size_t m_cycle_size; // required by constructor
+			int		m_current { -1 };
+			size_t	m_cycle_size;
+			number	m_cycle_count;
         };
 
 
         /// Generates a triangle wave constrained between -1 to 1
-        /// @param T       render output as this datatype. algorithm was designed to assume the use of floating point.
-        /// @param size    size of the target vector
+        /// @tparam T       render output as this datatype. algorithm was designed to assume the use of floating point.
 
 		template <typename T>
 		class triangle {
@@ -238,9 +247,11 @@ namespace lib {
 
 			/// Create an instance of a generator to calculate an output with N points.
 			/// @param	size	The number of points over which the generator will produce a function.
+			///	@param	count	number of cycles of the wave to generate across the vector. default is 1.
 
-			triangle (size_t size)
-			: m_cycle_size(size)
+			triangle (size_t size, double count = 1.0)
+			: m_cycle_size	{ size	}
+			, m_cycle_count	{ count }
             {
                 //TODO: we need way to protect against zero. static_assert did not work.
             }
@@ -263,14 +274,14 @@ namespace lib {
 			}
 
 		private:
-			int m_current { -1 };
-			size_t m_cycle_size; // required by constructor
+			int		m_current { -1 };
+			size_t	m_cycle_size;
+			number	m_cycle_count;
 		};
 
 
         /// Generates a triangle wave constrained between 0 to 1
-        /// @param T       render output as this datatype. algorithm was designed to assume the use of floating point.
-        /// @param size    size of the target vector
+        /// @tparam T       render output as this datatype. algorithm was designed to assume the use of floating point.
 
         template <typename T>
         class triangle_unipolar {
@@ -278,9 +289,11 @@ namespace lib {
 
 			/// Create an instance of a generator to calculate an output with N points.
 			/// @param	size	The number of points over which the generator will produce a function.
+			///	@param	count	number of cycles of the wave to generate across the vector. default is 1.
 
-           triangle_unipolar (size_t size)
-            : m_cycle_size(size)
+           triangle_unipolar (size_t size, double count = 1.0)
+			: m_cycle_size	{ size	}
+			, m_cycle_count	{ count }
 			{
                 //TODO: we need way to protect against zero. static_assert did not work.
             }
@@ -303,8 +316,9 @@ namespace lib {
             }
 
         private:
-			int m_current { -1 };
-			size_t m_cycle_size; // required by constructor
+			int		m_current { -1 };
+			size_t	m_cycle_size;
+			number	m_cycle_count;
         };
 
 	} // namespace generator
