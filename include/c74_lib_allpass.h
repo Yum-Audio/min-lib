@@ -10,6 +10,7 @@ namespace c74 {
 namespace min {
 namespace lib {
 
+	
 	///	A single-channel generalized allpass filter.
 
 	class allpass {
@@ -23,8 +24,9 @@ namespace lib {
 		{}
 
 
-		/// size of the history buffers -- i.e. the delay time
-		///	TODO: dataspace integration for units other than samples
+		/// Set a new delay time in samples.
+		/// @param	new_size	The new delay time in samples.
+		///						Note this may not exceed the capacity set when the object instance is created.
 
 		void delay(size_t new_size) {
 			m_feedforward_history.resize(new_size);
@@ -32,16 +34,24 @@ namespace lib {
 		};
 
 
+		/// Return the current delay time in samples.
+		/// @return The delay time in samples.
+
 		size_t delay() {
 			return m_feedforward_history.size();
 		};
 
 
-		/// Feedback coefficient.
+		/// Set the feedback coefficient.
+		/// @param	new_gain	The new feedback coefficient.
 
 		void gain(number new_gain) {
 			m_gain = new_gain;
 		}
+
+
+		/// Return the value of the feedback coefficient
+		/// @return The current feedback coefficient.
 
 		number gain() {
 			return m_gain;
@@ -58,6 +68,9 @@ namespace lib {
 			m_feedback_history.clear();
 		}
 
+		
+		/// Calculate one sample.
+		///	@return		Calculated sample
 
 		sample operator()(sample x) {
 			auto x1 = m_feedforward_history.tail(-1);
@@ -82,10 +95,9 @@ namespace lib {
 		}
 
 	private:
-		circular_storage<sample>	m_feedforward_history;
-		circular_storage<sample>	m_feedback_history;
-		number						m_gain {};
-
+		circular_storage<sample>	m_feedforward_history;	///< Delay line for the FIR side of the filter.
+		circular_storage<sample>	m_feedback_history;		///< Delay line for the IIR side of the filter.
+		number						m_gain {};				///< Feedback coefficient.
 	};
 
 
