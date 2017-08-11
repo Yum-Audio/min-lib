@@ -14,12 +14,15 @@ namespace min {
 namespace lib {
 
 
-	/// one-channel soft-saturation/distortion filter
+	///	A single-channel soft-saturation/distortion effect.
 
 	class saturation {
 	public:
 
-		void set_drive(number drive_percentage) {
+		/// Set the amount of overdrive.
+		/// @param	drive_percentage	The new amount of overdrive as a percentage.
+
+		void drive(number drive_percentage) {
 			m_drive = drive_percentage;
 			auto f = MIN_CLAMP(drive_percentage / 100.0, 0.001, 0.999);
 
@@ -35,6 +38,17 @@ namespace lib {
 		}
 
 
+		/// Return the current amout of overdriving being applied.
+		/// @return The current overdrive amount as a percentage.
+
+		number drive() {
+			return m_drive;
+		}
+
+
+		/// Calculate one sample.
+		///	@return		Calculated sample
+
 		sample operator()(sample x) {
 			if (x > m_b)
 				x = 1.0;
@@ -42,9 +56,6 @@ namespace lib {
 				x = -1.0;
 #ifdef WIN_VERSION
 			else {
-				// http://redmine.jamoma.org/issues/show/54
-				// It is insane, but on Windows sin() returns bad values
-				// if the argument is negative, so we have to do this crazy workaround.
 				number sign;
 				if (x < 0.0) {
 					x = -x;
@@ -61,13 +72,12 @@ namespace lib {
 			return x * m_scale;
 		}
 
-
 	private:
 		number m_drive {};
 		number m_z;
 		number m_s;
 		number m_b;
-		number m_nb; // negative b
+		number m_nb;		 // negative b
 		number m_scale;
 	};
 
