@@ -12,10 +12,10 @@ namespace min {
 namespace lib {
 
 
-	///	A multichannel interpolating delay line.
+	///	A single-channel interpolating delay line.
 	/// @tparam The type of interpolation. The default is no interpolation.
 
-	template <class interpolation_type = interpolation::none<>>
+	template <class interpolation_type = interpolator::none<>>
 	class delay {
 	public:
 
@@ -81,10 +81,10 @@ namespace lib {
 		}
 
 	private:
-		circular_storage<sample>		m_history;
-		number							m_size;
-		double							m_size_fractional;
-		interpolation_type				m_interpolator;
+		circular_storage<sample>		m_history;			///< Memory for storing the delayed samples.
+		number							m_size;				///< Delay time in samples. May include a fractional component.
+		double							m_size_fractional;	///< The fractional component of the delay time.
+		interpolation_type				m_interpolator;		///< The interpolator instance used to produce interpolated output.
 	};
 
 
