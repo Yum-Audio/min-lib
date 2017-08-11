@@ -11,6 +11,7 @@
 #include "c74_lib_limit.h"
 #include "c74_lib_easing.h"
 #include "c74_lib_filters.h"
+#include "c74_lib_math.h"
 
 #include "c74_lib_allpass.h"
 #include "c74_lib_dcblocker.h"
