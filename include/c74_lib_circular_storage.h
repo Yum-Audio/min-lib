@@ -206,13 +206,11 @@ namespace lib {
 			return m_items[index];
 		}
 
-
 	private:
 		std::vector<T>		m_items;									///< storage for the circular buffer's data
 		std::size_t			m_index {};									///< location of the record head
 		std::size_t			m_size;										///< the size of the circular buffer (may be different from the amount of allocated storage)
 		std::thread::id		m_thread = { std::this_thread::get_id() };	///< used to ensure we don't access unsafely from multiple threads
-
 	};
 
 
