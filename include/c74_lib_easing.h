@@ -10,8 +10,14 @@
 
 namespace c74 {
 namespace min {
+namespace lib {
 namespace easing {
 			
+
+	/// The "linear" easing function as formalized and popularized by Robert Penner.
+	/// @tparam	T		The type of number to use for the calculations (e.g. float, double, number, or sample).
+	///	@param	x		The value to feed as input into the easing function.
+	///	@return			The output of the easing function.
 
 	template<typename T>
 	T linear(T x) {
@@ -19,11 +25,21 @@ namespace easing {
 	}
 	
 
+	/// The "in-back" easing function as formalized and popularized by Robert Penner.
+	/// @tparam	T		The type of number to use for the calculations (e.g. float, double, number, or sample).
+	///	@param	x		The value to feed as input into the easing function.
+	///	@return			The output of the easing function.
+
 	template<typename T>
 	T in_back(T x) {
 		return x * x * x - x * sin(x * M_PI);
 	}
 
+
+	/// The "in-out-back" easing function as formalized and popularized by Robert Penner.
+	/// @tparam	T		The type of number to use for the calculations (e.g. float, double, number, or sample).
+	///	@param	x		The value to feed as input into the easing function.
+	///	@return			The output of the easing function.
 
 	template<typename T>
 	T in_out_back(T x) {
@@ -38,12 +54,22 @@ namespace easing {
 	}
 
 
+	/// The "out-back" easing function as formalized and popularized by Robert Penner.
+	/// @tparam	T		The type of number to use for the calculations (e.g. float, double, number, or sample).
+	///	@param	x		The value to feed as input into the easing function.
+	///	@return			The output of the easing function.
+
 	template<typename T>
 	T out_back(T x) {
 		double f = 1.0 - x;
 		return 1 - (f * f * f - f * sin(f * M_PI));
 	}
 
+
+	/// The "in-bounce" easing function as formalized and popularized by Robert Penner.
+	/// @tparam	T		The type of number to use for the calculations (e.g. float, double, number, or sample).
+	///	@param	x		The value to feed as input into the easing function.
+	///	@return			The output of the easing function.
 
 	template<typename T>
 	T in_bounce(T x) {
@@ -61,6 +87,11 @@ namespace easing {
 		return 1.0 - y;
 	}
 
+
+	/// The "in-out-bounce" easing function as formalized and popularized by Robert Penner.
+	/// @tparam	T		The type of number to use for the calculations (e.g. float, double, number, or sample).
+	///	@param	x		The value to feed as input into the easing function.
+	///	@return			The output of the easing function.
 
 	template<typename T>
 	T in_out_bounce(T x) {
@@ -95,6 +126,11 @@ namespace easing {
 	}
 
 
+	/// The "out-bounce" easing function as formalized and popularized by Robert Penner.
+	/// @tparam	T		The type of number to use for the calculations (e.g. float, double, number, or sample).
+	///	@param	x		The value to feed as input into the easing function.
+	///	@return			The output of the easing function.
+
 	template<typename T>
 	T out_bounce(T x) {
 		if (x < 4/11.0)
@@ -108,11 +144,21 @@ namespace easing {
 	}
 
 
+	/// The "in-circular" easing function as formalized and popularized by Robert Penner.
+	/// @tparam	T		The type of number to use for the calculations (e.g. float, double, number, or sample).
+	///	@param	x		The value to feed as input into the easing function.
+	///	@return			The output of the easing function.
+
 	template<typename T>
 	T in_circular(T x) {
 		return 1 - sqrt(1 - (x * x));
 	}
 
+
+	/// The "in-out-circular" easing function as formalized and popularized by Robert Penner.
+	/// @tparam	T		The type of number to use for the calculations (e.g. float, double, number, or sample).
+	///	@param	x		The value to feed as input into the easing function.
+	///	@return			The output of the easing function.
 
 	template<typename T>
 	T in_out_circular(T x) {
@@ -123,17 +169,32 @@ namespace easing {
 	}
 
 
+	/// The "out-circular" easing function as formalized and popularized by Robert Penner.
+	/// @tparam	T		The type of number to use for the calculations (e.g. float, double, number, or sample).
+	///	@param	x		The value to feed as input into the easing function.
+	///	@return			The output of the easing function.
+
 	template<typename T>
 	T out_circular(T x) {
 		return sqrt((2 - x) * x);
 	}
 
 
+	/// The "in-cubic" easing function as formalized and popularized by Robert Penner.
+	/// @tparam	T		The type of number to use for the calculations (e.g. float, double, number, or sample).
+	///	@param	x		The value to feed as input into the easing function.
+	///	@return			The output of the easing function.
+
 	template<typename T>
 	T in_cubic(T x) {
 		return x * x * x;
 	}
 
+
+	/// The "in-out-cubic" easing function as formalized and popularized by Robert Penner.
+	/// @tparam	T		The type of number to use for the calculations (e.g. float, double, number, or sample).
+	///	@param	x		The value to feed as input into the easing function.
+	///	@return			The output of the easing function.
 
 	template<typename T>
 	T in_out_cubic(T x) {
@@ -146,6 +207,11 @@ namespace easing {
 	}
 
 
+	/// The "out-cubic" easing function as formalized and popularized by Robert Penner.
+	/// @tparam	T		The type of number to use for the calculations (e.g. float, double, number, or sample).
+	///	@param	x		The value to feed as input into the easing function.
+	///	@return			The output of the easing function.
+
 	template<typename T>
 	T out_cubic(T x) {
 		double f = x - 1.0;
@@ -153,11 +219,21 @@ namespace easing {
 	}
 
 
+	/// The "in-elastic" easing function as formalized and popularized by Robert Penner.
+	/// @tparam	T		The type of number to use for the calculations (e.g. float, double, number, or sample).
+	///	@param	x		The value to feed as input into the easing function.
+	///	@return			The output of the easing function.
+
 	template<typename T>
 	T in_elastic(T x) {
 		return sin(6.5 * M_PI * x) * pow(2, 10 * (x - 1));
 	}
 
+
+	/// The "in-out-elastic" easing function as formalized and popularized by Robert Penner.
+	/// @tparam	T		The type of number to use for the calculations (e.g. float, double, number, or sample).
+	///	@param	x		The value to feed as input into the easing function.
+	///	@return			The output of the easing function.
 
 	template<typename T>
 	T in_out_elastic(T x) {
@@ -168,11 +244,21 @@ namespace easing {
 	}
 
 
+	/// The "out-elastic" easing function as formalized and popularized by Robert Penner.
+	/// @tparam	T		The type of number to use for the calculations (e.g. float, double, number, or sample).
+	///	@param	x		The value to feed as input into the easing function.
+	///	@return			The output of the easing function.
+
 	template<typename T>
 	T out_elastic(T x) {
 		return sin(-6.5 * M_PI * (x + 1)) * pow(2, -10 * x) + 1;
 	}
 
+
+	/// The "in-exponential" easing function as formalized and popularized by Robert Penner.
+	/// @tparam	T		The type of number to use for the calculations (e.g. float, double, number, or sample).
+	///	@param	x		The value to feed as input into the easing function.
+	///	@return			The output of the easing function.
 
 	template<typename T>
 	T in_exponential(T x) {
@@ -182,6 +268,11 @@ namespace easing {
 			return pow(2, 10 * (x - 1));
 	}
 
+
+	/// The "in-out-exponential" easing function as formalized and popularized by Robert Penner.
+	/// @tparam	T		The type of number to use for the calculations (e.g. float, double, number, or sample).
+	///	@param	x		The value to feed as input into the easing function.
+	///	@return			The output of the easing function.
 
 	template<typename T>
 	T in_out_exponential(T x) {
@@ -194,6 +285,11 @@ namespace easing {
 	}
 
 
+	/// The "out-exponential" easing function as formalized and popularized by Robert Penner.
+	/// @tparam	T		The type of number to use for the calculations (e.g. float, double, number, or sample).
+	///	@param	x		The value to feed as input into the easing function.
+	///	@return			The output of the easing function.
+
 	template<typename T>
 	T out_exponential(T x) {
 		if (x == 1.0)
@@ -203,11 +299,21 @@ namespace easing {
 	}
 
 
+	/// The "in-quadratic" easing function as formalized and popularized by Robert Penner.
+	/// @tparam	T		The type of number to use for the calculations (e.g. float, double, number, or sample).
+	///	@param	x		The value to feed as input into the easing function.
+	///	@return			The output of the easing function.
+
 	template<typename T>
 	T in_quadratic(T x) {
 		return x * x;
 	}
 
+
+	/// The "in-out-quadratic" easing function as formalized and popularized by Robert Penner.
+	/// @tparam	T		The type of number to use for the calculations (e.g. float, double, number, or sample).
+	///	@param	x		The value to feed as input into the easing function.
+	///	@return			The output of the easing function.
 
 	template<typename T>
 	T in_out_quadratic(T x) {
@@ -218,17 +324,32 @@ namespace easing {
 	}
 
 
+	/// The "out-quadratic" easing function as formalized and popularized by Robert Penner.
+	/// @tparam	T		The type of number to use for the calculations (e.g. float, double, number, or sample).
+	///	@param	x		The value to feed as input into the easing function.
+	///	@return			The output of the easing function.
+
 	template<typename T>
 	T out_quadratic(T x) {
 		return -(x * (x - 2));
 	}
 
 
+	/// The "in-quartic" easing function as formalized and popularized by Robert Penner.
+	/// @tparam	T		The type of number to use for the calculations (e.g. float, double, number, or sample).
+	///	@param	x		The value to feed as input into the easing function.
+	///	@return			The output of the easing function.
+
 	template<typename T>
 	T in_quartic(T x) {
 		return x * x * x * x;
 	}
 
+
+	/// The "in-out-quartic" easing function as formalized and popularized by Robert Penner.
+	/// @tparam	T		The type of number to use for the calculations (e.g. float, double, number, or sample).
+	///	@param	x		The value to feed as input into the easing function.
+	///	@return			The output of the easing function.
 
 	template<typename T>
 	T in_out_quartic(T x) {
@@ -241,6 +362,11 @@ namespace easing {
 	}
 
 
+	/// The "out-quartic" easing function as formalized and popularized by Robert Penner.
+	/// @tparam	T		The type of number to use for the calculations (e.g. float, double, number, or sample).
+	///	@param	x		The value to feed as input into the easing function.
+	///	@return			The output of the easing function.
+
 	template<typename T>
 	T out_quartic(T x) {
 		double f = (x - 1);
@@ -248,11 +374,21 @@ namespace easing {
 	}
 
 
+	/// The "in-quintic" easing function as formalized and popularized by Robert Penner.
+	/// @tparam	T		The type of number to use for the calculations (e.g. float, double, number, or sample).
+	///	@param	x		The value to feed as input into the easing function.
+	///	@return			The output of the easing function.
+
 	template<typename T>
 	T in_quintic(T x) {
 		return x * x * x * x * x;
 	}
 
+
+	/// The "in-out-quintic" easing function as formalized and popularized by Robert Penner.
+	/// @tparam	T		The type of number to use for the calculations (e.g. float, double, number, or sample).
+	///	@param	x		The value to feed as input into the easing function.
+	///	@return			The output of the easing function.
 
 	template<typename T>
 	T in_out_quintic(T x) {
@@ -265,6 +401,11 @@ namespace easing {
 	}
 
 
+	/// The "out-quintic" easing function as formalized and popularized by Robert Penner.
+	/// @tparam	T		The type of number to use for the calculations (e.g. float, double, number, or sample).
+	///	@param	x		The value to feed as input into the easing function.
+	///	@return			The output of the easing function.
+
 	template<typename T>
 	T out_quintic(T x) {
 		double f = (x - 1);
@@ -272,11 +413,21 @@ namespace easing {
 	}
 
 
+	/// The "in-sine" easing function as formalized and popularized by Robert Penner.
+	/// @tparam	T		The type of number to use for the calculations (e.g. float, double, number, or sample).
+	///	@param	x		The value to feed as input into the easing function.
+	///	@return			The output of the easing function.
+
 	template<typename T>
 	T in_sine(T x) {
 		return sin((x - 1) * M_PI * 0.5) + 1;
 	}
 
+
+	/// The "in-out-sine" easing function as formalized and popularized by Robert Penner.
+	/// @tparam	T		The type of number to use for the calculations (e.g. float, double, number, or sample).
+	///	@param	x		The value to feed as input into the easing function.
+	///	@return			The output of the easing function.
 
 	template<typename T>
 	T in_out_sine(T x) {
@@ -284,50 +435,65 @@ namespace easing {
 	}
 
 
+	/// The "out-sine" easing function as formalized and popularized by Robert Penner.
+	/// @tparam	T		The type of number to use for the calculations (e.g. float, double, number, or sample).
+	///	@param	x		The value to feed as input into the easing function.
+	///	@return			The output of the easing function.
+
 	template<typename T>
 	T out_sine(T x) {
 		return sin(x * M_PI * 0.5);
 	}
 
 
+	/// An enum to represent a selection any of the available easing functions in an object attribute.
+	/// @see easing::apply()
+	/// @see easing::function_info
+	/// @see attribute
+
 	enum class function {
 		linear,
 
-		in_back,
-		in_bounce,
-		in_circular,
-		in_cubic,
-		in_elastic,
-		in_exponential,
-		in_quadratic,
-		in_quartic,
-		in_quintic,
-		in_sine,
+		in_back,				///< in-back
+		in_bounce,				///< in-bounce
+		in_circular,			///< in-circular
+		in_cubic,				///< in-cubic
+		in_elastic,				///< in-elastic
+		in_exponential,			///< in-exponential
+		in_quadratic,			///< in-quadratic
+		in_quartic,				///< in-quartic
+		in_quintic,				///< in-quintic
+		in_sine,				///< in-sine
 
-		in_out_back,
-		in_out_bounce,
-		in_out_circular,
-		in_out_cubic,
-		in_out_elastic,
-		in_out_exponential,
-		in_out_quadratic,
-		in_out_quartic,
-		in_out_quintic,
-		in_out_sine,
+		in_out_back,			///< in-out-back
+		in_out_bounce,			///< in-out-bounce
+		in_out_circular,		///< in-out-circular
+		in_out_cubic,			///< in-out-cubic
+		in_out_elastic,			///< in-out-elastic
+		in_out_exponential,		///< in-out-exponential
+		in_out_quadratic,		///< in-out-quadratic
+		in_out_quartic,			///< in-out-quartic
+		in_out_quintic,			///< in-out-quintic
+		in_out_sine,			///< in-out-sine
 
-		out_back,
-		out_bounce,
-		out_circular,
-		out_cubic,
-		out_elastic,
-		out_exponential,
-		out_quadratic,
-		out_quartic,
-		out_quintic,
-		out_sine,
+		out_back,				///< out-back
+		out_bounce,				///< out-bounce
+		out_circular,			///< out-circular
+		out_cubic,				///< out-cubic
+		out_elastic,			///< out-elastic
+		out_exponential,		///< out-exponential
+		out_quadratic,			///< out-quadratic
+		out_quartic,			///< out-quartic
+		out_quintic,			///< out-quintic
+		out_sine,				///< out-sine
 
-		enum_count
+		enum_count				///< the number of available easing functions
 	};
+
+
+	/// Textual descriptors for the enum values that represent easing functions in an object attribute.
+	/// @see easing::function_info
+	/// @see attribute
 
 	static enum_map function_info = {
 		"linear",
@@ -366,6 +532,12 @@ namespace easing {
 		"out_sine"
 	};
 
+
+	/// Apply one of the standard easing functions to a number as formalized and popularized by Robert Penner.
+	/// @tparam	The type of number to use for the calculations (e.g. float, double, number, or sample).
+	/// @param	name	The easing function to apply as enumerated in the #easing::function enum.
+	///	@param	x		The value to feed as input into the easing function.
+	///	@return			The "eased" output.
 
 	template<typename T>
 	T apply(easing::function name, T x) {
@@ -406,4 +578,4 @@ namespace easing {
 	}
 
 
-}}} // namespace c74::min::easing
+}}}} // namespace c74::min::lib::easing
