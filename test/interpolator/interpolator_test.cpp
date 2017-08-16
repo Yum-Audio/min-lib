@@ -9,7 +9,7 @@
 
 SCENARIO ("Using No Interpolation") {
 	GIVEN ("An instance of the 'none' iterpolator for the sample type") {
-		c74::min::lib::interpolation::none<c74::min::sample> f;
+		c74::min::lib::interpolator::none<c74::min::sample> f;
 
 		auto x0 = -1.0;
 		auto x1 = 2.0;
@@ -38,7 +38,7 @@ SCENARIO ("Using No Interpolation") {
 
 SCENARIO ("Using 'Nearest' Interpolation") {
 	GIVEN ("An instance of the 'nearest' iterpolator for the sample type") {
-		c74::min::lib::interpolation::nearest<c74::min::sample> f;
+		c74::min::lib::interpolator::nearest<c74::min::sample> f;
 
 		auto x0 = -1.0;
 		auto x1 = 2.0;
@@ -75,7 +75,7 @@ SCENARIO ("Using 'Nearest' Interpolation") {
 
 SCENARIO ("Using Linear Interpolation") {
 	GIVEN ("An instance of the 'linear' iterpolator for the sample type") {
-		c74::min::lib::interpolation::linear<c74::min::sample> f;
+		c74::min::lib::interpolator::linear<c74::min::sample> f;
 
 		auto x0 = 1.0;
 		auto x1 = -1.0;
@@ -177,7 +177,7 @@ SCENARIO ("Using Linear Interpolation") {
 
 SCENARIO ("Using Allpass Interpolation") {
 	GIVEN ("An instance of the 'allpass' iterpolator for the sample type") {
-		c74::min::lib::interpolation::allpass<c74::min::sample> f;
+		c74::min::lib::interpolator::allpass<c74::min::sample> f;
 
 		auto x0 = -1.0;
 		auto x1 = 2.0;
@@ -279,7 +279,7 @@ SCENARIO ("Using Allpass Interpolation") {
 
 SCENARIO ("Using Cosine Interpolation") {
 	GIVEN ("An instance of the 'cosine' iterpolator for the sample type") {
-		c74::min::lib::interpolation::cosine<c74::min::sample> f;
+		c74::min::lib::interpolator::cosine<c74::min::sample> f;
 
 		auto x0 = -1.0;
 		auto x1 = 2.0;
@@ -381,7 +381,7 @@ SCENARIO ("Using Cosine Interpolation") {
 
 SCENARIO ("Using Cubic Interpolation") {
 	GIVEN ("An instance of the 'cubic' iterpolator for the sample type") {
-		c74::min::lib::interpolation::cubic<c74::min::sample> f;
+		c74::min::lib::interpolator::cubic<c74::min::sample> f;
 
 		auto x0 = -1.0;
 		auto x1 = 2.0;
@@ -475,7 +475,7 @@ SCENARIO ("Using Cubic Interpolation") {
 
 SCENARIO ("Using Hermite Interpolation") {
 	GIVEN ("An instance of the 'hermite' iterpolator for the sample type") {
-		c74::min::lib::interpolation::hermite<c74::min::sample> f;
+		c74::min::lib::interpolator::hermite<c74::min::sample> f;
 
 		auto x0 = -1.0;
 		auto x1 = 2.0;
@@ -578,7 +578,7 @@ SCENARIO ("Using Hermite Interpolation") {
 
 SCENARIO ("Using Spline Interpolation") {
 	GIVEN ("An instance of the 'spline' iterpolator for the sample type") {
-		c74::min::lib::interpolation::spline<c74::min::sample> f;
+		c74::min::lib::interpolator::spline<c74::min::sample> f;
 
 		auto x0 = -1.0;
 		auto x1 = 2.0;

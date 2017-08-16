@@ -31,6 +31,7 @@ namespace math {
 
 
 	/// Calculate the mean and standard-deviation from a vector of numerical input.
+    /// @tparam     The data type of the items in the vector of input.
 	/// @param	v	A vector of numerical input.
 	///	@return		A std::pair containing the mean and the standard deviation.
 
