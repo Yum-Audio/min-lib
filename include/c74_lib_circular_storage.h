@@ -27,11 +27,11 @@ namespace lib {
 
 		/// Constructor specifies a fixed amount of storage for the container.
 		///	If you want a different amount of storage, create a new container and dispose of the one you don't want.
-		/// @param	itemcount	The number of items to be stored in the container.
+		/// @param	item_count	The number of items to be stored in the container.
 
-		explicit circular_storage(std::size_t itemcount)
-		: m_items(itemcount)
-		, m_size(itemcount)
+		explicit circular_storage(std::size_t item_count)
+		: m_items(item_count)
+		, m_size(item_count)
 		{}
 
 
@@ -42,7 +42,7 @@ namespace lib {
 
 
 		/// Write a block of items into the container.
-		///	@param	new_input	A block of items to add. May not be more items than the size (itemcount) of the container.
+		///	@param	new_input	A block of items to add. May not be more items than the size (item_count) of the container.
 
 		void write(const std::vector<T>& new_input) {
 			assert(std::this_thread::get_id() == m_thread);
