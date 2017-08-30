@@ -10,6 +10,10 @@ include_directories(
 #	"${CMAKE_CURRENT_LIST_DIR}/mock"
 )
 
+add_definitions(
+	-DMIN_TEST
+)
+
 #set(CMAKE_CXX_FLAGS "-std=c++1y -stdlib=libc++ -fprofile-arcs -ftest-coverage")
 #set(CMAKE_CXX_FLAGS "-fprofile-arcs -ftest-coverage")
 #set(CMAKE_C_FLAGS "-fprofile-arcs -ftest-coverage")
