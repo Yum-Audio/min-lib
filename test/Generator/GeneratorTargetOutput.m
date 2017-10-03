@@ -43,7 +43,7 @@ function retval = generate_unipolartrangle(delta)
 endfunction
 
 for i = 1:64
-	current_delta = (i - 1) / 64;
+	current_delta = mod((i - 1), 64) / 64;
 	output_ramp(i) = ( current_delta * 2.0 ) - 1.0;
     output_unipolarramp(i) = current_delta;
 	output_sine(i) = sin (current_delta * 2.0 * pi);
