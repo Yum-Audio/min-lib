@@ -81,7 +81,7 @@ namespace lib {
 
 			T operator()() {
 				++m_current;
-				return T(m_current) / m_cycle_size;
+				return ( T(fmod(m_current*m_cycle_count, m_cycle_size)) / m_cycle_size);
 			}
 
 		private:
