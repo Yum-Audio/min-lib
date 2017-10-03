@@ -256,6 +256,89 @@ SCENARIO ("Generate a Ramp with 2.5 cycles") {
 }
 
 
+SCENARIO ("Generate a Ramp with 0.25 cycles") {
+    GIVEN ("An empty vector of samples") {
+        c74::min::sample_vector	v(64);
+        
+        WHEN("The entire length is filled by a 'ramp' generator for the sample type, with count set to 0.25.") {
+            THEN("The output matches an externally generated reference set.")
+            
+            std::generate(v.begin(), v.end(), c74::min::lib::generator::ramp<c74::min::sample>(v.size(), 0.25));
+            
+            // The following output was generated using the Octave code in GeneratorTargetOutput.m by NW
+            c74::min::sample_vector reference = {
+                -1,
+                -0.9921875,
+                -0.984375,
+                -0.9765625,
+                -0.96875,
+                -0.9609375,
+                -0.953125,
+                -0.9453125,
+                -0.9375,
+                -0.9296875,
+                -0.921875,
+                -0.9140625,
+                -0.90625,
+                -0.8984375,
+                -0.890625,
+                -0.8828125,
+                -0.875,
+                -0.8671875,
+                -0.859375,
+                -0.8515625,
+                -0.84375,
+                -0.8359375,
+                -0.828125,
+                -0.8203125,
+                -0.8125,
+                -0.8046875,
+                -0.796875,
+                -0.7890625,
+                -0.78125,
+                -0.7734375,
+                -0.765625,
+                -0.7578125,
+                -0.75,
+                -0.7421875,
+                -0.734375,
+                -0.7265625,
+                -0.71875,
+                -0.7109375,
+                -0.703125,
+                -0.6953125,
+                -0.6875,
+                -0.6796875,
+                -0.671875,
+                -0.6640625,
+                -0.65625,
+                -0.6484375,
+                -0.640625,
+                -0.6328125,
+                -0.625,
+                -0.6171875,
+                -0.609375,
+                -0.6015625,
+                -0.59375,
+                -0.5859375,
+                -0.578125,
+                -0.5703125,
+                -0.5625,
+                -0.5546875,
+                -0.546875,
+                -0.5390625,
+                -0.53125,
+                -0.5234375,
+                -0.515625,
+                -0.5078125
+            };
+            
+            REQUIRE_VECTOR_APPROX( v, reference );
+        }
+    }
+}
+
+
 SCENARIO ("Generate a Sawtooth") {
 	GIVEN ("An empty vector of samples") {
 		c74::min::sample_vector	v(64);
