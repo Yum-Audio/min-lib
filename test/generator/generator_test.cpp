@@ -3077,3 +3077,86 @@ SCENARIO ("Generate a Unipolar Triangle") {
 		}
 	}
 }
+
+
+SCENARIO ("Generate a Unipolar Triangle with 3.0 cycles") {
+    GIVEN ("An empty vector of samples") {
+        c74::min::sample_vector	v(64);
+        
+        WHEN("The entire length is filled by a 'triangle_unipolar' generator for the sample type, with count set to 3.0.") {
+            THEN("The output matches an externally generated reference set.")
+            
+            std::generate(v.begin(), v.end(), c74::min::lib::generator::triangle_unipolar<c74::min::sample>(v.size(), 3.0));
+            
+            // The following output was generated using the Octave code in GeneratorTargetOutput.m by NW
+            c74::min::sample_vector reference = {
+                0.5,
+                0.59375,
+                0.6875,
+                0.78125,
+                0.875,
+                0.96875,
+                0.9375,
+                0.84375,
+                0.75,
+                0.65625,
+                0.5625,
+                0.46875,
+                0.375,
+                0.28125,
+                0.1875,
+                0.09375,
+                0,
+                0.09375,
+                0.1875,
+                0.28125,
+                0.375,
+                0.46875,
+                0.5625000000000001,
+                0.6562500000000001,
+                0.7500000000000001,
+                0.8437500000000001,
+                0.9375000000000001,
+                0.96875,
+                0.875,
+                0.78125,
+                0.6875,
+                0.59375,
+                0.4999999999999998,
+                0.4062499999999998,
+                0.3124999999999998,
+                0.2187499999999998,
+                0.1249999999999998,
+                0.03124999999999978,
+                0.06250000000000022,
+                0.1562500000000002,
+                0.2500000000000002,
+                0.3437500000000002,
+                0.4375000000000002,
+                0.5312500000000002,
+                0.6250000000000002,
+                0.7187500000000002,
+                0.8125000000000002,
+                0.9062500000000002,
+                1,
+                0.90625,
+                0.8125,
+                0.71875,
+                0.625,
+                0.53125,
+                0.4374999999999998,
+                0.3437499999999998,
+                0.2499999999999998,
+                0.1562499999999998,
+                0.06249999999999978,
+                0.03125000000000022,
+                0.1250000000000002,
+                0.2187500000000002,
+                0.3125000000000002,
+                0.4062500000000002
+            };
+            
+            REQUIRE_VECTOR_APPROX( v, reference );
+        }
+    }
+}
