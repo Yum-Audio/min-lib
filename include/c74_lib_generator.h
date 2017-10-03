@@ -40,7 +40,7 @@ namespace lib {
 
             T operator()() {
                 ++m_current;
-                return ( T(m_current) * 2.0 / m_cycle_size) - 1.0;
+                return ( T( ( fmod(m_current * m_cycle_count / m_cycle_size, 1.0) * 2.0 ) - 1.0));
             }
 
         private:
@@ -81,7 +81,7 @@ namespace lib {
 
 			T operator()() {
 				++m_current;
-				return T(m_current) / m_cycle_size;
+				return ( T(fmod(m_current * m_cycle_count / m_cycle_size, 1.0)));
 			}
 
 		private:
@@ -263,13 +263,15 @@ namespace lib {
 			T operator()() {
 				T out = 0.0;
 				++m_current;
+                
+                auto delta = fmod(m_current * m_cycle_count / m_cycle_size, 1.0) ;
 
-				if (m_current <= m_cycle_size/4)
-					out = 4.0 * m_current / m_cycle_size;
-				else if (m_current >= 3 * m_cycle_size / 4)
-					out = -4.0 + 4.0 * m_current / m_cycle_size;
+				if (delta <= 0.25)
+					out = delta / 0.25;
+				else if (delta >= 0.75)
+					out = -1.0 + (delta - 0.75) / 0.25;
 				else
-					out = 2.0 - 4.0 * m_current / m_cycle_size;
+					out = 1.0 - (delta - 0.25) / 0.25;
 				return out;
 			}
 
@@ -306,13 +308,15 @@ namespace lib {
                 T out = 0.0;
                 ++m_current;
 
-                if (m_current <= m_cycle_size/4)
-                    out = 2.0 * m_current / m_cycle_size;
-                else if (m_current >= 3 * m_cycle_size / 4)
-                    out = -2.0 + 2.0 * m_current / m_cycle_size;
-                else
-                    out = 1.0 - 2.0 * m_current / m_cycle_size;
-                return 0.5 + out;
+               auto delta = fmod(m_current * m_cycle_count / m_cycle_size, 1.0) ;
+               
+               if (delta <= 0.25)
+                   out = delta / 0.5;
+               else if (delta >= 0.75)
+                   out = 1.0 + (delta - 1.5) / 0.5;
+               else
+                   out = -2.0 - (delta - 1.5) / 0.5;
+               return out + 0.5;
             }
 
         private:
