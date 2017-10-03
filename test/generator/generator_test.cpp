@@ -837,6 +837,89 @@ SCENARIO ("Generate a Unipolar Ramp with 3.0 cycles") {
 }
 
 
+SCENARIO ("Generate a Unipolar Ramp with 2.5 cycles") {
+    GIVEN ("An empty vector of samples") {
+        c74::min::sample_vector	v(64);
+        
+        WHEN("The entire length is filled by a 'ramp_unipolar' generator for the sample type, with count set to 2.5.") {
+            THEN("The output matches an externally generated reference set.")
+            
+            std::generate(v.begin(), v.end(), c74::min::lib::generator::ramp_unipolar<c74::min::sample>(v.size(), 2.5));
+            
+            // The following output was generated using the Octave code in GeneratorTargetOutput.m by NW
+            c74::min::sample_vector reference = {
+                0,
+                0.0390625,
+                0.078125,
+                0.1171875,
+                0.15625,
+                0.1953125,
+                0.234375,
+                0.2734375,
+                0.3125,
+                0.3515625,
+                0.390625,
+                0.4296875,
+                0.46875,
+                0.5078125,
+                0.546875,
+                0.5859375,
+                0.625,
+                0.6640625,
+                0.703125,
+                0.7421875,
+                0.78125,
+                0.8203125,
+                0.859375,
+                0.8984375,
+                0.9375,
+                0.9765625,
+                0.01562499999999994,
+                0.05468749999999994,
+                0.09374999999999994,
+                0.1328124999999999,
+                0.1718749999999999,
+                0.2109374999999999,
+                0.2499999999999999,
+                0.2890624999999999,
+                0.3281249999999999,
+                0.3671874999999999,
+                0.4062499999999999,
+                0.4453124999999999,
+                0.4843749999999999,
+                0.5234374999999999,
+                0.5624999999999999,
+                0.6015624999999999,
+                0.6406249999999999,
+                0.6796874999999999,
+                0.7187499999999999,
+                0.7578124999999999,
+                0.7968749999999999,
+                0.8359374999999999,
+                0.8749999999999999,
+                0.9140624999999999,
+                0.9531249999999999,
+                0.9921874999999999,
+                0.03124999999999989,
+                0.07031249999999989,
+                0.1093749999999999,
+                0.1484374999999999,
+                0.1874999999999999,
+                0.2265624999999999,
+                0.2656249999999999,
+                0.3046874999999999,
+                0.3437499999999999,
+                0.3828124999999999,
+                0.4218749999999999,
+                0.4609374999999999
+            };
+            
+            REQUIRE_VECTOR_APPROX( v, reference );
+        }
+    }
+}
+
+
 SCENARIO ("Generate a Unipolar Sawtooth") {
 	GIVEN ("An empty vector of samples") {
 		c74::min::sample_vector	v(64);
