@@ -254,6 +254,7 @@ namespace lib {
 			, m_cycle_count	{ count }
             {
                 //TODO: we need way to protect against zero. static_assert did not work.
+                m_samples_per_cycle = m_cycle_size / m_cycle_count;
             }
 
 
@@ -263,13 +264,15 @@ namespace lib {
 			T operator()() {
 				T out = 0.0;
 				++m_current;
+                
+                auto delta = fmod(m_current / m_samples_per_cycle, 1.0) ;
 
-				if (m_current <= m_cycle_size/4)
-					out = 4.0 * m_current / m_cycle_size;
-				else if (m_current >= 3 * m_cycle_size / 4)
-					out = -4.0 + 4.0 * m_current / m_cycle_size;
+				if (delta <= 0.25)
+					out = delta / 0.25;
+				else if (delta >= 0.75)
+					out = -1.0 + (delta - 0.75) / 0.25;
 				else
-					out = 2.0 - 4.0 * m_current / m_cycle_size;
+					out = 1.0 - (delta - 0.25) / 0.25;
 				return out;
 			}
 
@@ -277,6 +280,7 @@ namespace lib {
 			int		m_current { -1 };
 			size_t	m_cycle_size;
 			number	m_cycle_count;
+            number  m_samples_per_cycle;
 		};
 
 
