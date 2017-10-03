@@ -2830,6 +2830,89 @@ SCENARIO ("Generate a Triangle with 3.0 cycles") {
 }
 
 
+SCENARIO ("Generate a Triangle with 2.5 cycles") {
+    GIVEN ("An empty vector of samples") {
+        c74::min::sample_vector	v(64);
+        
+        WHEN("The entire length is filled by a 'triangle' generator for the sample type, with count set to 2.5.") {
+            THEN("The output matches an externally generated reference set.")
+            
+            std::generate(v.begin(), v.end(), c74::min::lib::generator::triangle<c74::min::sample>(v.size(), 2.5));
+            
+            // The following output was generated using the Octave code in GeneratorTargetOutput.m by NW
+            c74::min::sample_vector reference = {
+                0,
+                0.15625,
+                0.3125,
+                0.46875,
+                0.625,
+                0.78125,
+                0.9375,
+                0.90625,
+                0.75,
+                0.59375,
+                0.4375,
+                0.28125,
+                0.125,
+                -0.03125,
+                -0.1875,
+                -0.34375,
+                -0.5,
+                -0.65625,
+                -0.8125,
+                -0.96875,
+                -0.875,
+                -0.71875,
+                -0.5625,
+                -0.40625,
+                -0.25,
+                -0.09375,
+                0.06249999999999978,
+                0.2187499999999998,
+                0.3749999999999998,
+                0.5312499999999998,
+                0.6874999999999998,
+                0.8437499999999998,
+                0.9999999999999998,
+                0.8437500000000002,
+                0.6875000000000002,
+                0.5312500000000002,
+                0.3750000000000002,
+                0.2187500000000002,
+                0.06250000000000022,
+                -0.09374999999999956,
+                -0.2499999999999996,
+                -0.4062499999999996,
+                -0.5624999999999996,
+                -0.7187499999999996,
+                -0.8749999999999996,
+                -0.9687500000000004,
+                -0.8125000000000004,
+                -0.6562500000000004,
+                -0.5000000000000004,
+                -0.3437500000000004,
+                -0.1875000000000004,
+                -0.03125000000000044,
+                0.1249999999999996,
+                0.2812499999999996,
+                0.4374999999999996,
+                0.5937499999999996,
+                0.7499999999999996,
+                0.9062499999999996,
+                0.9375000000000004,
+                0.7812500000000004,
+                0.6250000000000004,
+                0.4687500000000004,
+                0.3125000000000004,
+                0.1562500000000004
+            };
+            
+            REQUIRE_VECTOR_APPROX( v, reference );
+        }
+    }
+}
+
+
 SCENARIO ("Generate a Unipolar Triangle") {
 	GIVEN ("An empty vector of samples") {
 		c74::min::sample_vector	v(64);
