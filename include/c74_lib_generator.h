@@ -40,7 +40,7 @@ namespace lib {
 
             T operator()() {
                 ++m_current;
-                return ( T(fmod(m_current*m_cycle_count, m_cycle_size)) * 2.0 / m_cycle_size) - 1.0;
+                return ( T( ( fmod(m_current * m_cycle_count / m_cycle_size, 1.0) * 2.0 ) - 1.0));
             }
 
         private:
