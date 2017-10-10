@@ -15,14 +15,22 @@ samples_to_output = 64;
 
 % 1 - initialize all matrices to hold values generated
 input_ramp = double (1 : samples_to_output);
+output_linear = double (1 : samples_to_output);
+output_in_back = double (1 : samples_to_output);
 
 % 2 - define any functions used to generate values
 
 % 3 - iterate through loop to fill matrices
 for i = 1:samples_to_output
-	% NW: our formula for this ramp is constructed so that 0 and 1 will be included
-	input_ramp(i) = (i-1) / (samples_to_output-1);
+	% NW: our formula for input_ramp is constructed so that 0 and 1 will be included
+	x = (i-1) / (samples_to_output-1);
+	input_ramp(i) = x;
+	output_linear(i) = x;
+	output_in_back(i) = x * x * x - x * sin(x * pi);
+	
 endfor
 
 % 4 - write output values to disk
 save expectedOutput.mat input_ramp
+save -append expectedOutput.mat output_linear
+save -append expectedOutput.mat output_in_back
