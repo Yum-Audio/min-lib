@@ -26,6 +26,7 @@ output_out_back = double (1 : samples_to_output);
 output_out_bounce = double (1 : samples_to_output);
 output_in_bounce = double (1 : samples_to_output);
 output_in_out_bounce = double (1 : samples_to_output);
+output_in_circular = double (1 : samples_to_output);
 
 % 2 - define any functions used to generate values
 function retval = in_out_back(inval)
@@ -83,6 +84,7 @@ for i = 1:samples_to_output
 	output_out_bounce(i) = out_bounce(x);
 	output_in_bounce(i) = in_bounce(x);
 	output_in_out_bounce(i) = in_out_bounce(x);
+	output_in_circular(i) = 1 - sqrt(1 - (x * x));
 endfor
 
 % 4 - write output values to disk
@@ -94,3 +96,4 @@ save -append expectedOutput.mat output_out_back
 save -append expectedOutput.mat output_out_bounce
 save -append expectedOutput.mat output_in_bounce
 save -append expectedOutput.mat output_in_out_bounce
+save -append expectedOutput.mat output_in_circular
