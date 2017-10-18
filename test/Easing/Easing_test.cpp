@@ -14,7 +14,7 @@
         INFO( "when i == " << i ); \
         REQUIRE( easing_function(x) == Approx(reference_vector[i]) ); \
     } \
-} \
+} 
 
 SCENARIO ("Using Linear Easing") {
     
