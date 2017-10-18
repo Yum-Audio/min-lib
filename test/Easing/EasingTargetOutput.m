@@ -24,6 +24,7 @@ output_in_back = double (1 : samples_to_output);
 output_in_out_back = double (1 : samples_to_output);
 output_out_back = double (1 : samples_to_output);
 output_out_bounce = double (1 : samples_to_output);
+output_in_bounce = double (1 : samples_to_output);
 
 % 2 - define any functions used to generate values
 function retval = in_out_back(inval)
@@ -56,6 +57,10 @@ function retval = out_bounce(inval)
 	endif
 endfunction
 
+function retval = in_bounce(inval)
+	retval = 1 - out_bounce(1 - inval);;
+endfunction
+
 % 3 - iterate through loop to fill matrices
 for i = 1:samples_to_output
 	% NW: our formula for input_ramp is constructed so that 0 and 1 will be included
@@ -66,6 +71,7 @@ for i = 1:samples_to_output
 	output_in_out_back(i) = in_out_back(x);
 	output_out_back(i) = out_back(x);
 	output_out_bounce(i) = out_bounce(x);
+	output_in_bounce(i) = in_bounce(x);
 endfor
 
 % 4 - write output values to disk
@@ -75,3 +81,4 @@ save -append expectedOutput.mat output_in_back
 save -append expectedOutput.mat output_in_out_back
 save -append expectedOutput.mat output_out_back
 save -append expectedOutput.mat output_out_bounce
+save -append expectedOutput.mat output_in_bounce
