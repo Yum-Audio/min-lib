@@ -28,6 +28,7 @@ output_in_bounce = double (1 : samples_to_output);
 output_in_out_bounce = double (1 : samples_to_output);
 output_in_circular = double (1 : samples_to_output);
 output_out_circular = double (1 : samples_to_output);
+output_in_out_circular = double (1 : samples_to_output);
 
 % 2 - define any functions used to generate values
 function retval = in_out_back(inval)
@@ -73,6 +74,15 @@ function retval = in_out_bounce(inval)
 	endif
 endfunction
 
+function retval = in_out_circular(inval)
+	retval = 0.0;
+	if (inval < 0.5)
+		retval = 0.5 * (1 - sqrt(1 - 4 * (inval * inval)));
+	else
+		retval = 0.5 * (sqrt(-((2 * inval) - 3) * ((2 * inval) - 1)) + 1);
+	endif
+endfunction
+
 % 3 - iterate through loop to fill matrices
 for i = 1:samples_to_output
 	% NW: our formula for input_ramp is constructed so that 0 and 1 will be included
@@ -87,6 +97,7 @@ for i = 1:samples_to_output
 	output_in_out_bounce(i) = in_out_bounce(x);
 	output_in_circular(i) = 1 - sqrt(1 - (x * x));
 	output_out_circular(i) = sqrt((2 - x) * x);
+	output_in_out_circular(i) = in_out_circular(x);
 endfor
 
 % 4 - write output values to disk
@@ -100,3 +111,4 @@ save -append expectedOutput.mat output_in_bounce
 save -append expectedOutput.mat output_in_out_bounce
 save -append expectedOutput.mat output_in_circular
 save -append expectedOutput.mat output_out_circular
+save -append expectedOutput.mat output_in_out_circular
