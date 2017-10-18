@@ -23,6 +23,7 @@ output_linear = double (1 : samples_to_output);
 output_in_back = double (1 : samples_to_output);
 output_in_out_back = double (1 : samples_to_output);
 output_out_back = double (1 : samples_to_output);
+output_out_bounce = double (1 : samples_to_output);
 
 % 2 - define any functions used to generate values
 function retval = in_out_back(inval)
@@ -42,6 +43,19 @@ function retval = out_back(inval)
 	retval = 1 - (f * f * f - f * sin(f * pi));
 endfunction
 
+function retval = out_bounce(inval)
+	retval = 0.0;
+	if (inval < 4/11.0)
+		retval = (121 * inval * inval)/16.0;
+	elseif (inval < 8/11.0)
+		retval = (363/40.0 * inval * inval) - (99/10.0 * inval) + 17/5.0;
+	elseif(inval < 9/10.0)
+		retval = (4356/361.0 * inval * inval) - (35442/1805.0 * inval) + 16061/1805.0;
+	else
+		retval = (54/5.0 * inval * inval) - (513/25.0 * inval) + 268/25.0;
+	endif
+endfunction
+
 % 3 - iterate through loop to fill matrices
 for i = 1:samples_to_output
 	% NW: our formula for input_ramp is constructed so that 0 and 1 will be included
@@ -51,6 +65,7 @@ for i = 1:samples_to_output
 	output_in_back(i) = x * x * x - x * sin(x * pi);
 	output_in_out_back(i) = in_out_back(x);
 	output_out_back(i) = out_back(x);
+	output_out_bounce(i) = out_bounce(x);
 endfor
 
 % 4 - write output values to disk
@@ -59,3 +74,4 @@ save -append expectedOutput.mat output_linear
 save -append expectedOutput.mat output_in_back
 save -append expectedOutput.mat output_in_out_back
 save -append expectedOutput.mat output_out_back
+save -append expectedOutput.mat output_out_bounce
