@@ -43,7 +43,7 @@ output_out_quadratic = double (1 : samples_to_output);
 output_in_out_quadratic = double (1 : samples_to_output);
 output_in_quartic = double (1 : samples_to_output);
 output_out_quartic = double (1 : samples_to_output);
-%output_in_out_quartic = double (1 : samples_to_output);
+output_in_out_quartic = double (1 : samples_to_output);
 
 % 2 - define any functions used to generate values
 function retval = in_out_back(inval)
@@ -169,6 +169,16 @@ function retval = out_quartic(inval)
 	retval = f * f * f * (1 - inval) + 1;
 endfunction
 
+function retval = in_out_quartic(inval)
+	retval = 0.0;
+	if (inval < 0.5)
+		retval = 8 * inval * inval * inval * inval;
+	else
+		f = (inval - 1);
+		retval = -8 * f * f * f * f + 1;
+	endif
+endfunction
+
 % 3 - iterate through loop to fill matrices
 for i = 1:samples_to_output
 	% NW: our formula for input_ramp is constructed so that 0 and 1 will be included
@@ -198,7 +208,7 @@ for i = 1:samples_to_output
 	output_in_out_quadratic(i) = in_out_quadratic(x);
 	output_in_quartic(i) = x * x * x * x;
 	output_out_quartic(i) = out_quartic(x);
-	%output_in_out_quartic(i) = ;
+	output_in_out_quartic(i) = in_out_quartic(x);
 endfor
 
 % 4 - write output values to disk
@@ -227,4 +237,4 @@ save -append expectedOutput.mat output_out_quadratic
 save -append expectedOutput.mat output_in_out_quadratic
 save -append expectedOutput.mat output_in_quartic
 save -append expectedOutput.mat output_out_quartic
-%save -append expectedOutput.mat output_in_out_quartic
+save -append expectedOutput.mat output_in_out_quartic
