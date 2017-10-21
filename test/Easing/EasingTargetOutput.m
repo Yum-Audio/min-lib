@@ -39,7 +39,7 @@ output_in_exponential = double (1 : samples_to_output);
 output_out_exponential = double (1 : samples_to_output);
 output_in_out_exponential = double (1 : samples_to_output);
 output_in_quadratic = double (1 : samples_to_output);
-%output_out_quadratic = double (1 : samples_to_output);
+output_out_quadratic = double (1 : samples_to_output);
 %output_in_out_quadratic = double (1 : samples_to_output);
 
 % 2 - define any functions used to generate values
@@ -176,7 +176,7 @@ for i = 1:samples_to_output
 	output_out_exponential(i) = out_exponential(x);
 	output_in_out_exponential(i) = in_out_exponential(x);
 	output_in_quadratic(i) = x * x;
-	%output_out_quadratic(i) = ;
+	output_out_quadratic(i) = -(x * (x - 2));
 	%output_in_out_quadratic(i) = ;
 endfor
 
@@ -202,5 +202,5 @@ save -append expectedOutput.mat output_in_exponential
 save -append expectedOutput.mat output_out_exponential
 save -append expectedOutput.mat output_in_out_exponential
 save -append expectedOutput.mat output_in_quadratic
-%save -append expectedOutput.mat output_out_quadratic
+save -append expectedOutput.mat output_out_quadratic
 %save -append expectedOutput.mat output_in_out_quadratic
