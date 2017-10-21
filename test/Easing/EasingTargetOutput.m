@@ -41,6 +41,9 @@ output_in_out_exponential = double (1 : samples_to_output);
 output_in_quadratic = double (1 : samples_to_output);
 output_out_quadratic = double (1 : samples_to_output);
 output_in_out_quadratic = double (1 : samples_to_output);
+output_in_quartic = double (1 : samples_to_output);
+%output_out_quartic = double (1 : samples_to_output);
+%output_in_out_quartic = double (1 : samples_to_output);
 
 % 2 - define any functions used to generate values
 function retval = in_out_back(inval)
@@ -187,6 +190,9 @@ for i = 1:samples_to_output
 	output_in_quadratic(i) = x * x;
 	output_out_quadratic(i) = -(x * (x - 2));
 	output_in_out_quadratic(i) = in_out_quadratic(x);
+	output_in_quartic(i) = x * x * x * x;
+	%output_out_quartic(i) = ;
+	%output_in_out_quartic(i) = ;
 endfor
 
 % 4 - write output values to disk
@@ -213,3 +219,6 @@ save -append expectedOutput.mat output_in_out_exponential
 save -append expectedOutput.mat output_in_quadratic
 save -append expectedOutput.mat output_out_quadratic
 save -append expectedOutput.mat output_in_out_quadratic
+save -append expectedOutput.mat output_in_quartic
+%save -append expectedOutput.mat output_out_quartic
+%save -append expectedOutput.mat output_in_out_quartic
