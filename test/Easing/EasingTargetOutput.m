@@ -32,6 +32,7 @@ output_in_out_circular = double (1 : samples_to_output);
 output_in_cubic = double (1 : samples_to_output);
 output_in_out_cubic = double (1 : samples_to_output);
 output_out_cubic = double (1 : samples_to_output);
+output_in_elastic = double (1 : samples_to_output);
 
 % 2 - define any functions used to generate values
 function retval = in_out_back(inval)
@@ -120,6 +121,7 @@ for i = 1:samples_to_output
 	output_in_cubic(i) = x * x * x;
 	output_in_out_cubic(i) = in_out_cubic(x);
 	output_out_cubic(i) = out_cubic(x);
+	output_in_elastic(i) = sin(6.5 * pi * x) * 2^(10 * (x - 1));
 endfor
 
 % 4 - write output values to disk
@@ -137,3 +139,4 @@ save -append expectedOutput.mat output_in_out_circular
 save -append expectedOutput.mat output_in_cubic
 save -append expectedOutput.mat output_in_out_cubic
 save -append expectedOutput.mat output_out_cubic
+save -append expectedOutput.mat output_in_elastic
