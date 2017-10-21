@@ -34,6 +34,7 @@ output_in_out_cubic = double (1 : samples_to_output);
 output_out_cubic = double (1 : samples_to_output);
 output_in_elastic = double (1 : samples_to_output);
 output_out_elastic = double (1 : samples_to_output);
+output_in_out_elastic = double (1 : samples_to_output);
 
 % 2 - define any functions used to generate values
 function retval = in_out_back(inval)
@@ -104,6 +105,15 @@ function retval = out_cubic(inval)
 	retval = f * f * f + 1.0;
 endfunction
 
+function retval = in_out_elastic(inval)
+	retval = 0.0;
+	if (inval < 0.5)
+		retval = 0.5 * sin(6.5 * pi * (2 * inval)) * 2^(10 * ((2 * inval) - 1));
+	else
+		retval = 0.5 * (sin(-6.5 * pi * ((2 * inval - 1) + 1)) * 2^(-10 * (2 * inval - 1)) + 2);
+	endif
+endfunction
+
 % 3 - iterate through loop to fill matrices
 for i = 1:samples_to_output
 	% NW: our formula for input_ramp is constructed so that 0 and 1 will be included
@@ -124,6 +134,7 @@ for i = 1:samples_to_output
 	output_out_cubic(i) = out_cubic(x);
 	output_in_elastic(i) = sin(6.5 * pi * x) * 2^(10 * (x - 1));
 	output_out_elastic(i) = sin(-6.5 * pi * (x + 1)) * 2^(-10 * x) + 1;
+	output_in_out_elastic(i) = in_out_elastic(x);
 endfor
 
 % 4 - write output values to disk
@@ -143,3 +154,4 @@ save -append expectedOutput.mat output_in_out_cubic
 save -append expectedOutput.mat output_out_cubic
 save -append expectedOutput.mat output_in_elastic
 save -append expectedOutput.mat output_out_elastic
+save -append expectedOutput.mat output_in_out_elastic
