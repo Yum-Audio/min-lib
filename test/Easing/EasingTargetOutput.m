@@ -40,7 +40,7 @@ output_out_exponential = double (1 : samples_to_output);
 output_in_out_exponential = double (1 : samples_to_output);
 output_in_quadratic = double (1 : samples_to_output);
 output_out_quadratic = double (1 : samples_to_output);
-%output_in_out_quadratic = double (1 : samples_to_output);
+output_in_out_quadratic = double (1 : samples_to_output);
 
 % 2 - define any functions used to generate values
 function retval = in_out_back(inval)
@@ -151,6 +151,15 @@ function retval = in_out_exponential(inval)
 	endif
 endfunction
 
+function retval = in_out_quadratic(inval)
+	retval = 0.0;
+	if (inval < 0.5)
+		retval = 2 * inval * inval;
+	else
+		retval = (-2 * inval * inval) + (4 * inval) - 1;
+	endif
+endfunction
+
 % 3 - iterate through loop to fill matrices
 for i = 1:samples_to_output
 	% NW: our formula for input_ramp is constructed so that 0 and 1 will be included
@@ -177,7 +186,7 @@ for i = 1:samples_to_output
 	output_in_out_exponential(i) = in_out_exponential(x);
 	output_in_quadratic(i) = x * x;
 	output_out_quadratic(i) = -(x * (x - 2));
-	%output_in_out_quadratic(i) = ;
+	output_in_out_quadratic(i) = in_out_quadratic(x);
 endfor
 
 % 4 - write output values to disk
@@ -203,4 +212,4 @@ save -append expectedOutput.mat output_out_exponential
 save -append expectedOutput.mat output_in_out_exponential
 save -append expectedOutput.mat output_in_quadratic
 save -append expectedOutput.mat output_out_quadratic
-%save -append expectedOutput.mat output_in_out_quadratic
+save -append expectedOutput.mat output_in_out_quadratic
