@@ -49,7 +49,7 @@ output_out_quintic = double (1 : samples_to_output);
 output_in_out_quintic = double (1 : samples_to_output);
 output_in_sine = double (1 : samples_to_output);
 output_out_sine = double (1 : samples_to_output);
-%output_in_out_sine = double (1 : samples_to_output);
+output_in_out_sine = double (1 : samples_to_output);
 
 % 2 - define any functions used to generate values
 function retval = in_out_back(inval)
@@ -236,7 +236,7 @@ for i = 1:samples_to_output
 	output_in_out_quintic(i) = in_out_quintic(x);
 	output_in_sine(i) = sin((x - 1) * pi * 0.5) + 1;
 	output_out_sine(i) = sin(x * pi * 0.5);
-	%output_in_out_sine(i) = ;
+	output_in_out_sine(i) = 0.5 * (1 - cos(x * pi));
 endfor
 
 % 4 - write output values to disk
@@ -271,4 +271,4 @@ save -append expectedOutput.mat output_out_quintic
 save -append expectedOutput.mat output_in_out_quintic
 save -append expectedOutput.mat output_in_sine
 save -append expectedOutput.mat output_out_sine
-%save -append expectedOutput.mat output_in_out_sine
+save -append expectedOutput.mat output_in_out_sine
