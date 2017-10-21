@@ -36,7 +36,7 @@ output_in_elastic = double (1 : samples_to_output);
 output_out_elastic = double (1 : samples_to_output);
 output_in_out_elastic = double (1 : samples_to_output);
 output_in_exponential = double (1 : samples_to_output);
-%output_out_exponential = double (1 : samples_to_output);
+output_out_exponential = double (1 : samples_to_output);
 %output_in_out_exponential = double (1 : samples_to_output);
 
 % 2 - define any functions used to generate values
@@ -126,6 +126,15 @@ function retval = in_exponential(inval)
 	endif
 endfunction
 
+function retval = out_exponential(inval)
+	retval = 0.0;
+	if (inval == 1.0)
+		retval = 1.0;
+	else
+		retval = 1 - 2^(-10 * inval);
+	endif
+endfunction
+
 % 3 - iterate through loop to fill matrices
 for i = 1:samples_to_output
 	% NW: our formula for input_ramp is constructed so that 0 and 1 will be included
@@ -148,7 +157,7 @@ for i = 1:samples_to_output
 	output_out_elastic(i) = sin(-6.5 * pi * (x + 1)) * 2^(-10 * x) + 1;
 	output_in_out_elastic(i) = in_out_elastic(x);
 	output_in_exponential(i) = in_exponential(x);
-	%output_out_exponential = ;
+	output_out_exponential(i) = out_exponential(x);
 	%output_in_out_exponential = ;
 endfor
 
@@ -171,5 +180,5 @@ save -append expectedOutput.mat output_in_elastic
 save -append expectedOutput.mat output_out_elastic
 save -append expectedOutput.mat output_in_out_elastic
 save -append expectedOutput.mat output_in_exponential
-%save -append expectedOutput.mat output_out_exponential
+save -append expectedOutput.mat output_out_exponential
 %save -append expectedOutput.mat output_in_out_exponential
