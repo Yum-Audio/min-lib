@@ -45,7 +45,7 @@ output_in_quartic = double (1 : samples_to_output);
 output_out_quartic = double (1 : samples_to_output);
 output_in_out_quartic = double (1 : samples_to_output);
 output_in_quintic = double (1 : samples_to_output);
-%output_out_quintic = double (1 : samples_to_output);
+output_out_quintic = double (1 : samples_to_output);
 %output_in_out_quintic = double (1 : samples_to_output);
 
 % 2 - define any functions used to generate values
@@ -182,6 +182,12 @@ function retval = in_out_quartic(inval)
 	endif
 endfunction
 
+function retval = out_quintic(inval)
+	retval = 0.0;
+	f = (inval - 1);
+	retval = f * f * f * f * f + 1;
+endfunction
+
 % 3 - iterate through loop to fill matrices
 for i = 1:samples_to_output
 	% NW: our formula for input_ramp is constructed so that 0 and 1 will be included
@@ -213,7 +219,7 @@ for i = 1:samples_to_output
 	output_out_quartic(i) = out_quartic(x);
 	output_in_out_quartic(i) = in_out_quartic(x);
 	output_in_quintic(i) = x * x * x * x * x;
-	%output_out_quintic(i) = out_quartic(x);
+	output_out_quintic(i) = out_quintic(x);
 	%output_in_out_quintic(i) = in_out_quartic(x);
 endfor
 
@@ -245,5 +251,5 @@ save -append expectedOutput.mat output_in_quartic
 save -append expectedOutput.mat output_out_quartic
 save -append expectedOutput.mat output_in_out_quartic
 save -append expectedOutput.mat output_in_quintic
-%save -append expectedOutput.mat output_out_quintic
+save -append expectedOutput.mat output_out_quintic
 %save -append expectedOutput.mat output_in_out_quintic
