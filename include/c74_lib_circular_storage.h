@@ -45,7 +45,7 @@ namespace lib {
 		///	@param	new_input	A block of items to add. May not be more items than the size (item_count) of the container.
 
 		void write(const std::vector<T>& new_input) {
-			assert(std::this_thread::get_id() == m_thread);
+			check_thread();
 			assert(new_input.size() <= size());
 
 			std::size_t count = new_input.size();
@@ -74,7 +74,7 @@ namespace lib {
 		///	@param	new_input	An item to add.
 
 		void write(const T& new_input) {
-			assert(std::this_thread::get_id() == m_thread);
+			check_thread();
 
 			m_items[m_index] = new_input;
 			++m_index;
@@ -103,7 +103,7 @@ namespace lib {
 		///	@see	tail()
 
 		void head(std::vector<T>& output) {
-			assert(std::this_thread::get_id() == m_thread);
+			check_thread();
 			assert(size() >= output.size());
 
 			auto count = static_cast<long>( output.size() );
@@ -135,7 +135,7 @@ namespace lib {
 		///	@see	head()
 
 		void tail(std::vector<T>& output) {
-			assert(std::this_thread::get_id() == m_thread);
+			check_thread();
 			assert(size() >= output.size());
 
 			auto count = static_cast<long>( output.size() );
@@ -173,7 +173,7 @@ namespace lib {
 		///	Zero the contents.
 	
 		void clear() {
-			assert(std::this_thread::get_id() == m_thread);
+			check_thread();
 			m_items.clear();
 		}
 
@@ -207,10 +207,25 @@ namespace lib {
 		}
 
 	private:
+        
+        /// Confirm that multiple calls to public methods are happening on the same thread.
+        /// First call to this method will set the m_thread variable.
+        /// Every call after will compare to the current thread id to m_thread.
+        
+        void check_thread() {
+            if (m_thread == null_thread) {
+                m_thread = { std::this_thread::get_id() };
+            } else {
+                assert(std::this_thread::get_id() == m_thread);
+            }
+            
+        }
+        
 		std::vector<T>		m_items;									///< storage for the circular buffer's data
 		std::size_t			m_index {};									///< location of the record head
 		std::size_t			m_size;										///< the size of the circular buffer (may be different from the amount of allocated storage)
-		std::thread::id		m_thread = { std::this_thread::get_id() };	///< used to ensure we don't access unsafely from multiple threads
+		std::thread::id		m_thread;                                   ///< used to ensure we don't access unsafely from multiple threads
+        std::thread::id		null_thread;                                ///< save the default constructor output to catch the first call in check_thread()
 	};
 
 
