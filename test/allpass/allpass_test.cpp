@@ -117,24 +117,25 @@ SCENARIO ("Produce the correct impulse response") {
 
 SCENARIO ("Using non-default settings") {
     
-    WHEN ("Overriding the default capacity for allpass filter") {
+  //  WHEN ("Overriding the default capacity for allpass filter") {
         c74::min::lib::allpass	f(4800);
         
-        THEN("The size has been set correctly.")
+   //     THEN("The size has been set correctly.")
         
         REQUIRE( f.delay() == 4800 );
     
-        WHEN("Changing the size to less than default capacity") {
+  //      WHEN("Changing the size to less than default capacity") {
             
             f.delay(1000);
             
-            THEN("The size has been set correctly.")
+//            THEN("The size has been set correctly.")
             
             REQUIRE( f.delay() == 1000 );
             
 
         
-            WHEN ("processing a 1100-sample impulse") {
+ //           WHEN ("processing a 1100-sample impulse") {
+			{
                 // create an impulse buffer to process
                 const int				buffersize = 1100;
                 c74::min::sample_vector	impulse(buffersize);
@@ -155,15 +156,16 @@ SCENARIO ("Using non-default settings") {
             
             // What can we test here?
             
-            WHEN("Changing the size again to a higher value, but still less than default capacity")
+ //           WHEN("Changing the size again to a higher value, but still less than default capacity")
             
             f.delay(2000);
             
-            THEN("The size has been set correctly.")
+  //          THEN("The size has been set correctly.")
             
             REQUIRE( f.delay() == 2000 );
             
-            WHEN ("processing another 1100-sample impulse") {
+ //           WHEN ("processing another 1100-sample impulse")
+			{
                 // create an impulse buffer to process
                 const int				buffersize = 1100;
                 c74::min::sample_vector	impulse(buffersize);
@@ -184,9 +186,9 @@ SCENARIO ("Using non-default settings") {
             
             // What can we test here?
             
-        }
+//        }
         
-    }
+ //   }
     
 }
 
