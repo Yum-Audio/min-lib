@@ -73,8 +73,8 @@ namespace lib {
 		///	@return		Calculated sample
 
 		sample operator()(sample x) {
-			auto x1 = m_feedforward_history.tail(-1);
-			auto y1 = m_feedback_history.tail(-1);
+			auto x1 = m_feedforward_history.tail();
+			auto y1 = m_feedback_history.tail();
 			auto alpha = m_gain;
 
 			// Store the input in the feedforward buffer
