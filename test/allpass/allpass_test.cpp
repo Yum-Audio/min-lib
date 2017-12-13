@@ -37,11 +37,10 @@ TEST_CASE ("Produce the correct impulse response using default constructor") {
         output.push_back(y);
     }
 
-    INFO ("And finally checking our output against a reference prodcued with Octave.");
-    // coefficients calculated in Octave
-    //	a = [0.5, 1.0];	% numerator (fir)
-    //	b = [1.0, 0.5];	% denominator (iir)
-    //	i = impz(a, b, 64);
+    INFO ("And finally checking our output against a reference produced with Octave.");
+    // coefficients calculated in Octave using impz(a,b,64)
+    //	a1 = [0.5, 1.0]; % fir coefficients
+    //  b1 = [1.0, 0.5]; % iir coefficients
 
     sample_vector reference = {
         0.500000000000000    ,
@@ -144,11 +143,10 @@ TEST_CASE ("Produce the correct impulse response after constructor with initial 
         output.push_back(y);
     }
     
-    INFO ("And finally checking our output against a reference prodcued with Octave.");
-    // coefficients calculated in Octave
-    //	a = [0.5, 1.0];	% numerator (fir)
-    //	b = [1.0, 0.5];	% denominator (iir)
-    //	i = impz(a, b, 64);
+    INFO ("And finally checking our output against a reference produced with Octave.");
+    // coefficients calculated in Octave using impz(a,b,64)
+    //	a1 = [0.5, 1.0]; % fir coefficients
+    //  b1 = [1.0, 0.5]; % iir coefficients
     
     sample_vector reference = {
         0.500000000000000    ,
@@ -248,7 +246,7 @@ TEST_CASE ("Using other non-default settings") {
     
 }
 
-TEST_CASE ("Produce the correct impulse response for a delay setting of 2 samples") {
+TEST_CASE ("Produce the correct impulse response for 2 samples delay, 0.75 gain") {
     
     using namespace c74::min;
     using namespace c74::min::lib;
@@ -275,11 +273,10 @@ TEST_CASE ("Produce the correct impulse response for a delay setting of 2 sample
         output.push_back(y);
     }
     
-    INFO ("And finally checking our output against a reference prodcued with Octave.");
-    // coefficients calculated in Octave
-    //	a3 = [0.75, 0.0, 1.0];	% numerator (fir)
-    //	b3 = [1.0, 0.0, 0.75];	% denominator (iir)
-    //	i = impz(a, b, 64);
+    INFO ("And finally checking our output against a reference produced with Octave.");
+    // coefficients calculated in Octave using impz(a,b,64)
+    //	a2 = [0.75, 0.0, 1.0]; % fir coefficients
+    //  b2 = [1.0, 0.0, 0.75]; % iir coefficients
     
     sample_vector reference = {
         0.75,
@@ -352,7 +349,7 @@ TEST_CASE ("Produce the correct impulse response for a delay setting of 2 sample
     REQUIRE_VECTOR_APPROX(output, reference);
 }
 
-TEST_CASE ("Produce the correct impulse response for a delay setting of 4 samples") {
+TEST_CASE ("Produce the correct impulse response for for 4 samples delay, 0.5 gain") {
     
     using namespace c74::min;
     using namespace c74::min::lib;
@@ -379,11 +376,10 @@ TEST_CASE ("Produce the correct impulse response for a delay setting of 4 sample
         output.push_back(y);
     }
     
-    INFO ("And finally checking our output against a reference prodcued with Octave.");
-    // coefficients calculated in Octave
-    //	a = [0.5, 0.0, 0.0, 0.0, 1.0];	% numerator (fir)
-    //	b = [1.0, 0.0, 0.0, 0.0, 0.5];	% denominator (iir)
-    //	i = impz(a, b, 64);
+    INFO ("And finally checking our output against a reference produced with Octave.");
+    // coefficients calculated in Octave using impz(a,b,64)
+    //	a4 = [0.5, 0.0, 0.0, 0.0, 1.0]; % fir coefficients
+    //  b4 = [1.0, 0.0, 0.0, 0.0, 0.5]; % iir coefficients
     
     sample_vector reference = {
         0.5,
@@ -456,7 +452,7 @@ TEST_CASE ("Produce the correct impulse response for a delay setting of 4 sample
     REQUIRE_VECTOR_APPROX(output, reference);
 }
 
-TEST_CASE ("Produce the correct impulse response for a delay setting of 6 samples") {
+TEST_CASE ("Produce the correct impulse response for for 6 samples delay, -0.25 gain") {
     
     using namespace c74::min;
     using namespace c74::min::lib;
@@ -466,7 +462,7 @@ TEST_CASE ("Produce the correct impulse response for a delay setting of 6 sample
     REQUIRE( f.gain() == 0.0 );		// check the default value
     REQUIRE( f.delay() == 6 );     // check the initialized value
     
-    INFO("Changing the gain to 0.05...");
+    INFO("Changing the gain to -0.25...");
     f.gain(-0.25);
     REQUIRE( f.gain() == -0.25 );		// check the new value
     
@@ -484,10 +480,9 @@ TEST_CASE ("Produce the correct impulse response for a delay setting of 6 sample
     }
     
     INFO ("And finally checking our output against a reference produced with Octave.");
-    // coefficients calculated in Octave
-    //	a6 = [-0.25, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0]; % numerator (fir)
-    //  b6 = [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, -0.25];	% denominator (iir)
-    //	i = impz(a6, b6, 64);
+    // coefficients calculated in Octave using impz(a,b,64)
+    //  a6 = [-0.25, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0]; % fir coefficients
+    //  b6 = [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, -0.25]; % iir coefficients
     
     sample_vector reference = {
         -0.25,
@@ -560,7 +555,7 @@ TEST_CASE ("Produce the correct impulse response for a delay setting of 6 sample
     REQUIRE_VECTOR_APPROX(output, reference);
 }
 
-TEST_CASE ("Produce the correct impulse response for a delay setting of 7 samples") {
+TEST_CASE ("Produce the correct impulse response for 7 samples delay, -0.65 gain") {
     
     using namespace c74::min;
     using namespace c74::min::lib;
@@ -570,7 +565,7 @@ TEST_CASE ("Produce the correct impulse response for a delay setting of 7 sample
     REQUIRE( f.gain() == 0.0 );		// check the default value
     REQUIRE( f.delay() == 7 );     // check the initialized value
     
-    INFO("Changing the gain to 0.05...");
+    INFO("Changing the gain to -0.65...");
     f.gain(-0.65);
     REQUIRE( f.gain() == -0.65 );		// check the new value
     
@@ -588,10 +583,9 @@ TEST_CASE ("Produce the correct impulse response for a delay setting of 7 sample
     }
     
     INFO ("And finally checking our output against a reference produced with Octave.");
-    // coefficients calculated in Octave
-    //	a = [-0.65, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0]; % numerator (fir)
-    //  b = [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -0.65]; % denominator (iir)
-    //	i = impz(a, b, 64);
+    // coefficients calculated in Octave using impz(a,b,64)
+    //	a7 = [-0.65, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0]; % fir coefficients
+    //  b7 = [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -0.65]; % iir coefficients
     
     sample_vector reference = {
         -0.65,
@@ -664,7 +658,7 @@ TEST_CASE ("Produce the correct impulse response for a delay setting of 7 sample
     REQUIRE_VECTOR_APPROX(output, reference);
 }
 
-TEST_CASE ("Produce the correct impulse response for a delay setting of 8 samples") {
+TEST_CASE ("Produce the correct impulse response for for 8 samples delay, 0.05 gain") {
     
     using namespace c74::min;
     using namespace c74::min::lib;
@@ -692,10 +686,9 @@ TEST_CASE ("Produce the correct impulse response for a delay setting of 8 sample
     }
     
     INFO ("And finally checking our output against a reference produced with Octave.");
-    // coefficients calculated in Octave
-    //	a5 = [0.05, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0];	% numerator (fir)
-    //	b5 = [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.05];	% denominator (iir)
-    //	i = impz(a, b, 64);
+    // coefficients calculated in Octave using impz(a,b,64)
+    //  a8 = [0.05, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0]; % fir coefficients
+    //  b8 = [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.05]; % iir coefficients
     
     sample_vector reference = {
         0.05,
@@ -768,7 +761,7 @@ TEST_CASE ("Produce the correct impulse response for a delay setting of 8 sample
     REQUIRE_VECTOR_APPROX(output, reference);
 }
 
-TEST_CASE ("Produce the correct impulse response for a delay setting of 12 samples") {
+TEST_CASE ("Produce the correct impulse response for for 12 samples delay, 0.99 gain") {
     
     using namespace c74::min;
     using namespace c74::min::lib;
@@ -796,10 +789,9 @@ TEST_CASE ("Produce the correct impulse response for a delay setting of 12 sampl
     }
     
     INFO ("And finally checking our output against a reference produced with Octave.");
-    // coefficients calculated in Octave
-    //	a4 = [0.99, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0];	% numerator (fir)
-    //	b4 = [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.99];	% denominator (iir)
-    //	i = impz(a, b, 64);
+    // coefficients calculated in Octave using impz(a,b,64)
+    //	a12 = [0.99, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0]; % fir coefficients
+    //  b12 = [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.99]; % iir coefficients
     
     sample_vector reference = {
         0.99,
