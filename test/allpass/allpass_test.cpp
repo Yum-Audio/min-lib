@@ -767,3 +767,107 @@ TEST_CASE ("Produce the correct impulse response for a delay setting of 6 sample
     // check it
     REQUIRE_VECTOR_APPROX(output, reference);
 }
+
+TEST_CASE ("Produce the correct impulse response for a delay setting of 7 samples") {
+    
+    using namespace c74::min;
+    using namespace c74::min::lib;
+    INFO ("Using an allpass instance with arguments, which should set default gain at 0.0 and new capacity to 7 samples");
+    
+    allpass	f { 7 };
+    REQUIRE( f.gain() == 0.0 );		// check the default value
+    REQUIRE( f.delay() == 7 );     // check the initialized value
+    
+    INFO("Changing the gain to 0.05...");
+    f.gain(-0.65);
+    REQUIRE( f.gain() == -0.65 );		// check the new value
+    
+    INFO ("And then pushing a 64-sample impulse through the unit...");
+    sample_vector impulse(64, 0.0);
+    impulse[0] = 1.0;
+    
+    // output from our object's processing
+    sample_vector	output;
+    
+    // run the calculations
+    for (auto x : impulse) {
+        auto y = f(x);
+        output.push_back(y);
+    }
+    
+    INFO ("And finally checking our output against a reference produced with Octave.");
+    // coefficients calculated in Octave
+    //	a = [-0.65, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0]; % numerator (fir)
+    //  b = [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -0.65]; % denominator (iir)
+    //	i = impz(a, b, 64);
+    
+    sample_vector reference = {
+        -0.65,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0.5774999999999999,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0.375375,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0.24399375,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0.1585959375,
+        0, 
+        0, 
+        0, 
+        0, 
+        0, 
+        0, 
+        0.103087359375, 
+        0, 
+        0, 
+        0, 
+        0, 
+        0, 
+        0, 
+        0.06700678359375001, 
+        0, 
+        0, 
+        0, 
+        0, 
+        0, 
+        0, 
+        0.04355440933593751, 
+        0, 
+        0, 
+        0, 
+        0, 
+        0, 
+        0, 
+        0.02831036606835938, 
+        0, 
+        0, 
+        0, 
+        0, 
+        0, 
+        0, 
+        0.0184017379444336
+    };
+    
+    // check it
+    REQUIRE_VECTOR_APPROX(output, reference);
+}
