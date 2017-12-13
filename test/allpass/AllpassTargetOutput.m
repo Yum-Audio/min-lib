@@ -27,13 +27,6 @@ b1 = [1.0, 0.5]; % iir coefficients
 output_1_sample_delay = impz(a1, b1, samples_to_output);
 
 % Generate an impulse response with the follow characteristics:
-% Allpass, 4 sample delay, 0.5 gain
-a2 = [0.5, 0.0, 0.0, 0.0, 1.0];
-b2 = [1.0, 0.0, 0.0, 0.0, 0.5];
-
-output_4_samples_delay = impz(a2, b2, samples_to_output);
-
-% Generate an impulse response with the follow characteristics:
 % Allpass, 2 sample delay, 0.75 gain
 a3 = [0.75, 0.0, 1.0];
 b3 = [1.0, 0.0, 0.75];
@@ -41,18 +34,11 @@ b3 = [1.0, 0.0, 0.75];
 output_2_samples_delay = impz(a3, b3, samples_to_output);
 
 % Generate an impulse response with the follow characteristics:
-% Allpass, 12 sample delay, 0.99 gain
-a4 = [0.99, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0];
-b4 = [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.99];
+% Allpass, 4 sample delay, 0.5 gain
+a2 = [0.5, 0.0, 0.0, 0.0, 1.0];
+b2 = [1.0, 0.0, 0.0, 0.0, 0.5];
 
-output_12_samples_delay = impz(a4, b4, samples_to_output);
-
-% Generate an impulse response with the follow characteristics:
-% Allpass, 8 sample delay, 0.05 gain
-a5 = [0.05, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0];
-b5 = [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.05];
-
-output_8_samples_delay = impz(a5, b5, samples_to_output);
+output_4_samples_delay = impz(a2, b2, samples_to_output);
 
 % Generate an impulse response with the follow characteristics:
 % Allpass, 6 sample delay, -0.25 gain
@@ -63,15 +49,29 @@ output_6_samples_delay = impz(a6, b6, samples_to_output);
 
 % Generate an impulse response with the follow characteristics:
 % Allpass, 7 sample delay, -0.65 gain
-a7 = [-0.65, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0];
-b7 = [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -0.65];
+a7 = [-0.65, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0]; % numerator (fir)
+b7 = [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -0.65]; % denominator (iir)
 
 output_7_samples_delay = impz(a7, b7, samples_to_output);
 
+% Generate an impulse response with the follow characteristics:
+% Allpass, 8 sample delay, 0.05 gain
+a5 = [0.05, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0];
+b5 = [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.05];
+
+output_8_samples_delay = impz(a5, b5, samples_to_output);
+
+% Generate an impulse response with the follow characteristics:
+% Allpass, 12 sample delay, 0.99 gain
+a4 = [0.99, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0];
+b4 = [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.99];
+
+output_12_samples_delay = impz(a4, b4, samples_to_output);
+
 save expectedOutput.mat output_1_sample_delay
-save -append expectedOutput.mat output_4_samples_delay
 save -append expectedOutput.mat output_2_samples_delay
-save -append expectedOutput.mat output_12_samples_delay
-save -append expectedOutput.mat output_8_samples_delay
+save -append expectedOutput.mat output_4_samples_delay
 save -append expectedOutput.mat output_6_samples_delay
 save -append expectedOutput.mat output_7_samples_delay
+save -append expectedOutput.mat output_8_samples_delay
+save -append expectedOutput.mat output_12_samples_delay
