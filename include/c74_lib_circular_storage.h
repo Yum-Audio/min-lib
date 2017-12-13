@@ -213,21 +213,21 @@ namespace lib {
         /// Every call after will compare to the current thread id to m_thread.
         /// @return         false if the thread id changes between calls, else true
         
-        boolean_t check_thread() {
+        bool check_thread() {
             if (m_thread == null_thread) {
                 m_thread = { std::this_thread::get_id() };
                 return true;
-            } else {
+            } 
+            else {
                 return std::this_thread::get_id() == m_thread;
             }
-            
         }
         
-		std::vector<T>		m_items;									///< storage for the circular buffer's data
-		std::size_t			m_index {};									///< location of the record head
-		std::size_t			m_size;										///< the size of the circular buffer (may be different from the amount of allocated storage)
-		std::thread::id		m_thread;                                   ///< used to ensure we don't access unsafely from multiple threads
-        std::thread::id		null_thread;                                ///< save the default constructor output to catch the first call in check_thread()
+		std::vector<T>		m_items;        ///< storage for the circular buffer's data
+		std::size_t			m_index {};     ///< location of the record head
+		std::size_t			m_size;         ///< the size of the circular buffer (may be different from the amount of allocated storage)
+		std::thread::id		m_thread;       ///< used to ensure we don't access unsafely from multiple threads
+        std::thread::id		null_thread;    ///< save the default constructor output to catch the first call in check_thread()
 	};
 
 
