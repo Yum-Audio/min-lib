@@ -572,6 +572,7 @@ namespace easing {
 			case easing::function::out_sine:			return out_sine(x);
 			case easing::function::enum_count:			assert(false);
 		}
+		return 0.0;
 	}
 
 
