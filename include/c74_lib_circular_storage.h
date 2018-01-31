@@ -110,7 +110,7 @@ namespace lib {
 			auto start = static_cast<long>( m_index - count );
 			bool wrap = false;
 
-			if (start<0) {
+			while (start<0) {
 				count = -start;
 				start = static_cast<long>(size()) + start;
 				wrap = true;
@@ -142,7 +142,7 @@ namespace lib {
 			auto start = static_cast<long>( m_index % size() );
 			bool wrap = false;
 
-			if (start+count > size()) {
+			while (start+count > size()) {
 				count = static_cast<long>(size()) - start;
 				wrap = true;
 			}
