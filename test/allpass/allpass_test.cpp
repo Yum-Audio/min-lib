@@ -864,3 +864,59 @@ TEST_CASE ("Produce the correct impulse response for for 12 samples delay, 0.99 
     // check it
     REQUIRE_VECTOR_APPROX(output, reference);
 }
+
+// NW: developed in response to issue here: https://github.com/nwolek/min-verbs/issues/5
+TEST_CASE( "survives a sudden drop in delay time without crashing" ) {
+    
+    using namespace c74::min;
+    using namespace c74::min::lib;
+    
+    size_t test_size = 44100;
+    
+    INFO( "Start with a new instance of the allpass object." );
+    // create an instance of our object
+    allpass my_object { test_size };
+    
+    // create a vector to save output from our object's processing
+    sample_vector	output;
+    
+    INFO( "Setup an impulse that is just shorter than the allpass circular_storage." );
+    // create an impulse buffer to process
+    const int		buffersize = test_size - 1000;
+    sample_vector	impulse(buffersize, 0.0);
+    impulse[0] = 1.0;
+    
+    // change the delay_time to something larger than the default
+    INFO( "Change the delay_time attribute to 4410 samples (approx 100 ms)." );
+    my_object.delay(4410);
+    
+    REQUIRE( my_object.delay() == 4410 );
+    // note that this is our object's attribute only
+    // value does not actually get changed for the allpass circular_storage until the next call to its sample_operator
+    
+    // run the calculations
+    INFO( "Push the impulse sample_vector through the allpass object one time." );
+    for (auto x : impulse) {
+        auto y = my_object(x);
+        output.push_back(y);
+    }
+    
+    // change the delay_time to something smaller
+    INFO( "Change the delay_time attribute to 22 samples (approx 5 ms)." );
+    my_object.delay(22);
+    
+    REQUIRE( my_object.delay() == 22 );
+    // note that this is our object's attribute only
+    // value does not actually get changed for the allpass circular_storage until the next call to its sample_operator
+    
+    // run the calculations again, which should wrap around the internal circular_storage
+    INFO( "Push the impulse sample_vector through the allpass object another time." );
+    for (auto x : impulse) {
+        // CRASH HAPPENS HERE
+        auto y = my_object(x);
+        output.push_back(y);
+    }
+    
+    REQUIRE( output != impulse );
+    
+}
