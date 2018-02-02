@@ -78,7 +78,7 @@ namespace lib {
 
 			m_items[m_index] = new_input;
 			++m_index;
-			if (m_index == size())
+			if (m_index >= size())
 				m_index = 0;
 		}
 

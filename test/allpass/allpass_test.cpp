@@ -891,6 +891,7 @@ TEST_CASE( "survives a sudden drop in delay time without crashing" ) {
     // change the delay_time to something larger than the default
     INFO( "Change the delay_time attribute to 44 samples (approx 1 ms)." );
     my_object.delay(44);
+	my_object.gain(0.5);
     
     REQUIRE( my_object.delay() == 44 );
     // note that this is our object's attribute only
