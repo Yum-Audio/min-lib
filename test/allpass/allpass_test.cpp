@@ -882,35 +882,51 @@ TEST_CASE( "survives a sudden drop in delay time without crashing" ) {
     
     INFO( "Setup an impulse that is just shorter than the allpass circular_storage." );
     // create an impulse buffer to process
-    const int		buffersize = test_size - 1000;
+    const int		buffersize = 64;
     sample_vector	impulse(buffersize, 0.0);
     impulse[0] = 1.0;
-    
+
+
+
     // change the delay_time to something larger than the default
-    INFO( "Change the delay_time attribute to 4410 samples (approx 100 ms)." );
-    my_object.delay(4410);
+    INFO( "Change the delay_time attribute to 44 samples (approx 1 ms)." );
+    my_object.delay(44);
     
-    REQUIRE( my_object.delay() == 4410 );
+    REQUIRE( my_object.delay() == 44 );
     // note that this is our object's attribute only
     // value does not actually get changed for the allpass circular_storage until the next call to its sample_operator
     
     // run the calculations
     INFO( "Push the impulse sample_vector through the allpass object one time." );
+	for (auto i=0; i<10000; ++i)
     for (auto x : impulse) {
         auto y = my_object(x);
         output.push_back(y);
     }
+
+
+	// change the delay_time to something larger than the default
+	INFO( "Change the delay_time attribute UP to 441 samples (approx 10 ms)." );
+	my_object.delay(441);
+	REQUIRE( my_object.delay() == 441 );
+
+	// run the calculations
+	INFO( "Push the impulse sample_vector through the allpass object one time." );
+	for (auto i=0; i<10000; ++i)
+	for (auto x : impulse) {
+		auto y = my_object(x);
+		output.push_back(y);
+	}
+
     
     // change the delay_time to something smaller
-    INFO( "Change the delay_time attribute to 22 samples (approx 5 ms)." );
-    my_object.delay(22);
-    
-    REQUIRE( my_object.delay() == 22 );
-    // note that this is our object's attribute only
-    // value does not actually get changed for the allpass circular_storage until the next call to its sample_operator
-    
+    INFO( "Change the delay_time attribute BACK DOWB to 44 samples (approx 1 ms)." );
+    my_object.delay(44);
+    REQUIRE( my_object.delay() == 44 );
+
     // run the calculations again, which should wrap around the internal circular_storage
     INFO( "Push the impulse sample_vector through the allpass object another time." );
+	for (auto i=0; i<10000; ++i)
     for (auto x : impulse) {
         // CRASH HAPPENS HERE
         auto y = my_object(x);
