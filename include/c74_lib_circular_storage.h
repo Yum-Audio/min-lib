@@ -170,11 +170,12 @@ namespace lib {
 		}
 
 
-		///	Zero the contents.
+		///	Zero the contents without resizing.
 	
 		void clear() {
             assert(check_thread());
-			m_items.clear();
+			T empty_value;
+            std::fill(m_items.begin(),m_items.end(),empty_value);
 		}
 
 
@@ -194,6 +195,11 @@ namespace lib {
 		void resize(std::size_t	new_size) {
 			assert(new_size <= m_items.size());
 			m_size = new_size;
+            // if m_index is out of bounds after resize, we clear the memory to prevent invalid output from history
+            if (m_index >= m_size) {
+                m_index = 0;
+                clear();
+            }
 		}
 
 
