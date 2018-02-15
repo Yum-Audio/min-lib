@@ -231,3 +231,15 @@ TEST_CASE ("Using Circular Storage as the basis for an Audio Delay") {
 	samples = {29,30,31,32};
 	circ.write(samples);
 }
+
+TEST_CASE ("Test that clear() does not resize Circular Storage") {
+    INFO ("Using an 8-sample circular buffer")
+    c74::min::lib::circular_storage<c74::min::sample>	circ(8);	// 8 samples
+    
+    REQUIRE( circ.size() == 8 );
+    
+    circ.clear();
+    
+    REQUIRE( circ.size() == 8 );
+    
+}
