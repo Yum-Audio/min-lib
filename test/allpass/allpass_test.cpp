@@ -937,3 +937,74 @@ TEST_CASE( "survives a sudden drop in delay time without crashing" ) {
     REQUIRE( output != impulse );
     
 }
+
+// NW: developed in response to issue here: https://github.com/Cycling74/min-lib/issues/19
+TEST_CASE( "produces valid output after sudden drop in delay time" ) {
+    
+    using namespace c74::min;
+    using namespace c74::min::lib;
+    
+    size_t test_size = 44100;
+    
+    INFO( "Start with a new instance of the allpass object." );
+    // create an instance of our object
+    allpass my_object { test_size };
+    
+    // create a vector to save output from our object's processing
+    sample_vector	output;
+    
+    INFO( "Setup an impulse that is just shorter than the allpass circular_storage." );
+    // create an impulse buffer to process
+    const int		buffersize = 64;
+    sample_vector	impulse(buffersize, 0.0);
+    impulse[0] = 1.0;
+    
+    // change the delay_time to something larger than the default
+    INFO( "Change the delay_time attribute to 4 samples (approx 0.1 ms)." );
+    my_object.delay(4);
+    my_object.gain(0.5);
+    
+    REQUIRE( my_object.delay() == 4 );
+    // note that this is our object's attribute only
+    // value does not actually get changed for the allpass circular_storage until the next call to its sample_operator
+    
+    // run the calculations
+    INFO( "Push the impulse sample_vector through the allpass object one time." );
+    for (auto x : impulse) {
+        auto y = my_object(x);
+        output.push_back(y);
+    }
+    
+    
+    // change the delay_time to something larger than the default
+    INFO( "Change the delay_time attribute UP to 44 samples (approx 1 ms)." );
+    my_object.delay(44);
+    REQUIRE( my_object.delay() == 44 );
+    
+    // run the calculations
+    INFO( "Push the impulse sample_vector through the allpass object one time." );
+    for (auto x : impulse) {
+        auto y = my_object(x);
+        output.push_back(y);
+    }
+    
+    
+    // change the delay_time to something smaller
+    INFO( "Change the delay_time attribute BACK DOWN to 4 samples (approx 0.1 ms)." );
+    my_object.delay(4);
+    REQUIRE( my_object.delay() == 4 );
+    
+    // run the calculations again, which should wrap around the internal circular_storage
+    INFO( "Push the impulse sample_vector through the allpass object another time." );
+    for (auto x : impulse) {
+        // CRASH HAPPENS HERE
+        auto y = my_object(x);
+        output.push_back(y);
+    }
+    
+    INFO( "Compare the last 64 samples to the first 64 samples. They should be the same." );
+    for (auto x : impulse) {
+        REQUIRE( output[x] == output[x+128] );
+    }
+    
+}

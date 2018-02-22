@@ -231,3 +231,42 @@ TEST_CASE ("Using Circular Storage as the basis for an Audio Delay") {
 	samples = {29,30,31,32};
 	circ.write(samples);
 }
+
+TEST_CASE ("Test zero() and clear() functions of Circular Storage") {
+    INFO ("Using an 8-sample circular buffer")
+    c74::min::lib::circular_storage<c74::min::sample>	circ(8);	// 8 samples
+    c74::min::sample_vector								samples = {1,2,3,4,5,6,7,8};
+    
+    INFO("The default size will be the capacity of the circular buffer (8 samples)");
+    REQUIRE( circ.size() == 8 );
+    
+    INFO("After we write in 8 values, the internal storage is updated with the new items in the correct locations");
+    circ.write(samples);
+    REQUIRE( circ.item(0) == 1 );
+    REQUIRE( circ.item(1) == 2 );
+    REQUIRE( circ.item(2) == 3 );
+    REQUIRE( circ.item(3) == 4 );
+    REQUIRE( circ.item(4) == 5 );
+    REQUIRE( circ.item(5) == 6 );
+    REQUIRE( circ.item(6) == 7 );
+    REQUIRE( circ.item(7) == 8 );
+    
+    INFO("After we call zero(), the size of the internal storage in unchanged...");
+    circ.zero();
+    REQUIRE( circ.size() == 8 );
+    
+    INFO("...but all values have been set to zero");
+    REQUIRE( circ.item(0) == 0 );
+    REQUIRE( circ.item(1) == 0 );
+    REQUIRE( circ.item(2) == 0 );
+    REQUIRE( circ.item(3) == 0 );
+    REQUIRE( circ.item(4) == 0 );
+    REQUIRE( circ.item(5) == 0 );
+    REQUIRE( circ.item(6) == 0 );
+    REQUIRE( circ.item(7) == 0 );
+    
+    INFO("After we call clear(), the internal storage has a size of 0");
+    circ.clear();
+    REQUIRE( circ.size() == 0 );
+    
+}
