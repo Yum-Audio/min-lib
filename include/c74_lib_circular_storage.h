@@ -172,11 +172,20 @@ namespace lib {
 
 		///	Zero the contents without resizing.
 	
-		void clear() {
+		void zero() {
             assert(check_thread());
-			T empty_value;
-            std::fill(m_items.begin(),m_items.end(),empty_value);
+			T zero_value = T(); // call the constructor to ensure zero initialization
+            std::fill(m_items.begin(),m_items.end(),zero_value);
 		}
+        
+        
+        /// Clear the contents, leaving internal vector with a size of zero.
+        
+        void clear() {
+            assert(check_thread());
+            m_items.clear();
+            m_size = 0;
+        }
 
 
 		///	Return the item count of the container.
@@ -195,10 +204,10 @@ namespace lib {
 		void resize(std::size_t	new_size) {
 			assert(new_size <= m_items.size());
 			m_size = new_size;
-            // if m_index is out of bounds after resize, we clear the memory to prevent invalid output from history
+            // if m_index is out of bounds after resize, we zero the memory to prevent invalid output from history
             if (m_index >= m_size) {
                 m_index = 0;
-                clear();
+                zero();
             }
 		}
 
