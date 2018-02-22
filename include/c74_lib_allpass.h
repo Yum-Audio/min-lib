@@ -82,11 +82,11 @@ namespace lib {
 
 			// Apply the filter
 			// We start with the equation in standard form:
-			//		y = alpha * x  +  x1  -  alpha * y1;
+			//		y = -alpha * x  +  x1  +  alpha * y1;
 			// Then to a version that Fred Harris refers to as a "Re-Ordered All-Pass Filter Structure" in Multirate Signal Processing
-			//		y = x1  +  alpha * x  -  alpha * y1;
+			//		y = x1  +  alpha * y1  -  alpha * x;
 			// Finally, here is a "Single Coefficient All-Pass Filter", dropping from 2 adds and 2 mults down to 2 adds and 1 mult
-			auto y = x1 + ((x - y1) * alpha);
+			auto y = x1 + ((y1 - x) * alpha);
 
 			// Store the output in the feedback buffer
 			m_feedback_history.write(y);
