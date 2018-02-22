@@ -1002,7 +1002,9 @@ TEST_CASE( "produces valid output after sudden drop in delay time" ) {
         output.push_back(y);
     }
     
-    REQUIRE( output[0] == output[128] );
-    REQUIRE( output[1] == output[129] );
+    INFO( "Compare the last 64 samples to the first 64 samples. They should be the same." );
+    for (auto x : impulse) {
+        REQUIRE( output[x] == output[x+128] );
+    }
     
 }
