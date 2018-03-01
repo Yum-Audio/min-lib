@@ -586,11 +586,11 @@ TEST_CASE ("Produce the correct impulse response for 7 samples delay, -0.65 gain
     
     INFO ("And finally checking our output against a reference produced with Octave.");
     // coefficients calculated in Octave using impz(a,b,64)
-    //	a7 = [-0.65, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0]; % fir coefficients
-    //  b7 = [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -0.65]; % iir coefficients
+    //	a7 = [0.65, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0]; % fir coefficients
+    //  b7 = [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.65]; % iir coefficients
     
     sample_vector reference = {
-        -0.65,
+        0.65,
         0,
         0,
         0,
@@ -604,7 +604,7 @@ TEST_CASE ("Produce the correct impulse response for 7 samples delay, -0.65 gain
         0,
         0,
         0,
-        0.375375,
+        -0.375375,
         0,
         0,
         0,
@@ -618,7 +618,7 @@ TEST_CASE ("Produce the correct impulse response for 7 samples delay, -0.65 gain
         0,
         0,
         0,
-        0.1585959375,
+        -0.1585959375,
         0, 
         0, 
         0, 
@@ -632,7 +632,7 @@ TEST_CASE ("Produce the correct impulse response for 7 samples delay, -0.65 gain
         0, 
         0, 
         0, 
-        0.06700678359375001, 
+        -0.06700678359375001, 
         0, 
         0, 
         0, 
@@ -646,7 +646,7 @@ TEST_CASE ("Produce the correct impulse response for 7 samples delay, -0.65 gain
         0, 
         0, 
         0, 
-        0.02831036606835938, 
+        -0.02831036606835938, 
         0, 
         0, 
         0, 
