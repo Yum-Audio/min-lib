@@ -220,3 +220,37 @@ SCENARIO ("responds appropriately to messages and attrs") {
 		}
 	}
 }
+
+// NW: developed in response to issue here: https://github.com/Cycling74/min-lib/issues/15
+TEST_CASE ("Parameters are set properly with different constructors") {
+	
+	using namespace c74::min;
+	using namespace c74::min::lib;
+	
+	INFO ("Creating onepole instance with no arguments, which leaves coefficient = 0.5");
+	
+	onepole	o1;
+	REQUIRE( o1.coefficient() == 0.5 );	// check the default
+	
+	INFO ("Creating onepole instance with 1 argument, which sets coefficient = 0.0");
+	
+	onepole	o2 { 0.0 };
+	REQUIRE( o2.coefficient() == 0.0 );	// check the initialized value
+	
+	INFO ("Creating onepole instance with 1 argument, which sets coefficient = 0.87654");
+	
+	onepole	o3 { 0.87654 };
+	REQUIRE( o3.coefficient() == Approx(0.87654) );	// check the initialized value
+	
+	INFO ("Creating onepole instance with 1 argument below clamping range");
+	
+	onepole	o4 { -0.1234 };
+	REQUIRE( o4.coefficient() == Approx(0.0) );	// check the initialized value
+	
+	
+	INFO ("Creating onepole instance with 1 argument above clamping range");
+	
+	onepole	o5 { 1.1234 };
+	REQUIRE( o5.coefficient() == Approx(1.0) );	// check the initialized value
+	
+}

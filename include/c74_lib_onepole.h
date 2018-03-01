@@ -18,6 +18,17 @@ namespace lib {
 	class onepole {
 	public:
 
+		
+		/// Default constructor with minimum number of initial values.
+		/// @param	initial_coefficient		Sets the gain coefficient that is applied to samples from history.
+		///									Default value is 0.5.
+		
+		explicit onepole(number initial_coefficient = 0.5)
+		{
+			this->coefficient(initial_coefficient);
+		}
+		
+		
 		/// Set filter coefficient directly.
 		/// @param new_coefficient	The new value of the feedback coefficient in the range [0.0, 1.0].
 
