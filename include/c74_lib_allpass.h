@@ -1,6 +1,6 @@
 /// @file
 ///	@ingroup 	minlib
-/// @author		Timothy Place, Trond Lossius
+/// @author		Timothy Place, Trond Lossius, Nathan Wolek
 ///	@copyright	Copyright (c) 2017, Cycling '74
 ///	@license	Usage of this file and its contents is governed by the MIT License
 
