@@ -16,12 +16,28 @@ namespace lib {
 	class allpass {
 	public:
 
-		/// Capacity is fixed at creation
+		/// Default constructor with minimum number of initial values.
+        /// @param	capacity	Sets capacity in samples for feedforward and feedback history.
+        ///						Default value is 4410 samples. Capacity is fixed at creation.
 
 		explicit allpass(std::size_t capacity = 4410)
 		: m_feedforward_history(capacity)
 		, m_feedback_history(capacity)
 		{}
+        
+        
+        /// Constructor with initial values for capacity, size, and gain.
+        /// @param  capacity_and_size	Sets capacity and size in samples for feedforward and feedback history.
+        ///								Uses std::pair to ensure values are set together. Capacity is fixed at creation.
+		/// @param	initial_gain		Sets the gain coefficient that is applied to samples from history.
+		///								Default value is 0.0.
+        
+        explicit allpass(std::pair<size_t, size_t> capacity_and_size, number initial_gain = 0.0)
+        : m_feedforward_history(capacity_and_size)
+        , m_feedback_history(capacity_and_size)
+        {
+            this->gain(initial_gain);
+        }
 
 
 		/// Set a new delay time in samples.
