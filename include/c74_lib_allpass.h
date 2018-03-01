@@ -1,6 +1,6 @@
 /// @file
 ///	@ingroup 	minlib
-/// @author		Timothy Place, Trond Lossius
+/// @author		Timothy Place, Trond Lossius, Nathan Wolek
 ///	@copyright	Copyright (c) 2017, Cycling '74
 ///	@license	Usage of this file and its contents is governed by the MIT License
 
@@ -16,12 +16,32 @@ namespace lib {
 	class allpass {
 	public:
 
-		/// Capacity is fixed at creation
+		/// Default constructor with minimum number of initial values.
+        /// @param	capacity		Sets capacity in samples for feedforward and feedback history.
+        ///							Default value is 4410 samples. Capacity is fixed at creation.
+		/// @param	initial_gain	Sets the gain coefficient that is applied to samples from history.
+		///							Default value is 0.0.
 
-		explicit allpass(std::size_t capacity = 4410)
+		explicit allpass(std::size_t capacity = 4410, number initial_gain = 0.0)
 		: m_feedforward_history(capacity)
 		, m_feedback_history(capacity)
-		{}
+		{
+			this->gain(initial_gain);
+		}
+        
+        
+        /// Constructor with initial values for capacity, size, and gain.
+        /// @param  capacity_and_size	Sets capacity and size in samples for feedforward and feedback history.
+        ///								Uses std::pair to ensure values are set together. Capacity is fixed at creation.
+		/// @param	initial_gain		Sets the gain coefficient that is applied to samples from history.
+		///								Default value is 0.0.
+        
+        explicit allpass(std::pair<size_t, size_t> capacity_and_size, number initial_gain = 0.0)
+        : m_feedforward_history(capacity_and_size)
+        , m_feedback_history(capacity_and_size)
+        {
+            this->gain(initial_gain);
+        }
 
 
 		/// Set a new delay time in samples.
@@ -82,11 +102,11 @@ namespace lib {
 
 			// Apply the filter
 			// We start with the equation in standard form:
-			//		y = alpha * x  +  x1  -  alpha * y1;
+			//		y = -alpha * x  +  x1  +  alpha * y1;
 			// Then to a version that Fred Harris refers to as a "Re-Ordered All-Pass Filter Structure" in Multirate Signal Processing
-			//		y = x1  +  alpha * x  -  alpha * y1;
+			//		y = x1  +  alpha * y1  -  alpha * x;
 			// Finally, here is a "Single Coefficient All-Pass Filter", dropping from 2 adds and 2 mults down to 2 adds and 1 mult
-			auto y = x1 + ((x - y1) * alpha);
+			auto y = x1 + ((y1 - x) * alpha);
 
 			// Store the output in the feedback buffer
 			m_feedback_history.write(y);
