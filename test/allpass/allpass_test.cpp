@@ -1009,3 +1009,36 @@ TEST_CASE( "produces valid output after sudden drop in delay time" ) {
     }
     
 }
+
+// NW: developed in response to issue here: https://github.com/Cycling74/min-lib/issues/14
+TEST_CASE ("Parameters are set properly with different constructors") {
+	
+	using namespace c74::min;
+	using namespace c74::min::lib;
+	
+	INFO ("Creating allpass instance with no arguments, which leaves default capacity = 4410 samples, gain = 0.0");
+	
+	allpass	f1;
+	REQUIRE( f1.gain() == 0.0 );	// check the defaults
+	REQUIRE( f1.delay() == 4410 );	// ...
+	
+	INFO ("Creating allpass instance with 1 argument, which sets capacity & size = 200 samples, default gain = 0.0");
+	
+	allpass	f2 { 200 };
+	REQUIRE( f2.gain() == 0.0 );	// check the default
+	REQUIRE( f2.delay() == 200 );	// check the initialized value
+	
+	INFO ("Creating allpass instance with 2 arguments, which sets capacity & size = 20 samples, gain = 0.76");
+	
+	allpass	f3 { 20, 0.76 };
+	REQUIRE( f3.gain() == 0.76 );	// check the initialized value
+	REQUIRE( f3.delay() == 20 );	// check the initialized value
+	
+	
+	INFO ("Creating allpass instance with 3 arguments, which sets capacity = 400 samples, size = 100, gain = 0.22");
+	
+	allpass	f4 { { 400, 100 } , 0.22 };
+	REQUIRE( f4.gain() == 0.22 );	// check the initialized value
+	REQUIRE( f4.delay() == 100 );	// check the initialized value
+	
+}
