@@ -17,13 +17,17 @@ namespace lib {
 	public:
 
 		/// Default constructor with minimum number of initial values.
-        /// @param	capacity	Sets capacity in samples for feedforward and feedback history.
-        ///						Default value is 4410 samples. Capacity is fixed at creation.
+        /// @param	capacity		Sets capacity in samples for feedforward and feedback history.
+        ///							Default value is 4410 samples. Capacity is fixed at creation.
+		/// @param	initial_gain	Sets the gain coefficient that is applied to samples from history.
+		///							Default value is 0.0.
 
-		explicit allpass(std::size_t capacity = 4410)
+		explicit allpass(std::size_t capacity = 4410, number initial_gain = 0.0)
 		: m_feedforward_history(capacity)
 		, m_feedback_history(capacity)
-		{}
+		{
+			this->gain(initial_gain);
+		}
         
         
         /// Constructor with initial values for capacity, size, and gain.
