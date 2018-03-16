@@ -195,6 +195,13 @@ namespace lib {
 			return m_size;
 		}
 
+		
+		///	Return the capacity (or maximum size) of the container.
+		/// @return	The capacity (or maximum size) of the container.
+		
+		std::size_t capacity() {
+			return m_items.size();
+		}
 
 		///	Change the number of items in the container.
 		/// Note that this does not change the capacity of the container,

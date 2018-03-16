@@ -212,6 +212,8 @@ TEST_CASE ("Using Circular Storage as the basis for an Audio Delay") {
 	INFO("We change the delay time from 16-samples to 10-samples")
 	circ.resize(10);
 	circ.tail(output);
+	REQUIRE( circ.size() == 10 );
+	REQUIRE( circ.capacity() == 16 );
 
 	INFO("if tail produced what happened 10 samples ago it would be: 15,16,17,18 -- but we just shortened the delay, which means some samples are going to get dropped");
 	REQUIRE( output[0] == 9 );
@@ -339,6 +341,8 @@ TEST_CASE ("Comparing outputs from two versions of tail() function to ensure the
 	INFO("We change the delay time from 16-samples to 10-samples")
 	circ.resize(10);
 	circ.tail(output);
+	REQUIRE( circ.size() == 10 );
+	REQUIRE( circ.capacity() == 16 );
 	
 	INFO("if tail produced what happened 10 samples ago it would be: 15,16,17,18 -- but we just shortened the delay, which means some samples are going to get dropped");
 	REQUIRE( output[0] == circ.tail(0) );
