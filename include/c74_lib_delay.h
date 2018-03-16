@@ -24,8 +24,9 @@ namespace lib {
 
 		delay(number capacity = 256)
 		: m_history(static_cast<size_t>(capacity + 5)) // 5 extra samples to accomodate the 'now' sample + up to 4 interpolation samples
-		, m_size(capacity)
-		{}
+		{
+			size(capacity);
+		}
 
 
 		/// Set a new delay time in samples.
@@ -69,15 +70,13 @@ namespace lib {
 		///	@return		Calculated sample
 
 		sample operator()(sample x) {
-			// must resize in the audio thread because circular storage requires single-threaded access
-			// need delay samples plus 2 "now" samples for interpolation
-			auto new_size = static_cast<size_t>(m_size) + 2;
-			m_history.resize(new_size);
-			m_size_fractional = m_size - static_cast<std::size_t>(m_size);
+			// calculate the difference between the capacity and our delay so that tail() can be offset
+			// extra 2 "now" samples allow for interpolation
+			size_t capacity_minus_delay = m_history.capacity() - static_cast<size_t>(m_size) - 2;
 
 			// write first (then read) so that we can acheive a zero-sample delay
 			m_history.write(x);
-			return m_interpolator(m_history.tail(1), m_history.tail(), m_size_fractional);
+			return m_interpolator(m_history.tail(capacity_minus_delay+1), m_history.tail(capacity_minus_delay), m_size_fractional);
 		}
 
 	private:
