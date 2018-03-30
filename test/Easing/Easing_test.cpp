@@ -1,7 +1,8 @@
+/// @file
 ///	@brief 		Unit test for the easing classes
-///	@author		Nathan Wolek
-//	@copyright	Copyright (c) 2017, Cycling '74
-///	@license	This project is released under the terms of the MIT License.
+///	@ingroup 	minlib
+///	@copyright	Copyright 2018 The Min-Lib Authors. All rights reserved.
+///	@license	Use of this source code is governed by the MIT License found in the License.md file.
 
 #define CATCH_CONFIG_MAIN
 #include "c74_min_catch.h"
