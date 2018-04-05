@@ -344,3 +344,69 @@ TEST_CASE ("Linear interpolation delay time at the edge of a vector") {
 	}
 	REQUIRE( nonzero_count == 2 );
 }
+
+// NW: developed in response to issue here: https://github.com/Cycling74/min-lib/issues/22
+TEST_CASE ("Clear message should reset values in memory to 0.0, but preserve size of memory allocation") {
+	
+	using namespace c74::min;
+	using namespace c74::min::lib;
+	INFO ("Using a delay of 6 samples, vector-size of 4 samples");
+	
+	sample_vector zero(4, 0.0);
+	sample_vector impulse(4, 0.0);
+	impulse[0] = 1.0;
+	
+	delay<> my_delay { 6 };
+	
+	INFO ("We process impulse, then two empty vectors of audio...");
+	sample_vector output[3];
+	for (auto& s : impulse)
+		output[0].push_back( my_delay(s) );
+	for (auto& s : zero)
+		output[1].push_back( my_delay(s) );
+	for (auto& s : zero)
+		output[2].push_back( my_delay(s) );
+	
+	REQUIRE( output[0][0] == 0.0 ); // delay 0 samples
+	REQUIRE( output[0][1] == 0.0 ); // delay 1 sample
+	REQUIRE( output[0][2] == 0.0 ); // delay 2 samples
+	REQUIRE( output[0][3] == 0.0 ); // ...
+	
+	REQUIRE( output[1][0] == 0.0 );
+	REQUIRE( output[1][1] == 0.0 );
+	REQUIRE( output[1][2] == 1.0 ); // delay 6 samples
+	REQUIRE( output[1][3] == 0.0 );
+	
+	REQUIRE( output[2][0] == 0.0 );
+	REQUIRE( output[2][1] == 0.0 );
+	REQUIRE( output[2][2] == 0.0 );
+	REQUIRE( output[2][3] == 0.0 );
+	
+	INFO ("Next we process impulse, but clear before the empty vectors...");
+	sample_vector output2[3];
+	for (auto& s : impulse)
+		output2[0].push_back( my_delay(s) );
+	
+	my_delay.clear();
+	
+	for (auto& s : zero)
+		output2[1].push_back( my_delay(s) );
+	for (auto& s : zero)
+		output2[2].push_back( my_delay(s) );
+	
+	REQUIRE( output2[0][0] == 0.0 ); // delay 0 samples
+	REQUIRE( output2[0][1] == 0.0 ); // delay 1 sample
+	REQUIRE( output2[0][2] == 0.0 ); // delay 2 samples
+	REQUIRE( output2[0][3] == 0.0 ); // ...
+	
+	REQUIRE( output2[1][0] == 0.0 );
+	REQUIRE( output2[1][1] == 0.0 );
+	REQUIRE( output2[1][2] == 0.0 ); // delayed impulse should be cleared
+	REQUIRE( output2[1][3] == 0.0 );
+	
+	REQUIRE( output2[2][0] == 0.0 );
+	REQUIRE( output2[2][1] == 0.0 );
+	REQUIRE( output2[2][2] == 0.0 );
+	REQUIRE( output2[2][3] == 0.0 );
+
+}
