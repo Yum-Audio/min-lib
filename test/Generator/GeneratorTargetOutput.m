@@ -58,7 +58,7 @@ endfunction
 
 for i = 1:samples_to_output
 	current_delta = mod((i - 1), samples_per_cycle) / samples_per_cycle;
-	output_unipolarramp(i) = current_delta * samples_per_cycle / (samples_per_cycle - 1);
+	output_unipolarramp(i) = mod((i - 1), samples_per_cycle) / (samples_per_cycle - ( 1 / cycles_per_matrix ));
 	output_ramp(i) = ( ( output_unipolarramp(i) * 2.0 ) - 1.0 );
 	output_sawtooth(i) = ( current_delta * 2.0 ) - 1.0;
     output_unipolarsawtooth(i) = current_delta;
