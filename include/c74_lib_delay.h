@@ -60,7 +60,7 @@ namespace lib {
 		/// Erase the delay history.
 
 		void clear() {
-			m_history.clear();
+			m_history.zero();
 		}
 
 
