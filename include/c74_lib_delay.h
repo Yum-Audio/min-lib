@@ -27,6 +27,13 @@ namespace lib {
 		{
 			size(capacity);
 		}
+		
+		delay(std::pair<size_t, number> capacity_and_size)
+		: m_history(capacity_and_size.first + 5)
+		{
+			assert(capacity_and_size.first > capacity_and_size.second);
+			size(capacity_and_size.second);
+		}
 
 
 		/// Set a new delay time in samples.
