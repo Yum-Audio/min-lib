@@ -1,8 +1,7 @@
 /// @file
 ///	@ingroup 	minlib
-/// @author		Timothy Place, Nathan Wolek
-///	@copyright	Copyright (c) 2017, Cycling '74
-///	@license	Usage of this file and its contents is governed by the MIT License
+///	@copyright	Copyright 2018 The Min-Lib Authors. All rights reserved.
+///	@license	Use of this source code is governed by the MIT License found in the License.md file.
 
 #pragma once
 
@@ -16,18 +15,18 @@ namespace lib {
 	namespace generator {
 
 
-        /// Generates a line from -1 to 1 with consistent slope
+        /// Generates an ideal sawtooth waveform from -1 to 1. Not anti-aliased.
         /// @tparam T       render output as this datatype. algorithm was designed to assume the use of floating point.
 
         template <typename T>
-        class ramp {
+        class sawtooth {
         public:
 
 			/// Create an instance of a generator to calculate an output with N points.
 			/// @param	size	The number of points over which the generator will produce a function.
 			///	@param	count	number of cycles of the wave to generate across the vector. default is 1.
 
-            ramp (size_t size, double count = 1.0)
+            sawtooth (size_t size, double count = 1.0)
 			: m_cycle_size	{ size	}
 			, m_cycle_count	{ count }
             {
@@ -50,25 +49,25 @@ namespace lib {
         };
 
 
-        /// Generates an ideal sawtooth waveform from -1 to 1. Not anti-aliased.
+		/// Generates a line from -1 to 1 with consistent slope
         /// @tparam T       render output as this datatype. algorithm was designed to assume the use of floating point.
 
         template <typename T>
-        using sawtooth = generator::ramp<T>;
+        using ramp = generator::sawtooth<T>;
 
 
-        /// Generates a line from 0 to 1 with consistent slope
+        /// Generates an ideal sawtooth waveform from 0 to 1. Not anti-aliased.
         /// @tparam T       render output as this datatype. algorithm was designed to assume the use of floating point.
 
 		template <typename T>
-		class ramp_unipolar {
+		class sawtooth_unipolar {
 		public:
 
 			/// Create an instance of a generator to calculate an output with N points.
 			/// @param	size	The number of points over which the generator will produce a function.
 			///	@param	count	number of cycles of the wave to generate across the vector. default is 1.
 
-			ramp_unipolar (size_t size, double count = 1.0)
+			sawtooth_unipolar (size_t size, double count = 1.0)
 			: m_cycle_size	{ size	}
 			, m_cycle_count	{ count }
 			{
@@ -91,11 +90,11 @@ namespace lib {
 		};
 
 
-        /// Generates an ideal sawtooth waveform from 0 to 1. Not anti-aliased.
+		/// Generates a line from 0 to 1 with consistent slope
         /// @tparam T       render output as this datatype. algorithm was designed to assume the use of floating point.
 
         template <typename T>
-        using sawtooth_unipolar = generator::ramp_unipolar<T>;
+        using ramp_unipolar = generator::sawtooth_unipolar<T>;
 
 
         /// Generates a sine wave constrained between -1 to 1

@@ -15,7 +15,7 @@ clear
 % - cycles_per_matrix controls the number of cycles in each target output matrix.
 
 samples_to_output = 64;
-cycles_per_matrix = 1;
+cycles_per_matrix = 2;
 
 % samples_per_cycle is then computed using the first two variables.
 % This value is needed before we enter the loop that generates each target output matrix.
@@ -23,6 +23,8 @@ samples_per_cycle = samples_to_output / cycles_per_matrix;
 
 output_ramp = double (1 : samples_to_output);
 output_unipolarramp = double (1 : samples_to_output);
+output_sawtooth = double (1 : samples_to_output);
+output_unipolarsawtooth = double (1 : samples_to_output);
 output_sine = double (1 : samples_to_output);
 output_unipolarsine = double (1 : samples_to_output);
 output_cosine = double (1 : samples_to_output);
@@ -56,8 +58,10 @@ endfunction
 
 for i = 1:samples_to_output
 	current_delta = mod((i - 1), samples_per_cycle) / samples_per_cycle;
-	output_ramp(i) = ( current_delta * 2.0 ) - 1.0;
-    output_unipolarramp(i) = current_delta;
+	output_unipolarramp(i) = current_delta * samples_per_cycle / (samples_per_cycle - ( 1 / cycles_per_matrix ));
+	output_ramp(i) = ( ( output_unipolarramp(i) * 2.0 ) - 1.0 );
+	output_sawtooth(i) = ( current_delta * 2.0 ) - 1.0;
+    output_unipolarsawtooth(i) = current_delta;
 	output_sine(i) = sin (current_delta * 2.0 * pi);
 	output_unipolarsine(i) = 0.5 + 0.5 * sin (current_delta * 2.0 * pi);
 	output_cosine(i) = cos (current_delta * 2.0 * pi);
@@ -68,6 +72,8 @@ endfor
 
 save expectedOutput.mat output_ramp
 save -append expectedOutput.mat output_unipolarramp
+save -append expectedOutput.mat output_sawtooth
+save -append expectedOutput.mat output_unipolarsawtooth
 save -append expectedOutput.mat output_sine
 save -append expectedOutput.mat output_unipolarsine
 save -append expectedOutput.mat output_cosine

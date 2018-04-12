@@ -1,8 +1,7 @@
 /// @file
 ///	@ingroup 	minlib
-/// @author		Timothy Place, Nathan Wolek
-///	@copyright	Copyright (c) 2017, Cycling '74
-///	@license	Usage of this file and its contents is governed by the MIT License
+///	@copyright	Copyright 2018 The Min-Lib Authors. All rights reserved.
+///	@license	Use of this source code is governed by the MIT License found in the License.md file.
 
 #pragma once
 
@@ -76,7 +75,7 @@ namespace lib {
 		/// Erase the delay history.
 
 		void clear() {
-			m_history.clear();
+			m_history.zero();
 		}
 
 
