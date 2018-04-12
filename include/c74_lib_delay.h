@@ -80,14 +80,14 @@ namespace lib {
 		sample tail(int offset = 0)  {
 			
 			// calculate the difference between the capacity and our delay so that tail() can be properly offset
-			// extra 1 "now" sample to allow for interpolation
+			// extra 2 "now" samples to allow for interpolation
 			size_t true_offset =
 				m_history.capacity()
 				- integral_size()
-				- 1
+				- 2
 				+ offset;
 			
-			return m_history.tail(true_offset);
+			return m_interpolator(m_history.tail(true_offset+1), m_history.tail(true_offset), m_size_fractional);
 		}
 		
 		
@@ -115,7 +115,7 @@ namespace lib {
 			size_t capacity_minus_delay = m_history.capacity() - static_cast<size_t>(m_size) - 2;
 
 			// write first (then read) so that we can acheive a zero-sample delay
-			m_history.write(x);
+			write(x);
 			return m_interpolator(m_history.tail(capacity_minus_delay+1), m_history.tail(capacity_minus_delay), m_size_fractional);
 		}
 		
