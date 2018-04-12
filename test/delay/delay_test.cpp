@@ -414,7 +414,7 @@ TEST_CASE ("Clear message should reset values in memory to 0.0, but preserve siz
 TEST_CASE ("Using tail() and write() functions") {
 	using namespace c74::min;
 	using namespace c74::min::lib;
-	INFO ("Using a delay of 4 samples to process a vector of 16 samples");
+	INFO ("Using a delay of 4 samples to process first vector of 16 samples");
 	
 	sample_vector					input		{ 0,1,0,0,		0,0,2,0,	3,0,0,0,	0,0,0,0 };
 	sample_vector					output;
@@ -428,5 +428,17 @@ TEST_CASE ("Using tail() and write() functions") {
 	}
 	
 	REQUIRE_VECTOR_APPROX( output , reference );
+	
+	INFO ("Using an offset of 2 brings delay to (4 - 2) samples when we process second vector of 16 samples");
+	sample_vector					output2;
+	sample_vector					reference2	{ 0,0,0,1,		0,0,0,0,	2,0,3,0,	0,0,0,0 };
+	
+	INFO ("We process second vector of audio...");
+	for (auto& s : input) {
+		my_delay.write(s);
+		output2.push_back( my_delay.tail(2) );
+	}
+	
+	REQUIRE_VECTOR_APPROX( output2 , reference2 );
 }
 
