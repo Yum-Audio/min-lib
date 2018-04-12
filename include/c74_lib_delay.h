@@ -70,6 +70,24 @@ namespace lib {
 		double fractional_size() {
 			return m_size_fractional;
 		}
+		
+		
+		/// Read a single sample out from the delay.
+		///	This will be the oldest sample in the history, unless an offset is specified.
+		/// @param	offset	An optional parameter for getting an item that is N items newer than the oldest value.
+		///	@return	output	The item from the buffer.
+		
+		sample tail(int offset = 0)  {
+			return m_history.tail(offset);
+		}
+		
+		
+		/// Write a single sample into the delay.
+		///	@param	new_input	An item to add.
+		
+		void write(sample new_input)  {
+			m_history.write(new_input);
+		}
 
 
 		/// Erase the delay history.
