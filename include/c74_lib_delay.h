@@ -20,13 +20,17 @@ namespace lib {
 	public:
 
 		/// Capacity of the delay is fixed at instantiation
-		/// @param capacity	The number of samples to allocate for the delay line. Default is 256.
+		/// @param capacity	The number of samples to allocate for the maximum delay allowed, which will also be used as the initial delay. Default is 256.
 
 		delay(number capacity = 256)
 		: m_history(static_cast<size_t>(capacity + 5)) // 5 extra samples to accomodate the 'now' sample + up to 4 interpolation samples
 		{
 			size(capacity);
 		}
+		
+		
+		/// Capacity of the delay is fixed at instantiation
+		/// @param capacity_and_size	The number of samples to allocate for the maximum delay allowed, along with a second initial delay setting that is less than this maximum.
 		
 		delay(std::pair<size_t, number> capacity_and_size)
 		: m_history(capacity_and_size.first + 5)
@@ -44,6 +48,7 @@ namespace lib {
 			m_size_fractional = m_size - static_cast<std::size_t>(m_size);
 		}
 
+		
 		/// Return the current delay time in samples.
 		/// @return The delay time in samples.
 
@@ -51,6 +56,7 @@ namespace lib {
 			return m_size;
 		}
 
+		
 		/// Return the integer part of the current delay time in samples.
 		/// @return The integer part of the delay time in samples.
 
@@ -58,6 +64,7 @@ namespace lib {
 			return static_cast<std::size_t>(m_size);
 		}
 
+		
 		/// Return the fractional part of the current delay time in samples.
 		/// @return The fractional part of the delay time in samples.
 
@@ -85,6 +92,7 @@ namespace lib {
 			m_history.write(x);
 			return m_interpolator(m_history.tail(capacity_minus_delay+1), m_history.tail(capacity_minus_delay), m_size_fractional);
 		}
+		
 
 	private:
 		circular_storage<sample>		m_history;			///< Memory for storing the delayed samples.
