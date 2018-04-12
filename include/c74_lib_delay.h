@@ -110,13 +110,9 @@ namespace lib {
 		///	@return		Calculated sample
 
 		sample operator()(sample x) {
-			// calculate the difference between the capacity and our delay so that tail() can be offset
-			// extra 2 "now" samples allow for interpolation
-			size_t capacity_minus_delay = m_history.capacity() - static_cast<size_t>(m_size) - 2;
-
 			// write first (then read) so that we can acheive a zero-sample delay
 			write(x);
-			return m_interpolator(m_history.tail(capacity_minus_delay+1), m_history.tail(capacity_minus_delay), m_size_fractional);
+			return tail();
 		}
 		
 
