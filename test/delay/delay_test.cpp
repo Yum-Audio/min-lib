@@ -419,7 +419,7 @@ TEST_CASE ("Using tail() and write() functions") {
 	sample_vector					input		{ 0,1,0,0,		0,0,2,0,	3,0,0,0,	0,0,0,0 };
 	sample_vector					output;
 	sample_vector					reference	{ 0,0,0,0,		0,1,0,0,	0,0,2,0,	3,0,0,0 };
-	delay<>	my_delay(4);
+	delay<interpolator::linear<>>	my_delay(4);
 	
 	INFO ("We process 1 vector of audio...");
 	for (auto& s : input) {
@@ -440,5 +440,20 @@ TEST_CASE ("Using tail() and write() functions") {
 	}
 	
 	REQUIRE_VECTOR_APPROX( output2 , reference2 );
+	
+	INFO ("Changing delay to 2.1 samples (requires interpolation) when we process third vector of 16 samples");
+	sample_vector					output3;
+	sample_vector					reference3	{ 0,0,0,0.9,	0.1,0,0,0,	1.8,0.2,2.7,0.3, 0,0,0,0	};
+	
+	my_delay.size(2.1);
+	
+	INFO ("We process third vector of audio...");
+	for (auto& s : input) {
+		my_delay.write(s);
+		output3.push_back( my_delay.tail() );
+	}
+	
+	REQUIRE_VECTOR_APPROX( output3 , reference3 );
+	
 }
 
