@@ -80,11 +80,11 @@ namespace lib {
 		sample tail(int offset = 0)  {
 			
 			// calculate the difference between the capacity and our delay so that tail() can be properly offset
-			// extra 2 "now" samples allow for interpolation
+			// extra 1 "now" sample to allow for interpolation
 			size_t true_offset =
 				m_history.capacity()
 				- integral_size()
-				- 2
+				- 1
 				+ offset;
 			
 			return m_history.tail(true_offset);

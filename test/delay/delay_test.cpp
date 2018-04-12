@@ -410,3 +410,23 @@ TEST_CASE ("Clear message should reset values in memory to 0.0, but preserve siz
 	REQUIRE( output2[2][3] == 0.0 );
 
 }
+
+TEST_CASE ("Using tail() and write() functions") {
+	using namespace c74::min;
+	using namespace c74::min::lib;
+	INFO ("Using a delay of 4 samples to process a vector of 16 samples");
+	
+	sample_vector					input		{ 0,1,0,0,		0,0,2,0,	3,0,0,0,	0,0,0,0 };
+	sample_vector					output;
+	sample_vector					reference	{ 0,0,0,0,		0,1,0,0,	0,0,2,0,	3,0,0,0 };
+	delay<>	my_delay(4);
+	
+	INFO ("We process 1 vector of audio...");
+	for (auto& s : input) {
+		my_delay.write(s);
+		output.push_back( my_delay.tail() );
+	}
+	
+	REQUIRE_VECTOR_APPROX( output , reference );
+}
+
