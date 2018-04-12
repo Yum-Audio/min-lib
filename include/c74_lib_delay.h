@@ -78,7 +78,16 @@ namespace lib {
 		///	@return	output	The item from the buffer.
 		
 		sample tail(int offset = 0)  {
-			return m_history.tail(offset);
+			
+			// calculate the difference between the capacity and our delay so that tail() can be properly offset
+			// extra 2 "now" samples allow for interpolation
+			size_t true_offset =
+				m_history.capacity()
+				- integral_size()
+				- 2
+				+ offset;
+			
+			return m_history.tail(true_offset);
 		}
 		
 		
