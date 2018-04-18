@@ -5,6 +5,8 @@
 
 #pragma once
 
+#include "c74_lib_delay.h"
+
 namespace c74 {
 namespace min {
 namespace lib {
@@ -48,8 +50,8 @@ namespace lib {
 		///						Note this may not exceed the capacity set when the object instance is created.
 
 		void delay(size_t new_size) {
-			m_feedforward_history.resize(new_size);
-			m_feedback_history.resize(new_size);
+			m_feedforward_history.size(new_size);
+			m_feedback_history.size(new_size);
 		};
 
 
@@ -92,13 +94,13 @@ namespace lib {
 		///	@return		Calculated sample
 
 		sample operator()(sample x) {
-			auto x1 = m_feedforward_history.tail();
-			auto y1 = m_feedback_history.tail();
+			auto x1 = m_feedforward_history.tail(1);
+			auto y1 = m_feedback_history.tail(1);
 			auto alpha = m_gain;
 
 			// Store the input in the feedforward buffer
 			m_feedforward_history.write(x);
-
+	
 			// Apply the filter
 			// We start with the equation in standard form:
 			//		y = -alpha * x  +  x1  +  alpha * y1;
@@ -114,9 +116,10 @@ namespace lib {
 		}
 
 	private:
-		circular_storage<sample>	m_feedforward_history;	///< Delay line for the FIR side of the filter.
-		circular_storage<sample>	m_feedback_history;		///< Delay line for the IIR side of the filter.
+		c74::min::lib::delay<>		m_feedforward_history {};	///< Delay line for the FIR side of the filter.
+		c74::min::lib::delay<>		m_feedback_history {};		///< Delay line for the IIR side of the filter.
 		number						m_gain {};				///< Feedback coefficient.
+		
 	};
 
 

@@ -19,12 +19,24 @@ namespace lib {
 	public:
 
 		/// Capacity of the delay is fixed at instantiation
-		/// @param capacity	The number of samples to allocate for the delay line. Default is 256.
+		/// @param capacity	The number of samples to allocate for the maximum delay allowed, which will also be used as the initial delay. Default is 256.
 
 		delay(number capacity = 256)
 		: m_history(static_cast<size_t>(capacity + 5)) // 5 extra samples to accomodate the 'now' sample + up to 4 interpolation samples
-		, m_size(capacity)
-		{}
+		{
+			size(capacity);
+		}
+		
+		
+		/// Capacity of the delay is fixed at instantiation
+		/// @param capacity_and_size	The number of samples to allocate for the maximum delay allowed, along with a second initial delay setting that is less than this maximum.
+		
+		delay(std::pair<size_t, number> capacity_and_size)
+		: m_history(capacity_and_size.first + 5)
+		{
+			assert(capacity_and_size.first > capacity_and_size.second);
+			size(capacity_and_size.second);
+		}
 
 
 		/// Set a new delay time in samples.
@@ -35,6 +47,7 @@ namespace lib {
 			m_size_fractional = m_size - static_cast<std::size_t>(m_size);
 		}
 
+		
 		/// Return the current delay time in samples.
 		/// @return The delay time in samples.
 
@@ -42,6 +55,7 @@ namespace lib {
 			return m_size;
 		}
 
+		
 		/// Return the integer part of the current delay time in samples.
 		/// @return The integer part of the delay time in samples.
 
@@ -49,18 +63,46 @@ namespace lib {
 			return static_cast<std::size_t>(m_size);
 		}
 
+		
 		/// Return the fractional part of the current delay time in samples.
 		/// @return The fractional part of the delay time in samples.
 
 		double fractional_size() {
 			return m_size_fractional;
 		}
+		
+		
+		/// Read a single sample out from the delay.
+		///	This will be the oldest sample in the history, unless an offset is specified.
+		/// @param	offset	An optional parameter for getting an item that is N items newer than the oldest value.
+		///	@return	output	The item from the buffer.
+		
+		sample tail(int offset = 0)  {
+			
+			// calculate the difference between the capacity and our delay so that tail() can be properly offset
+			// extra 2 "now" samples to allow for interpolation
+			size_t true_offset =
+				m_history.capacity()
+				- integral_size()
+				- 2
+				+ offset;
+			
+			return m_interpolator(m_history.tail(true_offset+1), m_history.tail(true_offset), m_size_fractional);
+		}
+		
+		
+		/// Write a single sample into the delay.
+		///	@param	new_input	An item to add.
+		
+		void write(sample new_input)  {
+			m_history.write(new_input);
+		}
 
 
 		/// Erase the delay history.
 
 		void clear() {
-			m_history.clear();
+			m_history.zero();
 		}
 
 
@@ -68,16 +110,11 @@ namespace lib {
 		///	@return		Calculated sample
 
 		sample operator()(sample x) {
-			// must resize in the audio thread because circular storage requires single-threaded access
-			// need delay samples plus 2 "now" samples for interpolation
-			auto new_size = static_cast<size_t>(m_size) + 2;
-			m_history.resize(new_size);
-			m_size_fractional = m_size - static_cast<std::size_t>(m_size);
-
 			// write first (then read) so that we can acheive a zero-sample delay
-			m_history.write(x);
-			return m_interpolator(m_history.tail(1), m_history.tail(), m_size_fractional);
+			write(x);
+			return tail();
 		}
+		
 
 	private:
 		circular_storage<sample>		m_history;			///< Memory for storing the delayed samples.

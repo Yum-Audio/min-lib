@@ -213,6 +213,8 @@ TEST_CASE ("Using Circular Storage as the basis for an Audio Delay") {
 	INFO("We change the delay time from 16-samples to 10-samples")
 	circ.resize(10);
 	circ.tail(output);
+	REQUIRE( circ.size() == 10 );
+	REQUIRE( circ.capacity() == 16 );
 
 	INFO("if tail produced what happened 10 samples ago it would be: 15,16,17,18 -- but we just shortened the delay, which means some samples are going to get dropped");
 	REQUIRE( output[0] == 9 );
@@ -270,4 +272,94 @@ TEST_CASE ("Test zero() and clear() functions of Circular Storage") {
     circ.clear();
     REQUIRE( circ.size() == 0 );
     
+}
+
+// NW: Used the Audio Delay test above as the template for this new test
+TEST_CASE ("Comparing outputs from two versions of tail() function to ensure they match") {
+	INFO("Using a 16-sample circular buffer and a processing vector-size of 4")
+	
+	c74::min::lib::circular_storage<c74::min::sample>	circ(16);
+	c74::min::sample_vector								samples(4);
+	c74::min::sample_vector								output(4);
+	
+	INFO("The default is that delay will be the size of the capacity of the buffer (16 samples)");
+	REQUIRE(circ.size() == 16);
+	
+	INFO("When Reading from the delay line the first time (first 4 vectors)")
+	INFO("The first 16 samples (4 vectors) will be zero because we read from it before we write into it");
+	
+	circ.tail(output);
+	REQUIRE( output[0] == 0 );
+	REQUIRE( output[1] == 0 );
+	REQUIRE( output[2] == 0 );
+	REQUIRE( output[3] == 0 );
+	samples = {1,2,3,4};
+	circ.write(samples);
+	
+	circ.tail(output);
+	REQUIRE( output[0] == circ.tail(0) );
+	REQUIRE( output[1] == circ.tail(1) );
+	REQUIRE( output[2] == circ.tail(2) );
+	REQUIRE( output[3] == circ.tail(3) );
+	samples = {5,6,7,8};
+	circ.write(samples);
+	
+	circ.tail(output);
+	REQUIRE( output[0] == circ.tail(0) );
+	REQUIRE( output[1] == circ.tail(1) );
+	REQUIRE( output[2] == circ.tail(2) );
+	REQUIRE( output[3] == circ.tail(3) );
+	samples = {9,10,11,12};
+	circ.write(samples);
+	
+	circ.tail(output);
+	REQUIRE( output[0] == circ.tail(0) );
+	REQUIRE( output[1] == circ.tail(1) );
+	REQUIRE( output[2] == circ.tail(2) );
+	REQUIRE( output[3] == circ.tail(3) );
+	samples = {13,14,15,16};
+	circ.write(samples);
+	
+	INFO("When Reading from the delay line for the 17th sample")
+	INFO("The tail should produce what happened 16 samples ago (our delay time is 16 samples): 1,2,3,4");
+	
+	circ.tail(output);
+	REQUIRE( output[0] == circ.tail(0) );
+	REQUIRE( output[1] == circ.tail(1) );
+	REQUIRE( output[2] == circ.tail(2) );
+	REQUIRE( output[3] == circ.tail(3) );
+	samples = {17,18,19,20};
+	circ.write(samples);
+	
+	circ.tail(output);
+	REQUIRE( output[0] == circ.tail(0) );
+	REQUIRE( output[1] == circ.tail(1) );
+	REQUIRE( output[2] == circ.tail(2) );
+	REQUIRE( output[3] == circ.tail(3) );
+	samples = {21,22,23,24};
+	circ.write(samples);
+	
+	INFO("We change the delay time from 16-samples to 10-samples")
+	circ.resize(10);
+	circ.tail(output);
+	REQUIRE( circ.size() == 10 );
+	REQUIRE( circ.capacity() == 16 );
+	
+	INFO("if tail produced what happened 10 samples ago it would be: 15,16,17,18 -- but we just shortened the delay, which means some samples are going to get dropped");
+	REQUIRE( output[0] == circ.tail(0) );
+	REQUIRE( output[1] == circ.tail(1) );
+	REQUIRE( output[2] == circ.tail(2) );
+	REQUIRE( output[3] == circ.tail(3) );
+	samples = {25,26,27,28};
+	circ.write(samples);
+	
+	INFO("When we process the next vector after the delay time change")
+	INFO("tail produces what happened 10 samples ago: 19,20,21,22");
+	circ.tail(output);
+	REQUIRE( output[0] == circ.tail(0) );
+	REQUIRE( output[1] == circ.tail(1) );
+	REQUIRE( output[2] == circ.tail(2) );
+	REQUIRE( output[3] == circ.tail(3) );
+	samples = {29,30,31,32};
+	circ.write(samples);
 }
