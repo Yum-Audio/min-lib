@@ -14,7 +14,17 @@ namespace lib {
 	class oscillator {
 	public:
 		
+		/// Default constructor
+		
+		oscillator (c74::min::lib::generator waveform = c74::min::lib::generator::sine)
+		{
+			std::generate(wavetable.begin(), wavetable.end(), waveform<c74::min::sample>(wavetable.size()));
+		}
+		
+		
 	private:
+		c74::min::lib::sync			phase_ramp;
+		c74::min::sample_vector		wavetable(4096);
 		
 	};
 	
