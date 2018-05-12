@@ -18,15 +18,15 @@ namespace lib {
 		/// Default constructor
 		
 		oscillator ()
+		: m_wavetable(4096)
 		{
-			std::generate(m_wavetable.begin(), m_wavetable.end(), m_generator(m_wavetable.size()));
+			std::generate(m_wavetable.begin(), m_wavetable.end(), waveform_type(m_wavetable.size()));
 		}
 		
 		
 	private:
-		c74::min::lib::sync			m_phase_ramp;
-		c74::min::sample_vector		m_wavetable(4096);
-		waveform_type				m_generator;
+		sync				m_phase_ramp {};
+		sample_vector		m_wavetable {};
 		
 	};
 	
