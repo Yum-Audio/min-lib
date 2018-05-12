@@ -31,3 +31,32 @@ TEST_CASE ("Produce correctly sized wavetables using constructor parameters") {
 	REQUIRE( o3.size() == 16384 );		// check the defaults
 	
 }
+
+
+TEST_CASE ("Confirm changes to frequency and phase parameters") {
+	
+	using namespace c74::min;
+	using namespace c74::min::lib;
+	INFO ("Using an oscillator instance with no arguments, which should set default values of 0.0 phase, 0.0 frequency");
+	
+	oscillator<> o;
+	
+	REQUIRE( o.phase() == 0.0 );		// check the defaults
+	REQUIRE( o.frequency() == 0.0 );	// ..
+	
+	INFO ("Changing the phase to 0.25");
+	o.phase(0.25);
+	REQUIRE( o.phase() == Approx(0.25) );	// check the new value for phase
+	REQUIRE( o.frequency() == 0.0 );		// and confirm the default frequency remains
+	
+	INFO ("Changing the phase to 1.35 should wrap back around");
+	o.phase(1.32);
+	REQUIRE( o.phase() == Approx(0.32) );	// check the new value for phase
+	REQUIRE( o.frequency() == 0.0 );		// and confirm the default frequency remains
+	
+	INFO ("Changing the phase to -0.15 should wrap back around");
+	o.phase(-0.17);
+	REQUIRE( o.phase() == Approx(0.83) );	// check the new value for phase
+	REQUIRE( o.frequency() == 0.0 );		// and confirm the default frequency remains
+	
+}

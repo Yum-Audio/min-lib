@@ -34,6 +34,39 @@ namespace lib {
 		}
 		
 		
+		/// Set the frequency of the oscillator.
+		/// @param	oscillator_frequency	The frequency of the oscillator in hertz.
+		/// @param	sampling_frequency		The sampling frequency of the environment in hertz.
+		
+		void frequency(number oscillator_frequency, number sampling_frequency) {
+			m_phase_ramp.frequency(oscillator_frequency, sampling_frequency);
+		}
+		
+		
+		/// Get the current frequency of the oscillator.
+		/// @return	The current frequency of the oscillator in the range [0.0, f_s].
+		
+		number frequency() {
+			return m_phase_ramp.frequency();
+		}
+		
+		
+		/// Set the phase of the oscillator
+		///	@param	new_phase	The new phase to which the oscillator will be set. Range is [0.0, 1.0).
+		
+		void phase(number new_phase) {
+			m_phase_ramp.phase(new_phase);
+		}
+		
+		
+		/// Get the current phase of the oscillator
+		/// @return	The current phase of the oscillator in the range [0.0, 1.0).
+		
+		number phase() {
+			return m_phase_ramp.phase();
+		}
+		
+		
 	private:
 		sync				m_phase_ramp {};	///< manages the frequency and phase of our oscillator
 		sample_vector		m_wavetable {};		///< vector containing single cycle of the waveform
