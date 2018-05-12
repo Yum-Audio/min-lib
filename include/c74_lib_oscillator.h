@@ -11,20 +11,22 @@ namespace lib {
 	
 	/// Generate basic <a href="https://en.wikipedia.org/wiki/Waveform">waveforms</a> using a single-cycle <a href="https://en.wikipedia.org/wiki/Wavetable_synthesis">wavetable</a>
 	
+	template <class waveform_type = generator::sine<c74::min::sample>>
 	class oscillator {
 	public:
 		
 		/// Default constructor
 		
-		oscillator (c74::min::lib::generator waveform = c74::min::lib::generator::sine)
+		oscillator ()
 		{
-			std::generate(wavetable.begin(), wavetable.end(), waveform<c74::min::sample>(wavetable.size()));
+			std::generate(m_wavetable.begin(), m_wavetable.end(), m_generator(m_wavetable.size()));
 		}
 		
 		
 	private:
-		c74::min::lib::sync			phase_ramp;
-		c74::min::sample_vector		wavetable(4096);
+		c74::min::lib::sync			m_phase_ramp;
+		c74::min::sample_vector		m_wavetable(4096);
+		waveform_type				m_generator;
 		
 	};
 	

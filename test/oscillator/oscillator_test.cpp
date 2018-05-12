@@ -14,6 +14,6 @@ TEST_CASE ("Produce the correct output using default constructor") {
     using namespace c74::min::lib;
     INFO ("Using an oscillator instance with no arguments");
     
-    oscillator o;
+    oscillator<> o;
 	
 }
