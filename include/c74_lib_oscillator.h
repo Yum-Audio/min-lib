@@ -15,10 +15,12 @@ namespace lib {
 	class oscillator {
 	public:
 		
-		/// Default constructor
+		/// Constructor specifies a fixed size for the internal wavetable.
+		///	If you want a different size, create a new oscillator and dispose of the one you don't want.
+		/// @param	wavetable_size	The number of samples in the wavetable.
 		
-		oscillator ()
-		: m_wavetable(4096)
+		oscillator (std::size_t wavetable_size = 4096)
+		: m_wavetable(wavetable_size)
 		{
 			std::generate(m_wavetable.begin(), m_wavetable.end(), waveform_type(m_wavetable.size()));
 		}
