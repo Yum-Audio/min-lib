@@ -26,6 +26,14 @@ namespace lib {
 		}
 		
 		
+		///	Return the size of the internal wavetable.
+		/// @return	The size of the sample_vector containing our single-cycle wavetable.
+		
+		std::size_t size() {
+			return m_wavetable.size();
+		}
+		
+		
 	private:
 		sync				m_phase_ramp {};
 		sample_vector		m_wavetable {};
