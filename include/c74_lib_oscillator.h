@@ -11,7 +11,7 @@ namespace lib {
 	
 	/// Generate basic <a href="https://en.wikipedia.org/wiki/Waveform">waveforms</a> using a single-cycle <a href="https://en.wikipedia.org/wiki/Wavetable_synthesis">wavetable</a>
 	
-	template <class waveform_type = generator::sine<c74::min::sample>>
+	template <class waveform_type = generator::sine<sample>>
 	class oscillator {
 	public:
 		
@@ -35,8 +35,8 @@ namespace lib {
 		
 		
 	private:
-		sync				m_phase_ramp {};
-		sample_vector		m_wavetable {};
+		sync				m_phase_ramp {};	///< manages the frequency and phase of our oscillator
+		sample_vector		m_wavetable {};		///< vector containing single cycle of the waveform
 		
 	};
 	
