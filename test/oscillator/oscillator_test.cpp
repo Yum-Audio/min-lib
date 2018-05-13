@@ -85,3 +85,45 @@ TEST_CASE ("Confirm changes to frequency and phase parameters") {
 	REQUIRE( o.phase() == Approx(0.83) );		// and confirm the phase remains unchanged
 	
 }
+
+
+TEST_CASE ("Confirm sample operator changes the phase") {
+	
+	using namespace c74::min;
+	using namespace c74::min::lib;
+	INFO ("Using an oscillator instance with wavetable size of 256");
+	
+	oscillator<> o { 256 };
+	o.frequency(1.0, 256.0);
+	sample output;
+	
+	INFO ("After 64 samples of output, phase should be 0.25");
+	for (int i=0; i < 64; i++)
+	{
+		output = o();
+	}
+	REQUIRE( o.phase() == Approx(0.25) );	// check the new value for phase
+	
+	INFO ("After another 64 samples of output, phase should be 0.5");
+	for (int i=0; i < 64; i++)
+	{
+		output = o();
+	}
+	REQUIRE( o.phase() == Approx(0.5) );	// check the new value for phase
+	
+	INFO ("After another 128 samples of output, phase should be 1.0");
+	for (int i=0; i < 128; i++)
+	{
+		output = o();
+	}
+	REQUIRE( o.phase() == Approx(1.0) );	// check the new value for phase
+	
+	INFO ("After another 64 samples of output, phase should be back at 0.25");
+	for (int i=0; i < 64; i++)
+	{
+		output = o();
+	}
+	REQUIRE( o.phase() == Approx(0.25) );	// check the new value for phase
+	
+	
+}

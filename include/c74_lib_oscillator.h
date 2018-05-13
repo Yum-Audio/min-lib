@@ -67,6 +67,19 @@ namespace lib {
 		}
 		
 		
+		/// Calculate one sample.
+		///	@return		Calculated sample
+		
+		sample operator()() {
+			sample phase_now = m_phase_ramp();
+			sample position_now = phase_now * m_wavetable.size();
+			
+			int position_now_integer = int(position_now);
+			
+			return m_wavetable.at(position_now_integer);
+		}
+		
+		
 	private:
 		sync				m_phase_ramp {};	///< manages the frequency and phase of our oscillator
 		sample_vector		m_wavetable {};		///< vector containing single cycle of the waveform
