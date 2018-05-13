@@ -59,4 +59,29 @@ TEST_CASE ("Confirm changes to frequency and phase parameters") {
 	REQUIRE( o.phase() == Approx(0.83) );	// check the new value for phase
 	REQUIRE( o.frequency() == 0.0 );		// and confirm the default frequency remains
 	
+	INFO ("Changing the frequency to 2000.0 at 96k sampling rate");
+	o.frequency(2000.0, 96000.0);
+	REQUIRE( o.frequency() == Approx(2000.0) );	// check the new value for frequency
+	REQUIRE( o.phase() == Approx(0.83) );		// and confirm the phase remains unchanged
+	
+	INFO ("Changing the frequency to 2000.0 at 96k sampling rate");
+	o.frequency(2000.0, 96000.0);
+	REQUIRE( o.frequency() == Approx(2000.0) );	// check the new value for frequency
+	REQUIRE( o.phase() == Approx(0.83) );		// and confirm the phase remains unchanged
+	
+	INFO ("Trying to set frequency above the Nyquist, which should fold back below");
+	o.frequency(52000.0, 96000.0);
+	REQUIRE( o.frequency() == Approx(44000.0) );	// check the new value for frequency
+	REQUIRE( o.phase() == Approx(0.83) );		// and confirm the phase remains unchanged
+	
+	INFO ("Trying to set frequency above the sampling rate, which should fold back below");
+	o.frequency(100000.0, 96000.0);
+	REQUIRE( o.frequency() == Approx(-4000.0) );	// check the new value for frequency
+	REQUIRE( o.phase() == Approx(0.83) );		// and confirm the phase remains unchanged
+	
+	INFO ("Trying to set frequency to negative value, which should be allowed");
+	o.frequency(-6000.0, 96000.0);
+	REQUIRE( o.frequency() == Approx(-6000.0) );	// check the new value for frequency
+	REQUIRE( o.phase() == Approx(0.83) );		// and confirm the phase remains unchanged
+	
 }
