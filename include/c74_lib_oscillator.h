@@ -11,7 +11,7 @@ namespace lib {
 	
 	/// Generate basic <a href="https://en.wikipedia.org/wiki/Waveform">waveforms</a> using a single-cycle <a href="https://en.wikipedia.org/wiki/Wavetable_synthesis">wavetable</a>
 	
-	template <class waveform_type = generator::sine<sample>>
+	template <class initial_waveform_type = generator::sine<sample>>
 	class oscillator {
 	public:
 		
@@ -22,7 +22,7 @@ namespace lib {
 		oscillator (std::size_t wavetable_size = 4096)
 		: m_wavetable(wavetable_size)
 		{
-			std::generate(m_wavetable.begin(), m_wavetable.end(), waveform_type(m_wavetable.size()));
+			change_waveform<initial_waveform_type>();
 		}
 		
 		
@@ -64,6 +64,12 @@ namespace lib {
 		
 		number phase() {
 			return m_phase_ramp.phase();
+		}
+		
+		
+		template <class new_waveform_type = generator::sine<sample>>
+		void change_waveform() {
+			std::generate(m_wavetable.begin(), m_wavetable.end(), new_waveform_type(m_wavetable.size()));
 		}
 		
 		

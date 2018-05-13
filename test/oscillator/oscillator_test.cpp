@@ -127,3 +127,17 @@ TEST_CASE ("Confirm sample operator changes the phase") {
 	
 	
 }
+
+TEST_CASE ("Changes waveform using the generator classes") {
+	
+	using namespace c74::min;
+	using namespace c74::min::lib;
+	INFO ("Using an oscillator instance with wavetable size of 256");
+	
+	oscillator<> o { 256 };
+	
+	o.change_waveform<generator::ramp_unipolar<sample>>();
+	
+	o.change_waveform<generator::ramp<sample>>();
+	
+}
