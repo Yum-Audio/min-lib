@@ -135,6 +135,8 @@ TEST_CASE ("Produce a sine waveform") {
 	INFO ("Using an oscillator instance with wavetable size of 64, default waveform of sine");
 	
 	oscillator<> o { 64 };
+	
+	INFO ("Setting frequency to produce single cycle with duration of 64 samples");
 	o.frequency(1.0, 64.0);
 	
 	// The following output was generated using the Octave code in GeneratorTargetOutput.m by NW
@@ -228,8 +230,10 @@ TEST_CASE ("Produce a ramp waveform") {
 	INFO ("Using an oscillator instance with wavetable size of 64, setting waveform to ramp");
 	
 	oscillator<> o { 64 };
-	o.frequency(1.0, 64.0);
 	o.change_waveform<generator::ramp<>>();
+	
+	INFO ("Setting frequency to produce single cycle with duration of 64 samples");
+	o.frequency(1.0, 64.0);
 	
 	c74::min::sample_vector reference = {
 		-1,
@@ -321,8 +325,10 @@ TEST_CASE ("Produce a sawtooth waveform") {
 	INFO ("Using an oscillator instance with wavetable size of 64, setting waveform to sawtooth");
 	
 	oscillator<> o { 64 };
-	o.frequency(1.0, 64.0);
 	o.change_waveform<generator::sawtooth<>>();
+	
+	INFO ("Setting frequency to produce single cycle with duration of 64 samples");
+	o.frequency(1.0, 64.0);
 	
 	c74::min::sample_vector reference = {
 		-1,
@@ -414,8 +420,10 @@ TEST_CASE ("Produce a unipolar ramp waveform") {
 	INFO ("Using an oscillator instance with wavetable size of 64, setting waveform to unipolar ramp");
 	
 	oscillator<> o { 64 };
-	o.frequency(1.0, 64.0);
 	o.change_waveform<generator::ramp_unipolar<>>();
+	
+	INFO ("Setting frequency to produce single cycle with duration of 64 samples");
+	o.frequency(1.0, 64.0);
 	
 	c74::min::sample_vector reference = {
 		0,
