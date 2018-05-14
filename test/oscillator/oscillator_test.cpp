@@ -136,8 +136,8 @@ TEST_CASE ("Changes waveform using the generator classes") {
 	
 	oscillator<> o { 256 };
 	
-	o.change_waveform<generator::ramp_unipolar<sample>>();
+	o.change_waveform<generator::ramp_unipolar<>>();
 	
-	o.change_waveform<generator::ramp<sample>>();
+	o.change_waveform<generator::ramp<>>();
 	
 }
