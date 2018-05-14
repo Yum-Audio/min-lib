@@ -19,3 +19,4 @@
 #include "c74_lib_onepole.h"
 #include "c74_lib_saturation.h"
 #include "c74_lib_sync.h"
+#include "c74_lib_oscillator.h"

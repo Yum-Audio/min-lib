@@ -15,7 +15,7 @@ SCENARIO ("Generate a Ramp") {
 		WHEN("The entire length is filled by a 'ramp' generator for the sample type.") {
 			THEN("The output matches an externally generated reference set.")
 
-			std::generate(v.begin(), v.end(), c74::min::lib::generator::ramp<c74::min::sample>(v.size()));
+			std::generate(v.begin(), v.end(), c74::min::lib::generator::ramp<>(v.size()));
 
 			// The following output was generated using the Octave code in GeneratorTargetOutput.m by NW
 			c74::min::sample_vector reference = {
@@ -98,7 +98,7 @@ SCENARIO ("Generate a Ramp with 3.0 cycles") {
         WHEN("The entire length is filled by a 'ramp' generator for the sample type, with count set to 3.0.") {
             THEN("The output matches an externally generated reference set.")
             
-            std::generate(v.begin(), v.end(), c74::min::lib::generator::ramp<c74::min::sample>(v.size(), 3.0));
+            std::generate(v.begin(), v.end(), c74::min::lib::generator::ramp<>(v.size(), 3.0));
             
             // The following output was generated using the Octave code in GeneratorTargetOutput.m by NW
             c74::min::sample_vector reference = {
@@ -181,7 +181,7 @@ SCENARIO ("Generate a Ramp with 2.5 cycles") {
         WHEN("The entire length is filled by a 'ramp' generator for the sample type, with count set to 2.5.") {
             THEN("The output matches an externally generated reference set.")
             
-            std::generate(v.begin(), v.end(), c74::min::lib::generator::ramp<c74::min::sample>(v.size(), 2.5));
+            std::generate(v.begin(), v.end(), c74::min::lib::generator::ramp<>(v.size(), 2.5));
             
             // The following output was generated using the Octave code in GeneratorTargetOutput.m by NW
             c74::min::sample_vector reference = {
@@ -264,7 +264,7 @@ SCENARIO ("Generate a Ramp with 0.25 cycles") {
         WHEN("The entire length is filled by a 'ramp' generator for the sample type, with count set to 0.25.") {
             THEN("The output matches an externally generated reference set.")
             
-            std::generate(v.begin(), v.end(), c74::min::lib::generator::ramp<c74::min::sample>(v.size(), 0.25));
+            std::generate(v.begin(), v.end(), c74::min::lib::generator::ramp<>(v.size(), 0.25));
             
             // The following output was generated using the Octave code in GeneratorTargetOutput.m by NW
             c74::min::sample_vector reference = {
@@ -347,7 +347,7 @@ SCENARIO ("Generate a Sawtooth") {
 		WHEN("The entire length is filled by a 'sawtooth' generator for the sample type.") {
 			THEN("The output matches an externally generated reference set.")
 
-			std::generate(v.begin(), v.end(), c74::min::lib::generator::sawtooth<c74::min::sample>(v.size()));
+			std::generate(v.begin(), v.end(), c74::min::lib::generator::sawtooth<>(v.size()));
 
 			// The following output was generated using the Octave code in GeneratorTargetOutput.m by NW
 			c74::min::sample_vector reference = {
@@ -430,7 +430,7 @@ SCENARIO ("Generate a Sawtooth with 3.0 cycles") {
         WHEN("The entire length is filled by a 'sawtooth' generator for the sample type, with count set to 3.0.") {
             THEN("The output matches an externally generated reference set.")
             
-            std::generate(v.begin(), v.end(), c74::min::lib::generator::sawtooth<c74::min::sample>(v.size(), 3.0));
+            std::generate(v.begin(), v.end(), c74::min::lib::generator::sawtooth<>(v.size(), 3.0));
             
             // The following output was generated using the Octave code in GeneratorTargetOutput.m by NW
             c74::min::sample_vector reference = {
@@ -513,7 +513,7 @@ SCENARIO ("Generate a Sawtooth with 2.5 cycles") {
         WHEN("The entire length is filled by a 'sawtooth' generator for the sample type, with count set to 2.5.") {
             THEN("The output matches an externally generated reference set.")
             
-            std::generate(v.begin(), v.end(), c74::min::lib::generator::sawtooth<c74::min::sample>(v.size(), 2.5));
+            std::generate(v.begin(), v.end(), c74::min::lib::generator::sawtooth<>(v.size(), 2.5));
             
             // The following output was generated using the Octave code in GeneratorTargetOutput.m by NW
             c74::min::sample_vector reference = {
@@ -596,7 +596,7 @@ SCENARIO ("Generate a Sawtooth with 0.25 cycles") {
         WHEN("The entire length is filled by a 'sawtooth' generator for the sample type, with count set to 0.25.") {
             THEN("The output matches an externally generated reference set.")
             
-            std::generate(v.begin(), v.end(), c74::min::lib::generator::sawtooth<c74::min::sample>(v.size(), 0.25));
+            std::generate(v.begin(), v.end(), c74::min::lib::generator::sawtooth<>(v.size(), 0.25));
             
             // The following output was generated using the Octave code in GeneratorTargetOutput.m by NW
             c74::min::sample_vector reference = {
@@ -679,7 +679,7 @@ SCENARIO ("Generate a Unipolar Ramp") {
 		WHEN("The entire length is filled by a 'ramp_unipolar' generator for the sample type.") {
 			THEN("The output matches an externally generated reference set.")
 
-			std::generate(v.begin(), v.end(), c74::min::lib::generator::ramp_unipolar<c74::min::sample>(v.size()));
+			std::generate(v.begin(), v.end(), c74::min::lib::generator::ramp_unipolar<>(v.size()));
 
 			// The following output was generated using the Octave code in GeneratorTargetOutput.m by NW
 			c74::min::sample_vector reference = {
@@ -762,7 +762,7 @@ SCENARIO ("Generate a Unipolar Ramp with 3.0 cycles") {
         WHEN("The entire length is filled by a 'ramp_unipolar' generator for the sample type, with count set to 3.0.") {
             THEN("The output matches an externally generated reference set.")
             
-            std::generate(v.begin(), v.end(), c74::min::lib::generator::ramp_unipolar<c74::min::sample>(v.size(), 3.0));
+            std::generate(v.begin(), v.end(), c74::min::lib::generator::ramp_unipolar<>(v.size(), 3.0));
             
             // The following output was generated using the Octave code in GeneratorTargetOutput.m by NW
             c74::min::sample_vector reference = {
@@ -845,7 +845,7 @@ SCENARIO ("Generate a Unipolar Ramp with 2.5 cycles") {
         WHEN("The entire length is filled by a 'ramp_unipolar' generator for the sample type, with count set to 2.5.") {
             THEN("The output matches an externally generated reference set.")
             
-            std::generate(v.begin(), v.end(), c74::min::lib::generator::ramp_unipolar<c74::min::sample>(v.size(), 2.5));
+            std::generate(v.begin(), v.end(), c74::min::lib::generator::ramp_unipolar<>(v.size(), 2.5));
             
             // The following output was generated using the Octave code in GeneratorTargetOutput.m by NW
             c74::min::sample_vector reference = {
@@ -928,7 +928,7 @@ SCENARIO ("Generate a Unipolar Ramp with 0.25 cycles") {
         WHEN("The entire length is filled by a 'ramp_unipolar' generator for the sample type, with count set to 0.25.") {
             THEN("The output matches an externally generated reference set.")
             
-            std::generate(v.begin(), v.end(), c74::min::lib::generator::ramp_unipolar<c74::min::sample>(v.size(), 0.25));
+            std::generate(v.begin(), v.end(), c74::min::lib::generator::ramp_unipolar<>(v.size(), 0.25));
             
             // The following output was generated using the Octave code in GeneratorTargetOutput.m by NW
             c74::min::sample_vector reference = {
@@ -1011,7 +1011,7 @@ SCENARIO ("Generate a Unipolar Sawtooth") {
 		WHEN("The entire length is filled by a 'sawtooth_unipolar' generator for the sample type.") {
 			THEN("The output matches an externally generated reference set.")
 
-			std::generate(v.begin(), v.end(), c74::min::lib::generator::sawtooth_unipolar<c74::min::sample>(v.size()));
+			std::generate(v.begin(), v.end(), c74::min::lib::generator::sawtooth_unipolar<>(v.size()));
 
 			// The following output was generated using the Octave code in GeneratorTargetOutput.m by NW
 			c74::min::sample_vector reference = {
@@ -1094,7 +1094,7 @@ SCENARIO ("Generate a Unipolar Sawtooth with 3.0 cycles") {
         WHEN("The entire length is filled by a 'sawtooth_unipolar' generator for the sample type, with count set to 3.0.") {
             THEN("The output matches an externally generated reference set.")
             
-            std::generate(v.begin(), v.end(), c74::min::lib::generator::sawtooth_unipolar<c74::min::sample>(v.size(), 3.0));
+            std::generate(v.begin(), v.end(), c74::min::lib::generator::sawtooth_unipolar<>(v.size(), 3.0));
             
             // The following output was generated using the Octave code in GeneratorTargetOutput.m by NW
             c74::min::sample_vector reference = {
@@ -1177,7 +1177,7 @@ SCENARIO ("Generate a Unipolar Sawtooth with 2.5 cycles") {
         WHEN("The entire length is filled by a 'sawtooth_unipolar' generator for the sample type, with count set to 2.5.") {
             THEN("The output matches an externally generated reference set.")
             
-            std::generate(v.begin(), v.end(), c74::min::lib::generator::sawtooth_unipolar<c74::min::sample>(v.size(), 2.5));
+            std::generate(v.begin(), v.end(), c74::min::lib::generator::sawtooth_unipolar<>(v.size(), 2.5));
             
             // The following output was generated using the Octave code in GeneratorTargetOutput.m by NW
             c74::min::sample_vector reference = {
@@ -1260,7 +1260,7 @@ SCENARIO ("Generate a Unipolar Sawtooth with 0.25 cycles") {
         WHEN("The entire length is filled by a 'sawtooth_unipolar' generator for the sample type, with count set to 0.25.") {
             THEN("The output matches an externally generated reference set.")
             
-            std::generate(v.begin(), v.end(), c74::min::lib::generator::sawtooth_unipolar<c74::min::sample>(v.size(), 0.25));
+            std::generate(v.begin(), v.end(), c74::min::lib::generator::sawtooth_unipolar<>(v.size(), 0.25));
             
             // The following output was generated using the Octave code in GeneratorTargetOutput.m by NW
             c74::min::sample_vector reference = {
@@ -1343,7 +1343,7 @@ SCENARIO ("Generate a Sine") {
 		WHEN("The entire length is filled by a 'sine' generator for the sample type.") {
 			THEN("The output matches an externally generated reference set.")
 
-			std::generate(v.begin(), v.end(), c74::min::lib::generator::sine<c74::min::sample>(v.size()));
+			std::generate(v.begin(), v.end(), c74::min::lib::generator::sine<>(v.size()));
 
 			// The following output was generated using the Octave code in GeneratorTargetOutput.m by NW
 			c74::min::sample_vector reference = {
@@ -1426,7 +1426,7 @@ SCENARIO ("Generate a Sine with 3.0 cycles") {
         WHEN("The entire length is filled by a 'sine' generator for the sample type, with count set to 3.0.") {
             THEN("The output matches an externally generated reference set.")
             
-            std::generate(v.begin(), v.end(), c74::min::lib::generator::sine<c74::min::sample>(v.size(), 3.0));
+            std::generate(v.begin(), v.end(), c74::min::lib::generator::sine<>(v.size(), 3.0));
             
             // The following output was generated using the Octave code in GeneratorTargetOutput.m by NW
             c74::min::sample_vector reference = {
@@ -1509,7 +1509,7 @@ SCENARIO ("Generate a Sine with 2.5 cycles") {
         WHEN("The entire length is filled by a 'sine' generator for the sample type, with count set to 2.5.") {
             THEN("The output matches an externally generated reference set.")
             
-            std::generate(v.begin(), v.end(), c74::min::lib::generator::sine<c74::min::sample>(v.size(), 2.5));
+            std::generate(v.begin(), v.end(), c74::min::lib::generator::sine<>(v.size(), 2.5));
             
             // The following output was generated using the Octave code in GeneratorTargetOutput.m by NW
             c74::min::sample_vector reference = {
@@ -1592,7 +1592,7 @@ SCENARIO ("Generate a Sine with 0.25 cycles") {
         WHEN("The entire length is filled by a 'sine' generator for the sample type, with count set to 0.25.") {
             THEN("The output matches an externally generated reference set.")
             
-            std::generate(v.begin(), v.end(), c74::min::lib::generator::sine<c74::min::sample>(v.size(), 0.25));
+            std::generate(v.begin(), v.end(), c74::min::lib::generator::sine<>(v.size(), 0.25));
             
             // The following output was generated using the Octave code in GeneratorTargetOutput.m by NW
             c74::min::sample_vector reference = {
@@ -1675,7 +1675,7 @@ SCENARIO ("Generate a Unipolar Sine") {
 		WHEN("The entire length is filled by a 'sine_unipolar' generator for the sample type.") {
 			THEN("The output matches an externally generated reference set.")
 
-			std::generate(v.begin(), v.end(), c74::min::lib::generator::sine_unipolar<c74::min::sample>(v.size()));
+			std::generate(v.begin(), v.end(), c74::min::lib::generator::sine_unipolar<>(v.size()));
 
 			// The following output was generated using the Octave code in GeneratorTargetOutput.m by NW
 			c74::min::sample_vector reference = {
@@ -1758,7 +1758,7 @@ SCENARIO ("Generate a Unipolar Sine with 3.0 cycles") {
         WHEN("The entire length is filled by a 'sine_unipolar' generator for the sample type, with count set to 3.0.") {
             THEN("The output matches an externally generated reference set.")
             
-            std::generate(v.begin(), v.end(), c74::min::lib::generator::sine_unipolar<c74::min::sample>(v.size(), 3.0));
+            std::generate(v.begin(), v.end(), c74::min::lib::generator::sine_unipolar<>(v.size(), 3.0));
             
             // The following output was generated using the Octave code in GeneratorTargetOutput.m by NW
             c74::min::sample_vector reference = {
@@ -1841,7 +1841,7 @@ SCENARIO ("Generate a Unipolar Sine with 2.5 cycles") {
         WHEN("The entire length is filled by a 'sine_unipolar' generator for the sample type, with count set to 2.5.") {
             THEN("The output matches an externally generated reference set.")
             
-            std::generate(v.begin(), v.end(), c74::min::lib::generator::sine_unipolar<c74::min::sample>(v.size(), 2.5));
+            std::generate(v.begin(), v.end(), c74::min::lib::generator::sine_unipolar<>(v.size(), 2.5));
             
             // The following output was generated using the Octave code in GeneratorTargetOutput.m by NW
             c74::min::sample_vector reference = {
@@ -1924,7 +1924,7 @@ SCENARIO ("Generate a Unipolar Sine with 0.25 cycles") {
         WHEN("The entire length is filled by a 'sine_unipolar' generator for the sample type, with count set to 0.25.") {
             THEN("The output matches an externally generated reference set.")
             
-            std::generate(v.begin(), v.end(), c74::min::lib::generator::sine_unipolar<c74::min::sample>(v.size(), 0.25));
+            std::generate(v.begin(), v.end(), c74::min::lib::generator::sine_unipolar<>(v.size(), 0.25));
             
             // The following output was generated using the Octave code in GeneratorTargetOutput.m by NW
             c74::min::sample_vector reference = {
@@ -2007,7 +2007,7 @@ SCENARIO ("Generate a Cosine") {
 		WHEN("The entire length is filled by a 'cosine' generator for the sample type.") {
 			THEN("The output matches an externally generated reference set.")
 
-			std::generate(v.begin(), v.end(), c74::min::lib::generator::cosine<c74::min::sample>(v.size()));
+			std::generate(v.begin(), v.end(), c74::min::lib::generator::cosine<>(v.size()));
 
 			// The following output was generated using the Octave code in GeneratorTargetOutput.m by NW
 			c74::min::sample_vector reference = {
@@ -2090,7 +2090,7 @@ SCENARIO ("Generate a Cosine with 3.0 cycles") {
         WHEN("The entire length is filled by a 'cosine' generator for the sample type, with count set to 3.0.") {
             THEN("The output matches an externally generated reference set.")
             
-            std::generate(v.begin(), v.end(), c74::min::lib::generator::cosine<c74::min::sample>(v.size(), 3.0));
+            std::generate(v.begin(), v.end(), c74::min::lib::generator::cosine<>(v.size(), 3.0));
             
             // The following output was generated using the Octave code in GeneratorTargetOutput.m by NW
             c74::min::sample_vector reference = {
@@ -2173,7 +2173,7 @@ SCENARIO ("Generate a Cosine with 2.5 cycles") {
         WHEN("The entire length is filled by a 'cosine' generator for the sample type, with count set to 2.5.") {
             THEN("The output matches an externally generated reference set.")
             
-            std::generate(v.begin(), v.end(), c74::min::lib::generator::cosine<c74::min::sample>(v.size(), 2.5));
+            std::generate(v.begin(), v.end(), c74::min::lib::generator::cosine<>(v.size(), 2.5));
             
             // The following output was generated using the Octave code in GeneratorTargetOutput.m by NW
             c74::min::sample_vector reference = {
@@ -2256,7 +2256,7 @@ SCENARIO ("Generate a Cosine with 0.25 cycles") {
         WHEN("The entire length is filled by a 'cosine' generator for the sample type, with count set to 0.25.") {
             THEN("The output matches an externally generated reference set.")
             
-            std::generate(v.begin(), v.end(), c74::min::lib::generator::cosine<c74::min::sample>(v.size(), 0.25));
+            std::generate(v.begin(), v.end(), c74::min::lib::generator::cosine<>(v.size(), 0.25));
             
             // The following output was generated using the Octave code in GeneratorTargetOutput.m by NW
             c74::min::sample_vector reference = {
@@ -2340,7 +2340,7 @@ SCENARIO ("Generate a Unipolar Cosine") {
 		WHEN("The entire length is filled by a 'cosine_unipolar' generator for the sample type.") {
 			THEN("The output matches an externally generated reference set.")
 
-			std::generate(v.begin(), v.end(), c74::min::lib::generator::cosine_unipolar<c74::min::sample>(v.size()));
+			std::generate(v.begin(), v.end(), c74::min::lib::generator::cosine_unipolar<>(v.size()));
 
 			// The following output was generated using the Octave code in GeneratorTargetOutput.m by NW
 			c74::min::sample_vector reference = {
@@ -2423,7 +2423,7 @@ SCENARIO ("Generate a Unipolar Cosine with 3.0 cycles") {
         WHEN("The entire length is filled by a 'cosine_unipolar' generator for the sample type, with count set to 3.0.") {
             THEN("The output matches an externally generated reference set.")
             
-            std::generate(v.begin(), v.end(), c74::min::lib::generator::cosine_unipolar<c74::min::sample>(v.size(), 3.0));
+            std::generate(v.begin(), v.end(), c74::min::lib::generator::cosine_unipolar<>(v.size(), 3.0));
             
             // The following output was generated using the Octave code in GeneratorTargetOutput.m by NW
             c74::min::sample_vector reference = {
@@ -2506,7 +2506,7 @@ SCENARIO ("Generate a Unipolar Cosine with 2.5 cycles") {
         WHEN("The entire length is filled by a 'cosine_unipolar' generator for the sample type, with count set to 2.5.") {
             THEN("The output matches an externally generated reference set.")
             
-            std::generate(v.begin(), v.end(), c74::min::lib::generator::cosine_unipolar<c74::min::sample>(v.size(), 2.5));
+            std::generate(v.begin(), v.end(), c74::min::lib::generator::cosine_unipolar<>(v.size(), 2.5));
             
             // The following output was generated using the Octave code in GeneratorTargetOutput.m by NW
             c74::min::sample_vector reference = {
@@ -2589,7 +2589,7 @@ SCENARIO ("Generate a Unipolar Cosine with 0.25 cycles") {
         WHEN("The entire length is filled by a 'cosine_unipolar' generator for the sample type, with count set to 0.25.") {
             THEN("The output matches an externally generated reference set.")
             
-            std::generate(v.begin(), v.end(), c74::min::lib::generator::cosine_unipolar<c74::min::sample>(v.size(), 0.25));
+            std::generate(v.begin(), v.end(), c74::min::lib::generator::cosine_unipolar<>(v.size(), 0.25));
             
             // The following output was generated using the Octave code in GeneratorTargetOutput.m by NW
             c74::min::sample_vector reference = {
@@ -2672,7 +2672,7 @@ SCENARIO ("Generate a Triangle") {
 		WHEN("The entire length is filled by a 'triangle' generator for the sample type.") {
 			THEN("The output matches an externally generated reference set.")
 
-			std::generate(v.begin(), v.end(), c74::min::lib::generator::triangle<c74::min::sample>(v.size()));
+			std::generate(v.begin(), v.end(), c74::min::lib::generator::triangle<>(v.size()));
 
 			// The following output was generated using the Octave code in GeneratorTargetOutput.m by NW
 			c74::min::sample_vector reference = {
@@ -2755,7 +2755,7 @@ SCENARIO ("Generate a Triangle with 3.0 cycles") {
         WHEN("The entire length is filled by a 'triangle' generator for the sample type, with count set to 3.0.") {
             THEN("The output matches an externally generated reference set.")
             
-            std::generate(v.begin(), v.end(), c74::min::lib::generator::triangle<c74::min::sample>(v.size(), 3.0));
+            std::generate(v.begin(), v.end(), c74::min::lib::generator::triangle<>(v.size(), 3.0));
             
             // The following output was generated using the Octave code in GeneratorTargetOutput.m by NW
             c74::min::sample_vector reference = {
@@ -2838,7 +2838,7 @@ SCENARIO ("Generate a Triangle with 2.5 cycles") {
         WHEN("The entire length is filled by a 'triangle' generator for the sample type, with count set to 2.5.") {
             THEN("The output matches an externally generated reference set.")
             
-            std::generate(v.begin(), v.end(), c74::min::lib::generator::triangle<c74::min::sample>(v.size(), 2.5));
+            std::generate(v.begin(), v.end(), c74::min::lib::generator::triangle<>(v.size(), 2.5));
             
             // The following output was generated using the Octave code in GeneratorTargetOutput.m by NW
             c74::min::sample_vector reference = {
@@ -2921,7 +2921,7 @@ SCENARIO ("Generate a Triangle with 0.25 cycles") {
         WHEN("The entire length is filled by a 'triangle' generator for the sample type, with count set to 0.25.") {
             THEN("The output matches an externally generated reference set.")
             
-            std::generate(v.begin(), v.end(), c74::min::lib::generator::triangle<c74::min::sample>(v.size(), 0.25));
+            std::generate(v.begin(), v.end(), c74::min::lib::generator::triangle<>(v.size(), 0.25));
             
             // The following output was generated using the Octave code in GeneratorTargetOutput.m by NW
             c74::min::sample_vector reference = {
@@ -3004,7 +3004,7 @@ SCENARIO ("Generate a Unipolar Triangle") {
 		WHEN("The entire length is filled by a 'triangle_unipolar' generator for the sample type.") {
 			THEN("The output matches an externally generated reference set.")
 
-			std::generate(v.begin(), v.end(), c74::min::lib::generator::triangle_unipolar<c74::min::sample>(v.size()));
+			std::generate(v.begin(), v.end(), c74::min::lib::generator::triangle_unipolar<>(v.size()));
 
 			// The following output was generated using the Octave code in GeneratorTargetOutput.m by NW
 			c74::min::sample_vector reference = {
@@ -3087,7 +3087,7 @@ SCENARIO ("Generate a Unipolar Triangle with 3.0 cycles") {
         WHEN("The entire length is filled by a 'triangle_unipolar' generator for the sample type, with count set to 3.0.") {
             THEN("The output matches an externally generated reference set.")
             
-            std::generate(v.begin(), v.end(), c74::min::lib::generator::triangle_unipolar<c74::min::sample>(v.size(), 3.0));
+            std::generate(v.begin(), v.end(), c74::min::lib::generator::triangle_unipolar<>(v.size(), 3.0));
             
             // The following output was generated using the Octave code in GeneratorTargetOutput.m by NW
             c74::min::sample_vector reference = {
@@ -3169,7 +3169,7 @@ SCENARIO ("Generate a Unipolar Triangle with 2.5 cycles") {
         WHEN("The entire length is filled by a 'triangle_unipolar' generator for the sample type, with count set to 2.5.") {
             THEN("The output matches an externally generated reference set.")
             
-            std::generate(v.begin(), v.end(), c74::min::lib::generator::triangle_unipolar<c74::min::sample>(v.size(), 2.5));
+            std::generate(v.begin(), v.end(), c74::min::lib::generator::triangle_unipolar<>(v.size(), 2.5));
             
             // The following output was generated using the Octave code in GeneratorTargetOutput.m by NW
             c74::min::sample_vector reference = {
@@ -3252,7 +3252,7 @@ SCENARIO ("Generate a Unipolar Triangle with 0.25 cycles") {
         WHEN("The entire length is filled by a 'triangle_unipolar' generator for the sample type, with count set to 0.25.") {
             THEN("The output matches an externally generated reference set.")
             
-            std::generate(v.begin(), v.end(), c74::min::lib::generator::triangle_unipolar<c74::min::sample>(v.size(), 0.25));
+            std::generate(v.begin(), v.end(), c74::min::lib::generator::triangle_unipolar<>(v.size(), 0.25));
             
             // The following output was generated using the Octave code in GeneratorTargetOutput.m by NW
             c74::min::sample_vector reference = {

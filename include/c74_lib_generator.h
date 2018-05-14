@@ -18,7 +18,7 @@ namespace lib {
         /// Generates an ideal sawtooth waveform from -1 to 1. Not anti-aliased.
         /// @tparam T       render output as this datatype. algorithm was designed to assume the use of floating point.
 
-        template <typename T>
+        template <typename T = sample>
         class sawtooth {
         public:
 
@@ -52,14 +52,14 @@ namespace lib {
 		/// Generates a line from -1 to 1 with consistent slope
         /// @tparam T       render output as this datatype. algorithm was designed to assume the use of floating point.
 
-        template <typename T>
+        template <typename T = sample>
         using ramp = generator::sawtooth<T>;
 
 
         /// Generates an ideal sawtooth waveform from 0 to 1. Not anti-aliased.
         /// @tparam T       render output as this datatype. algorithm was designed to assume the use of floating point.
 
-		template <typename T>
+		template <typename T = sample>
 		class sawtooth_unipolar {
 		public:
 
@@ -93,14 +93,14 @@ namespace lib {
 		/// Generates a line from 0 to 1 with consistent slope
         /// @tparam T       render output as this datatype. algorithm was designed to assume the use of floating point.
 
-        template <typename T>
+        template <typename T = sample>
         using ramp_unipolar = generator::sawtooth_unipolar<T>;
 
 
         /// Generates a sine wave constrained between -1 to 1
         /// @tparam T       render output as this datatype. algorithm was designed to assume the use of floating point.
 
-		template <typename T>
+		template <typename T = sample>
 		class sine {
 		public:
 
@@ -135,7 +135,7 @@ namespace lib {
         /// Generates a sine wave constrained between 0 to 1
         /// @tparam T       render output as this datatype. algorithm was designed to assume the use of floating point.
 
-        template <typename T>
+        template <typename T = sample>
         class sine_unipolar {
         public:
 
@@ -170,7 +170,7 @@ namespace lib {
         /// Generates a cosine wave constrained between -1 to 1
         /// @tparam T       render output as this datatype. algorithm was designed to assume the use of floating point.
 
-        template <typename T>
+        template <typename T = sample>
         class cosine {
         public:
 
@@ -205,7 +205,7 @@ namespace lib {
         /// Generates a cosine wave constrained between 0 to 1
         /// @tparam T       render output as this datatype. algorithm was designed to assume the use of floating point.
 
-        template <typename T>
+        template <typename T = sample>
         class cosine_unipolar {
         public:
 
@@ -240,7 +240,7 @@ namespace lib {
         /// Generates a triangle wave constrained between -1 to 1
         /// @tparam T       render output as this datatype. algorithm was designed to assume the use of floating point.
 
-		template <typename T>
+		template <typename T = sample>
 		class triangle {
 		public:
 
@@ -284,7 +284,7 @@ namespace lib {
         /// Generates a triangle wave constrained between 0 to 1
         /// @tparam T       render output as this datatype. algorithm was designed to assume the use of floating point.
 
-        template <typename T>
+        template <typename T = sample>
         class triangle_unipolar {
         public:
 

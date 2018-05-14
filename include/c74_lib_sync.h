@@ -55,7 +55,7 @@ namespace lib {
 		///	@return		Calculated sample
 
 		sample operator()() {
-			if (m_phase > 1.0)
+			if (m_phase >= 1.0)
 				m_phase -= 1.0;
 			else if (m_phase < 0.0)
 				m_phase += 1.0;
