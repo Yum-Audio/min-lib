@@ -981,3 +981,98 @@ TEST_CASE ("Produce a triangle waveform") {
 	
 	
 }
+
+
+TEST_CASE ("Produce a unipolar triangle waveform") {
+	
+	using namespace c74::min;
+	using namespace c74::min::lib;
+	INFO ("Using an oscillator instance with wavetable size of 64, setting waveform to unipolar triangle");
+	
+	oscillator<> o { 64 };
+	o.change_waveform<generator::triangle_unipolar<>>();
+	
+	INFO ("Setting frequency to produce single cycle with duration of 64 samples");
+	o.frequency(1.0, 64.0);
+	
+	c74::min::sample_vector reference = {
+		0.5,
+		0.53125,
+		0.5625,
+		0.59375,
+		0.625,
+		0.65625,
+		0.6875,
+		0.71875,
+		0.75,
+		0.78125,
+		0.8125,
+		0.84375,
+		0.875,
+		0.90625,
+		0.9375,
+		0.96875,
+		1,
+		0.96875,
+		0.9375,
+		0.90625,
+		0.875,
+		0.84375,
+		0.8125,
+		0.78125,
+		0.75,
+		0.71875,
+		0.6875,
+		0.65625,
+		0.625,
+		0.59375,
+		0.5625,
+		0.53125,
+		0.5,
+		0.46875,
+		0.4375,
+		0.40625,
+		0.375,
+		0.34375,
+		0.3125,
+		0.28125,
+		0.25,
+		0.21875,
+		0.1875,
+		0.15625,
+		0.125,
+		0.09375,
+		0.0625,
+		0.03125,
+		0,
+		0.03125,
+		0.0625,
+		0.09375,
+		0.125,
+		0.15625,
+		0.1875,
+		0.21875,
+		0.25,
+		0.28125,
+		0.3125,
+		0.34375,
+		0.375,
+		0.40625,
+		0.4375,
+		0.46875
+	};
+	
+	// output from our object's processing
+	sample_vector	output;
+	
+	// run the calculations
+	for (auto x : reference) {
+		auto y = o();
+		output.push_back(y);
+	}
+	
+	INFO("The output matches an externally generated reference set.");
+	REQUIRE_VECTOR_APPROX( output, reference );
+	
+	
+}
