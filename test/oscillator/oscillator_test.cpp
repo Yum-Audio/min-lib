@@ -128,16 +128,94 @@ TEST_CASE ("Confirm sample operator changes the phase") {
 	
 }
 
-TEST_CASE ("Changes waveform using the generator classes") {
+TEST_CASE ("Produce a sine waveform") {
 	
 	using namespace c74::min;
 	using namespace c74::min::lib;
-	INFO ("Using an oscillator instance with wavetable size of 256");
+	INFO ("Using an oscillator instance with wavetable size of 64, default waveform of sine");
 	
-	oscillator<> o { 256 };
+	oscillator<> o { 64 };
+	o.frequency(1.0, 64.0);
 	
-	o.change_waveform<generator::ramp_unipolar<>>();
+	// The following output was generated using the Octave code in GeneratorTargetOutput.m by NW
+	c74::min::sample_vector reference = {
+		0,
+		0.0980171403295606,
+		0.1950903220161282,
+		0.2902846772544623,
+		0.3826834323650898,
+		0.4713967368259976,
+		0.5555702330196022,
+		0.6343932841636455,
+		0.7071067811865475,
+		0.7730104533627369,
+		0.8314696123025451,
+		0.8819212643483549,
+		0.9238795325112867,
+		0.9569403357322089,
+		0.9807852804032304,
+		0.9951847266721968,
+		1,
+		0.9951847266721969,
+		0.9807852804032304,
+		0.9569403357322089,
+		0.9238795325112867,
+		0.881921264348355,
+		0.8314696123025455,
+		0.7730104533627371,
+		0.7071067811865476,
+		0.6343932841636455,
+		0.5555702330196022,
+		0.4713967368259978,
+		0.3826834323650898,
+		0.2902846772544623,
+		0.1950903220161286,
+		0.09801714032956084,
+		1.224646799147353e-16,
+		-0.09801714032956059,
+		-0.1950903220161284,
+		-0.2902846772544622,
+		-0.3826834323650897,
+		-0.4713967368259976,
+		-0.555570233019602,
+		-0.6343932841636453,
+		-0.7071067811865475,
+		-0.7730104533627367,
+		-0.8314696123025452,
+		-0.8819212643483549,
+		-0.9238795325112865,
+		-0.9569403357322088,
+		-0.9807852804032303,
+		-0.9951847266721969,
+		-1,
+		-0.9951847266721969,
+		-0.9807852804032304,
+		-0.9569403357322089,
+		-0.9238795325112866,
+		-0.881921264348355,
+		-0.8314696123025456,
+		-0.7730104533627369,
+		-0.7071067811865477,
+		-0.6343932841636459,
+		-0.5555702330196022,
+		-0.4713967368259979,
+		-0.3826834323650904,
+		-0.2902846772544624,
+		-0.1950903220161287,
+		-0.09801714032956052
+	};
 	
-	o.change_waveform<generator::ramp<>>();
+	// output from our object's processing
+	sample_vector	output;
+	
+	// run the calculations
+	for (auto x : reference) {
+		auto y = o();
+		output.push_back(y);
+	}
+	
+	INFO("The output matches an externally generated reference set.");
+	REQUIRE_VECTOR_APPROX( output, reference );
+	
 	
 }
