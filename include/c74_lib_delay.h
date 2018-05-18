@@ -87,7 +87,11 @@ namespace lib {
 				- 2
 				+ offset;
 			
-			return m_interpolator(m_history.tail(true_offset+1), m_history.tail(true_offset), m_size_fractional);
+			return m_interpolator(m_history.tail(true_offset+2),
+								  m_history.tail(true_offset+1),
+								  m_history.tail(true_offset),
+								  m_history.tail(true_offset-1),
+								  m_size_fractional);
 		}
 		
 		
