@@ -53,7 +53,35 @@ namespace lib {
         /// @tparam T       render output as this datatype. algorithm was designed to assume the use of floating point.
 
         template <typename T = sample>
-        using ramp = generator::sawtooth<T>;
+		class ramp {
+		public:
+			
+			/// Create an instance of a generator to calculate an output with N points.
+			/// @param	size	The number of points over which the generator will produce a function.
+			///	@param	count	number of cycles of the wave to generate across the vector. default is 1.
+			
+			ramp (size_t size, double count = 1.0)
+			: m_cycle_size	{ size	}
+			, m_cycle_count	{ count }
+			{
+				//TODO: we need way to protect against zero. static_assert did not work.
+			}
+			
+			
+			/// Called by std::generate to produce the next value in the series to produce this function.
+			///	@return	The next value in the series.
+			
+			T operator()() {
+				++m_current;
+				// CHANGES NEEDED HERE
+				return ( T( ( fmod(m_current * m_cycle_count / m_cycle_size, 1.0) * 2.0 ) - 1.0));
+			}
+			
+		private:
+			int		m_current { -1 };
+			size_t	m_cycle_size;
+			number	m_cycle_count;
+		};
 
 
         /// Generates an ideal sawtooth waveform from 0 to 1. Not anti-aliased.
@@ -94,7 +122,35 @@ namespace lib {
         /// @tparam T       render output as this datatype. algorithm was designed to assume the use of floating point.
 
         template <typename T = sample>
-        using ramp_unipolar = generator::sawtooth_unipolar<T>;
+		class ramp_unipolar {
+		public:
+			
+			/// Create an instance of a generator to calculate an output with N points.
+			/// @param	size	The number of points over which the generator will produce a function.
+			///	@param	count	number of cycles of the wave to generate across the vector. default is 1.
+			
+			ramp_unipolar (size_t size, double count = 1.0)
+			: m_cycle_size	{ size	}
+			, m_cycle_count	{ count }
+			{
+				//TODO: we need way to protect against zero. static_assert did not work.
+			}
+			
+			
+			/// Called by std::generate to produce the next value in the series to produce this function.
+			///	@return	The next value in the series.
+			
+			T operator()() {
+				++m_current;
+				// CHANGES NEEDED HERE
+				return ( T(fmod(m_current * m_cycle_count / m_cycle_size, 1.0)));
+			}
+			
+		private:
+			int		m_current { -1 };
+			size_t	m_cycle_size;
+			number	m_cycle_count;
+		};
 
 
         /// Generates a sine wave constrained between -1 to 1
