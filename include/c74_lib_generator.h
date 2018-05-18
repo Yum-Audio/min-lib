@@ -72,9 +72,24 @@ namespace lib {
 			///	@return	The next value in the series.
 			
 			T operator()() {
+				T out = 0.0;
 				++m_current;
-				// CHANGES NEEDED HERE
-				return ( T( ( fmod(m_current * m_cycle_count / m_cycle_size, 1.0) * 2.0 ) - 1.0));
+				
+				auto delta = fmod(m_current * m_cycle_count / m_cycle_size, 1.0) ;
+				auto samples_per_cycle = m_cycle_size / m_cycle_count;
+				
+				// protect against divide by zero
+				if (delta == 0.0)
+					out = -1.0;
+				// compute all other values
+				else
+					out = ( 2 * delta * samples_per_cycle / (samples_per_cycle-1) ) - 1.0;
+				
+				// clip values over 1.0
+				if (out > 1.0)
+					out = 1.0;
+				
+				return out;
 			}
 			
 		private:
@@ -141,9 +156,24 @@ namespace lib {
 			///	@return	The next value in the series.
 			
 			T operator()() {
+				T out = 0.0;
 				++m_current;
-				// CHANGES NEEDED HERE
-				return ( T(fmod(m_current * m_cycle_count / m_cycle_size, 1.0)));
+				
+				auto delta = fmod(m_current * m_cycle_count / m_cycle_size, 1.0) ;
+				auto samples_per_cycle = m_cycle_size / m_cycle_count;
+				
+				// protect against divide by zero
+				if (delta == 0.0)
+					out = 0.0;
+				// compute all other values
+				else
+					out = delta * samples_per_cycle / (samples_per_cycle-1);
+				
+				// clip values over 1.0
+				if (out > 1.0)
+					out = 1.0;
+				
+				return out;
 			}
 			
 		private:
