@@ -15,7 +15,7 @@ clear
 % - cycles_per_matrix controls the number of cycles in each target output matrix.
 
 samples_to_output = 64;
-cycles_per_matrix = 3.0;
+cycles_per_matrix = 1.0;
 
 % samples_per_cycle is then computed using the first two variables.
 % This value is needed before we enter the loop that generates each target output matrix.
@@ -85,7 +85,10 @@ for i = 1:samples_to_output
 	output_unipolartriangle(i) = generate_unipolartrangle(current_delta);
 endfor
 
-save expectedOutput.mat output_ramp
+save expectedOutput.mat samples_to_output
+save -append expectedOutput.mat cycles_per_matrix
+save -append expectedOutput.mat samples_per_cycle
+save -append expectedOutput.mat output_ramp
 save -append expectedOutput.mat output_unipolarramp
 save -append expectedOutput.mat output_sawtooth
 save -append expectedOutput.mat output_unipolarsawtooth
