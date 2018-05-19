@@ -340,6 +340,56 @@ namespace lib {
 			double m_bias		{ 0.0 };	// attribute
 			double m_tension	{ 0.0 };	// attribute
 		};
+		
+				
+		/// Factory for interpolators that allows objects to switch between types.
+		/// @tparam	interpolation_type	interpolator class that defines algorithm, must be derived from interpolator::base
+		
+		template <class interpolation_type = interpolator::none<>, class T = number>
+		class InterpolatorFactory {
+		public:
+			
+			/// Default constructor
+			explicit InterpolatorFactory()
+			{
+				bool check_base = std::is_base_of<interpolator::base<>,interpolation_type>::value;
+				assert(check_base);
+			}
+			
+			/// Interpolate based on 2 samples of input.
+			/// @param x1		Sample value that will be returned
+			/// @param x2		Unused sample value
+			/// @param delta	Unused fractional location
+			/// @return         The interpolated value
+			
+			MIN_CONSTEXPR T operator()(T x1, T x2, double delta) noexcept {
+				return m_interpolator->operator()(x1, x2, delta);
+			}
+			
+			
+			/// Interpolate based on 4 samples of input.
+			/// @param x0		Unused sample value
+			/// @param x1		Sample value that will be returned
+			/// @param x2		Unused sample value
+			/// @param x3		Unused sample value
+			/// @param delta	Unused fractional location
+			/// @return         The interpolated value
+			
+			MIN_CONSTEXPR T operator()(T x0, T x1, T x2, T x3, double delta) noexcept {
+				return m_interpolator->operator()(x0, x1, x2, x3, delta);
+			}
+			
+			/// Change the interpolation algorithm used.
+			/// @tparam	new_interpolation_type	interpolator class that defines algorithm
+			
+			template <class new_interpolation_type = interpolator::none<>>
+			void change_interpolation() {
+				m_interpolator = new new_interpolation_type;
+			}
+			
+		private:
+			interpolator::base<>	*m_interpolator = new interpolation_type;
+		};
 
 	}	// namespace interpolation
 }}}  // namespace c74::min::lib
