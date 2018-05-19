@@ -674,15 +674,35 @@ TEST_CASE("Changing between interpolators") {
 	using namespace c74::min;
 	using namespace c74::min::lib;
 	
-	interpolator::none<> i;
+	auto x0 = -1.0;
+	auto x1 = 2.0;
+	auto x2 = 1.0;
+	auto x3 = 4.0;
+	auto delta = 0.56;
 	
-	i = new interpolator::nearest<>;
-	i = new interpolator::linear<>;
-	i = new interpolator::allpass<>;
-	i = new interpolator::cosine<>;
-	i = new interpolator::cubic<>;
-	i = new interpolator::spline<>;
-	i = new interpolator::hermite<>;
+	interpolator::InterpolatorFactory<> i;
+	auto v_none = i(x0,x1,x2,x3,delta);
+	
+	i.change_interpolation<interpolator::nearest<>>();
+	auto v_nearest = i(x0,x1,x2,x3,delta);
+	
+	i.change_interpolation<interpolator::linear<>>();
+	auto v_linear = i(x0,x1,x2,x3,delta);
+	
+	i.change_interpolation<interpolator::allpass<>>();
+	auto v_allpass = i(x0,x1,x2,x3,delta);
+
+	i.change_interpolation<interpolator::cosine<>>();
+	auto v_cosine = i(x0,x1,x2,x3,delta);
+	
+	i.change_interpolation<interpolator::cubic<>>();
+	auto v_cubic = i(x0,x1,x2,x3,delta);
+	
+	i.change_interpolation<interpolator::spline<>>();
+	auto v_spline = i(x0,x1,x2,x3,delta);
+	
+	i.change_interpolation<interpolator::hermite<>>();
+	auto v_hermite = i(x0,x1,x2,x3,delta);
 	
 	
 }
