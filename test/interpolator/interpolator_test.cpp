@@ -669,3 +669,21 @@ SCENARIO ("Using Spline Interpolation") {
 		}
 	}
 }
+
+TEST_CASE("Changing between interpolators") {
+	using namespace c74::min;
+	using namespace c74::min::lib;
+	
+	interpolator::none<> i;
+	
+	i = new interpolator::nearest<>;
+	i = new interpolator::linear<>;
+	i = new interpolator::allpass<>;
+	i = new interpolator::cosine<>;
+	i = new interpolator::cubic<>;
+	i = new interpolator::spline<>;
+	i = new interpolator::hermite<>;
+	
+	
+}
+
