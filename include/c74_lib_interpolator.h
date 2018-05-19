@@ -26,9 +26,17 @@ namespace lib {
 
 		///	Shared base class for all interpolator types.
 
+		template<class T = number>
 		class base {
 		protected:
 			MIN_CONSTEXPR base() noexcept {};
+		public:
+			virtual T operator()(T x1, T x2, double delta) noexcept {
+				return x1;
+			}
+			virtual T operator()(T x0, T x1, T x2, T x3, double delta) noexcept {
+				return x1;
+			}
 		};
 
 
@@ -36,7 +44,7 @@ namespace lib {
 		///	@tparam	T		The data type to interpolate. By default this is the number type.
 
 		template<class T = number>
-		class none : base {
+		class none : public base<T> {
 		public:
 			static const int 	delay = 0;
 
@@ -69,7 +77,7 @@ namespace lib {
 		///	@tparam	T		The data type to interpolate. By default this is the number type.
 
 		template<class T = number>
-        class nearest : base {
+        class nearest : public base<T> {
         public:
             static const int 	delay = 0;
 
@@ -107,7 +115,7 @@ namespace lib {
 		///	@tparam	T		The data type to interpolate. By default this is the number type.
 
 		template<class T = number>
-		class linear : base {
+		class linear : public base<T> {
 		public:
 			static const int 	delay = 1;
 
@@ -142,7 +150,7 @@ namespace lib {
 		///	@tparam	T		The data type to interpolate. By default this is the number type.
 
 		template<class T = number>
-        class allpass : base {
+        class allpass : public base<T> {
         public:
             static const int 	delay = 1;
 
@@ -190,7 +198,7 @@ namespace lib {
 		///	@tparam	T		The data type to interpolate. By default this is the number type.
 
  		template<class T = number>
-		class cosine : base {
+		class cosine : public base<T> {
 		public:
 			static const int 	delay = 1;
 
@@ -224,7 +232,7 @@ namespace lib {
 		///	@tparam	T		The data type to interpolate. By default this is the number type.
 
  		template<class T = number>
-		class cubic : base {
+		class cubic : public base<T> {
 		public:
 			static const int 	delay = 3;
 
@@ -250,7 +258,7 @@ namespace lib {
 		///	@tparam	T		The data type to interpolate. By default this is the number type.
 
  		template<class T = number>
-		class spline : base {
+		class spline : public base<T> {
 		public:
 			static const int 	delay = 3;
 
@@ -277,7 +285,7 @@ namespace lib {
 		///	@tparam	T		The data type to interpolate. By default this is the number type.
 
  		template<class T = number>
-		class hermite : base {
+		class hermite : public base<T> {
 		public:
 			static const int 	delay	{ 3 };
 
