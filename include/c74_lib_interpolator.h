@@ -377,16 +377,17 @@ namespace lib {
 			
 			explicit interpolator_proxy(interpolator_type first_type = interpolator_type::none)
 			{
-				m_option.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::none<T>));
-				m_option.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::nearest<T>));
-				m_option.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::linear<T>));
-				m_option.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::allpass<T>));
-				m_option.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::cosine<T>));
-				m_option.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::cubic<T>));
-				m_option.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::spline<T>));
-				m_option.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::hermite<T>));
+				// NW: The order here must match the order in interpolator_type enum
+				m_type_vector.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::none<T>));
+				m_type_vector.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::nearest<T>));
+				m_type_vector.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::linear<T>));
+				m_type_vector.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::allpass<T>));
+				m_type_vector.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::cosine<T>));
+				m_type_vector.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::cubic<T>));
+				m_type_vector.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::spline<T>));
+				m_type_vector.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::hermite<T>));
 				
-				m_which_option = static_cast<int>(first_type);
+				m_which_type = static_cast<int>(first_type);
 				
 			}
 			
@@ -400,19 +401,21 @@ namespace lib {
 			/// @return         The interpolated value
 			
 			MIN_CONSTEXPR T operator()(T x0, T x1, T x2, T x3, double delta) noexcept {
-				return m_option[m_which_option]->operator()(x0, x1, x2, x3, delta);
+				return m_type_vector[m_which_type]->operator()(x0, x1, x2, x3, delta);
 			}
+			
 			
 			/// Change the interpolation algorithm used.
 			/// @param	new_type	option from the interpolator_type enum
 			
 			void change_interpolation(interpolator_type new_type) {
-				m_which_option = static_cast<int>(new_type);
+				m_which_type = static_cast<int>(new_type);
 			}
 			
+			
 		private:
-			std::vector<std::unique_ptr<interpolator::base<T>>>		m_option;
-			int														m_which_option;
+			std::vector<std::unique_ptr<interpolator::base<T>>>		m_type_vector;	///< vector with one instance of each interpolator type
+			int														m_which_type;	///< index within m_type_vector used for interpolation operator
 		};
 
 	}	// namespace interpolation
