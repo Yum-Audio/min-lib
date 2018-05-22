@@ -37,6 +37,18 @@ namespace lib {
 			virtual T operator()(T x0, T x1, T x2, T x3, double delta) noexcept {
 				return x1;
 			}
+			virtual void bias(double new_bias) {
+				;
+			}
+			virtual double bias() {
+				return 0.0;
+			}
+			virtual void tension(double new_tension) {
+				;
+			}
+			virtual double tension() {
+				return 0.0;
+			}
 		};
 
 

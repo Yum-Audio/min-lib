@@ -751,5 +751,20 @@ TEST_CASE("Produce correct values when changing between types using interpolator
 	REQUIRE( v_hermite == v_hermite_reference );
 	
 	
+	INFO("Setting bias and tension values works");
+	auto v_bias_default = i.bias();
+	auto v_tension_default = i.tension();
+	
+	double random_value1 = math::random(0.0,1.0);
+	auto random_value2 = math::random(0.0,1.0);
+	
+	i.bias(random_value1);
+	i.tension(random_value2);
+	
+	REQUIRE( i.bias() != v_bias_default );
+	REQUIRE( i.bias() == random_value1 );
+	REQUIRE( i.tension() != v_tension_default );
+	REQUIRE( i.tension() == random_value2 );
+	
 }
 
