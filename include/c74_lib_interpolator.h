@@ -349,6 +349,8 @@ namespace lib {
 			double m_tension	{ 0.0 };	// attribute
 		};
 		
+		/// Contains the names of available interpolation algorithms.
+		/// Used with multi_interpolator::change_interpolation() to select a specific option.
 		
 		enum class interpolator_type : int {
 			none,
@@ -370,6 +372,8 @@ namespace lib {
 		public:
 			
 			/// Default constructor
+			/// @param	first_type	option from the interpolator_type enum
+			
 			explicit InterpolatorFactory(interpolator_type first_type = interpolator_type::none)
 			{
 				m_option.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::none<T>));
@@ -409,7 +413,7 @@ namespace lib {
 			}
 			
 			/// Change the interpolation algorithm used.
-			/// @tparam	new_interpolation_type	interpolator class that defines algorithm
+			/// @param	new_type	option from the interpolator_type enum
 			
 			void change_interpolation(interpolator_type new_type) {
 				m_which_option = static_cast<int>(new_type);

@@ -684,25 +684,25 @@ TEST_CASE("Changing between interpolators") {
 	interpolator::InterpolatorFactory<> i;
 	auto v_none = i(x0,x1,x2,x3,delta);
 	
-	i.change_interpolation(InterpolatorType::nearest);
+	i.change_interpolation(interpolator_type::nearest);
 	auto v_nearest = i(x0,x1,x2,x3,delta);
 	
-	i.change_interpolation(InterpolatorType::linear);
+	i.change_interpolation(interpolator_type::linear);
 	auto v_linear = i(x0,x1,x2,x3,delta);
 	
-	i.change_interpolation(InterpolatorType::allpass);
+	i.change_interpolation(interpolator_type::allpass);
 	auto v_allpass = i(x0,x1,x2,x3,delta);
 
-	i.change_interpolation(InterpolatorType::cosine);
+	i.change_interpolation(interpolator_type::cosine);
 	auto v_cosine = i(x0,x1,x2,x3,delta);
 	
-	i.change_interpolation(InterpolatorType::cubic);
+	i.change_interpolation(interpolator_type::cubic);
 	auto v_cubic = i(x0,x1,x2,x3,delta);
 	
-	i.change_interpolation(InterpolatorType::spline);
+	i.change_interpolation(interpolator_type::spline);
 	auto v_spline = i(x0,x1,x2,x3,delta);
 	
-	i.change_interpolation(InterpolatorType::hermite);
+	i.change_interpolation(interpolator_type::hermite);
 	auto v_hermite = i(x0,x1,x2,x3,delta);
 	
 	
