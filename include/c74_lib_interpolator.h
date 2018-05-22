@@ -392,6 +392,38 @@ namespace lib {
 			}
 			
 			
+			/// Set the bias attribute on hermite interpolator.
+			/// @param	new_bias	The new bias value used in interpolating.
+			
+			void bias(double new_bias) {
+				m_type_vector[m_hermite_type]->bias(new_bias);
+			}
+			
+			
+			/// Return the value of the bias attribute on hermite interpolator.
+			/// @return The current bias.
+			
+			double bias() {
+				return m_type_vector[m_hermite_type]->bias();
+			}
+			
+			
+			/// Set the tension attribute on hermite interpolator.
+			/// @param	new_tension		The new tension value used in interpolating.
+			
+			void tension(double new_tension) {
+				m_type_vector[m_hermite_type]->tension(new_tension);
+			}
+			
+			
+			/// Return the value of the tension attribute on hermite interpolator.
+			/// @return The current tension.
+			
+			double tension() {
+				return m_type_vector[m_hermite_type]->tension();
+			}
+			
+			
 			/// Interpolate based on 4 samples of input.
 			/// @param x0		Unused sample value
 			/// @param x1		Sample value that will be returned
@@ -415,7 +447,8 @@ namespace lib {
 			
 		private:
 			std::vector<std::unique_ptr<interpolator::base<T>>>		m_type_vector;	///< vector with one instance of each interpolator type
-			int														m_which_type;	///< index within m_type_vector used for interpolation operator
+			int														m_which_type;	///< index within m_type_vector used for interpolation operator, stored to avoid repeat casting
+			static const int										m_hermite_type = static_cast<int>(interpolator_type::hermite);		///< index of the hermite interpolator, stored to avoid repeat casting
 		};
 
 	}	// namespace interpolation
