@@ -349,19 +349,40 @@ namespace lib {
 			double m_tension	{ 0.0 };	// attribute
 		};
 		
-				
+		
+		enum class InterpolatorType {
+			none,
+			nearest,
+			linear,
+			allpass,
+			cosine,
+			cubic,
+			spline,
+			hermite
+		};
+		
+		
 		/// Factory for interpolators that allows objects to switch between types.
 		/// @tparam	interpolation_type	interpolator class that defines algorithm, must be derived from interpolator::base
 		
-		template <class interpolation_type = interpolator::none<>, class T = number>
+		template <class T = number>
 		class InterpolatorFactory {
 		public:
 			
 			/// Default constructor
-			explicit InterpolatorFactory()
+			explicit InterpolatorFactory(InterpolatorType first_type = InterpolatorType::none)
 			{
-				bool check_base = std::is_base_of<interpolator::base<>,interpolation_type>::value;
-				assert(check_base);
+				m_option.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::none<T>));
+				m_option.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::nearest<T>));
+				m_option.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::linear<T>));
+				m_option.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::allpass<T>));
+				m_option.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::cosine<T>));
+				m_option.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::cubic<T>));
+				m_option.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::spline<T>));
+				m_option.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::hermite<T>));
+				
+				m_which_option = first_type;
+				
 			}
 			
 			/// Interpolate based on 2 samples of input.
@@ -371,7 +392,7 @@ namespace lib {
 			/// @return         The interpolated value
 			
 			MIN_CONSTEXPR T operator()(T x1, T x2, double delta) noexcept {
-				return m_interpolator->operator()(x1, x2, delta);
+				return m_option[static_cast<int>(m_which_option)]->operator()(x1, x2, delta);
 			}
 			
 			
@@ -380,23 +401,23 @@ namespace lib {
 			/// @param x1		Sample value that will be returned
 			/// @param x2		Unused sample value
 			/// @param x3		Unused sample value
-			/// @param delta	Unused fractional location
+			/// @param delta	Unused fractional locationq
 			/// @return         The interpolated value
 			
 			MIN_CONSTEXPR T operator()(T x0, T x1, T x2, T x3, double delta) noexcept {
-				return m_interpolator->operator()(x0, x1, x2, x3, delta);
+				return m_option[static_cast<int>(m_which_option)]->operator()(x0, x1, x2, x3, delta);
 			}
 			
 			/// Change the interpolation algorithm used.
 			/// @tparam	new_interpolation_type	interpolator class that defines algorithm
 			
-			template <class new_interpolation_type = interpolator::none<>>
-			void change_interpolation() {
-				m_interpolator = new new_interpolation_type;
+			void change_interpolation(InterpolatorType new_type) {
+				m_which_option = new_type;
 			}
 			
 		private:
-			interpolator::base<>	*m_interpolator = new interpolation_type;
+			std::vector<std::unique_ptr<interpolator::base<T>>>		m_option;
+			InterpolatorType										m_which_option = InterpolatorType::none;
 		};
 
 	}	// namespace interpolation

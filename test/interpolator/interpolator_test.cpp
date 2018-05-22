@@ -673,6 +673,7 @@ SCENARIO ("Using Spline Interpolation") {
 TEST_CASE("Changing between interpolators") {
 	using namespace c74::min;
 	using namespace c74::min::lib;
+	using namespace c74::min::lib::interpolator;
 	
 	auto x0 = -1.0;
 	auto x1 = 2.0;
@@ -683,25 +684,25 @@ TEST_CASE("Changing between interpolators") {
 	interpolator::InterpolatorFactory<> i;
 	auto v_none = i(x0,x1,x2,x3,delta);
 	
-	i.change_interpolation<interpolator::nearest<>>();
+	i.change_interpolation(InterpolatorType::nearest);
 	auto v_nearest = i(x0,x1,x2,x3,delta);
 	
-	i.change_interpolation<interpolator::linear<>>();
+	i.change_interpolation(InterpolatorType::linear);
 	auto v_linear = i(x0,x1,x2,x3,delta);
 	
-	i.change_interpolation<interpolator::allpass<>>();
+	i.change_interpolation(InterpolatorType::allpass);
 	auto v_allpass = i(x0,x1,x2,x3,delta);
 
-	i.change_interpolation<interpolator::cosine<>>();
+	i.change_interpolation(InterpolatorType::cosine);
 	auto v_cosine = i(x0,x1,x2,x3,delta);
 	
-	i.change_interpolation<interpolator::cubic<>>();
+	i.change_interpolation(InterpolatorType::cubic);
 	auto v_cubic = i(x0,x1,x2,x3,delta);
 	
-	i.change_interpolation<interpolator::spline<>>();
+	i.change_interpolation(InterpolatorType::spline);
 	auto v_spline = i(x0,x1,x2,x3,delta);
 	
-	i.change_interpolation<interpolator::hermite<>>();
+	i.change_interpolation(InterpolatorType::hermite);
 	auto v_hermite = i(x0,x1,x2,x3,delta);
 	
 	
