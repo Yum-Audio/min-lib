@@ -681,7 +681,7 @@ TEST_CASE("Changing between interpolators") {
 	auto x3 = 4.0;
 	auto delta = 0.56;
 	
-	interpolator::InterpolatorFactory<> i;
+	interpolator::interpolator_proxy<> i;
 	auto v_none = i(x0,x1,x2,x3,delta);
 	
 	i.change_interpolation(interpolator_type::nearest);

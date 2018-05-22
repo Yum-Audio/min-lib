@@ -349,6 +349,7 @@ namespace lib {
 			double m_tension	{ 0.0 };	// attribute
 		};
 		
+		
 		/// Contains the names of available interpolation algorithms.
 		/// Used with multi_interpolator::change_interpolation() to select a specific option.
 		
@@ -364,17 +365,17 @@ namespace lib {
 		};
 		
 		
-		/// Factory for interpolators that allows objects to switch between types.
-		/// @tparam	interpolation_type	interpolator class that defines algorithm, must be derived from interpolator::base
+		/// Proxy that provides means for objects to switch between interpolation types.
+		/// @tparam	T		The data type to interpolate. By default this is the number type.
 		
 		template <class T = number>
-		class InterpolatorFactory {
+		class interpolator_proxy {
 		public:
 			
 			/// Default constructor
-			/// @param	first_type	option from the interpolator_type enum
+			/// @param	first_type	Option from the interpolator_type enum. By default this is interpolator_type::none.
 			
-			explicit InterpolatorFactory(interpolator_type first_type = interpolator_type::none)
+			explicit interpolator_proxy(interpolator_type first_type = interpolator_type::none)
 			{
 				m_option.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::none<T>));
 				m_option.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::nearest<T>));
