@@ -350,7 +350,7 @@ namespace lib {
 		};
 		
 		
-		enum class InterpolatorType {
+		enum class interpolator_type : int {
 			none,
 			nearest,
 			linear,
@@ -370,7 +370,7 @@ namespace lib {
 		public:
 			
 			/// Default constructor
-			explicit InterpolatorFactory(InterpolatorType first_type = InterpolatorType::none)
+			explicit InterpolatorFactory(interpolator_type first_type = interpolator_type::none)
 			{
 				m_option.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::none<T>));
 				m_option.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::nearest<T>));
@@ -381,7 +381,7 @@ namespace lib {
 				m_option.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::spline<T>));
 				m_option.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::hermite<T>));
 				
-				m_which_option = first_type;
+				m_which_option = static_cast<int>(first_type);
 				
 			}
 			
@@ -392,7 +392,7 @@ namespace lib {
 			/// @return         The interpolated value
 			
 			MIN_CONSTEXPR T operator()(T x1, T x2, double delta) noexcept {
-				return m_option[static_cast<int>(m_which_option)]->operator()(x1, x2, delta);
+				return m_option[m_which_option]->operator()(x1, x2, delta);
 			}
 			
 			
@@ -405,19 +405,19 @@ namespace lib {
 			/// @return         The interpolated value
 			
 			MIN_CONSTEXPR T operator()(T x0, T x1, T x2, T x3, double delta) noexcept {
-				return m_option[static_cast<int>(m_which_option)]->operator()(x0, x1, x2, x3, delta);
+				return m_option[m_which_option]->operator()(x0, x1, x2, x3, delta);
 			}
 			
 			/// Change the interpolation algorithm used.
 			/// @tparam	new_interpolation_type	interpolator class that defines algorithm
 			
-			void change_interpolation(InterpolatorType new_type) {
-				m_which_option = new_type;
+			void change_interpolation(interpolator_type new_type) {
+				m_which_option = static_cast<int>(new_type);
 			}
 			
 		private:
 			std::vector<std::unique_ptr<interpolator::base<T>>>		m_option;
-			InterpolatorType										m_which_option = InterpolatorType::none;
+			int														m_which_option;
 		};
 
 	}	// namespace interpolation
