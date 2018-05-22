@@ -390,16 +390,6 @@ namespace lib {
 				
 			}
 			
-			/// Interpolate based on 2 samples of input.
-			/// @param x1		Sample value that will be returned
-			/// @param x2		Unused sample value
-			/// @param delta	Unused fractional location
-			/// @return         The interpolated value
-			
-			MIN_CONSTEXPR T operator()(T x1, T x2, double delta) noexcept {
-				return m_option[m_which_option]->operator()(x1, x2, delta);
-			}
-			
 			
 			/// Interpolate based on 4 samples of input.
 			/// @param x0		Unused sample value
