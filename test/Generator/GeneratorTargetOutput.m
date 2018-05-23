@@ -15,11 +15,11 @@ clear
 % - cycles_per_matrix controls the number of cycles in each target output matrix.
 
 samples_to_output = 64;
-cycles_per_matrix = 2;
+cycles_per_matrix = 1.0;
 
 % samples_per_cycle is then computed using the first two variables.
 % This value is needed before we enter the loop that generates each target output matrix.
-samples_per_cycle = samples_to_output / cycles_per_matrix;
+global samples_per_cycle = samples_to_output / cycles_per_matrix;
 
 output_ramp = double (1 : samples_to_output);
 output_unipolarramp = double (1 : samples_to_output);
@@ -56,9 +56,24 @@ function retval = generate_unipolartrangle(delta)
 		retval = retval + 0.5;
 endfunction
 
+function retval = generate_unipolarramp(delta)
+	retval = 0.0;
+	global samples_per_cycle;
+	if ( delta == 0.0 )
+		retval = 0.0;
+	else
+		retval = delta * samples_per_cycle / (samples_per_cycle-1);
+	endif
+	% certain cycles_per_matrix values will produce retvals that exceed 1.0 slightly
+	% so we clip them here
+	if ( retval > 1.0 )
+		retval = 1.0;
+	endif
+endfunction
+
 for i = 1:samples_to_output
 	current_delta = mod((i - 1), samples_per_cycle) / samples_per_cycle;
-	output_unipolarramp(i) = current_delta * samples_per_cycle / (samples_per_cycle - ( 1 / cycles_per_matrix ));
+	output_unipolarramp(i) = generate_unipolarramp(current_delta);
 	output_ramp(i) = ( ( output_unipolarramp(i) * 2.0 ) - 1.0 );
 	output_sawtooth(i) = ( current_delta * 2.0 ) - 1.0;
     output_unipolarsawtooth(i) = current_delta;
@@ -70,7 +85,10 @@ for i = 1:samples_to_output
 	output_unipolartriangle(i) = generate_unipolartrangle(current_delta);
 endfor
 
-save expectedOutput.mat output_ramp
+save expectedOutput.mat samples_to_output
+save -append expectedOutput.mat cycles_per_matrix
+save -append expectedOutput.mat samples_per_cycle
+save -append expectedOutput.mat output_ramp
 save -append expectedOutput.mat output_unipolarramp
 save -append expectedOutput.mat output_sawtooth
 save -append expectedOutput.mat output_unipolarsawtooth
