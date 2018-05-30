@@ -669,3 +669,102 @@ SCENARIO ("Using Spline Interpolation") {
 		}
 	}
 }
+
+TEST_CASE("Produce correct values when changing between types using interpolator::proxy") {
+	using namespace c74::min;
+	using namespace c74::min::lib;
+	using namespace c74::min::lib::interpolator;
+	
+	
+	INFO("Using a common set of 4 input samples and 1 delta");
+	auto x0 = -1.0;
+	auto x1 = 2.0;
+	auto x2 = 1.0;
+	auto x3 = 4.0;
+	auto delta = 0.56;
+	
+	
+	// Creating separate instances of each type to generate reference values
+	interpolator::none<> r_none;
+	auto v_none_reference = r_none(x0,x1,x2,x3,delta);
+	
+	interpolator::nearest<> r_nearest;
+	auto v_nearest_reference = r_nearest(x0,x1,x2,x3,delta);
+	
+	interpolator::linear<> r_linear;
+	auto v_linear_reference = r_linear(x0,x1,x2,x3,delta);
+	
+	interpolator::allpass<> r_allpass;
+	auto v_allpass_reference = r_allpass(x0,x1,x2,x3,delta);
+	
+	interpolator::cosine<> r_cosine;
+	auto v_cosine_reference = r_cosine(x0,x1,x2,x3,delta);
+	
+	interpolator::cubic<> r_cubic;
+	auto v_cubic_reference = r_cubic(x0,x1,x2,x3,delta);
+	
+	interpolator::spline<> r_spline;
+	auto v_spline_reference = r_spline(x0,x1,x2,x3,delta);
+	
+	interpolator::hermite<> r_hermite;
+	auto v_hermite_reference = r_hermite(x0,x1,x2,x3,delta);
+	
+	
+	INFO("Default operator output is consistent with type::none");
+	interpolator::proxy<> i;
+	auto v_none = i(x0,x1,x2,x3,delta);
+	REQUIRE( v_none == v_none_reference );
+	
+	INFO("After change, operator output is consistent with type::nearest");
+	i.change_interpolation(type::nearest);
+	auto v_nearest = i(x0,x1,x2,x3,delta);
+	REQUIRE( v_nearest == v_nearest_reference );
+	
+	INFO("After change, operator output is consistent with type::linear");
+	i.change_interpolation(type::linear);
+	auto v_linear = i(x0,x1,x2,x3,delta);
+	REQUIRE( v_linear == v_linear_reference );
+	
+	INFO("After change, operator output is consistent with type::allpass");
+	i.change_interpolation(type::allpass);
+	auto v_allpass = i(x0,x1,x2,x3,delta);
+	REQUIRE( v_allpass == v_allpass_reference );
+
+	INFO("After change, operator output is consistent with type::cosine");
+	i.change_interpolation(type::cosine);
+	auto v_cosine = i(x0,x1,x2,x3,delta);
+	REQUIRE( v_cosine == v_cosine_reference );
+	
+	INFO("After change, operator output is consistent with type::cubic");
+	i.change_interpolation(type::cubic);
+	auto v_cubic = i(x0,x1,x2,x3,delta);
+	REQUIRE( v_cubic == v_cubic_reference );
+	
+	INFO("After change, operator output is consistent with type::spline");
+	i.change_interpolation(type::spline);
+	auto v_spline = i(x0,x1,x2,x3,delta);
+	REQUIRE( v_spline == v_spline_reference );
+	
+	INFO("After change, operator output is consistent with type::hermite");
+	i.change_interpolation(type::hermite);
+	auto v_hermite = i(x0,x1,x2,x3,delta);
+	REQUIRE( v_hermite == v_hermite_reference );
+	
+	
+	INFO("Setting bias and tension values works");
+	auto v_bias_default = i.bias();
+	auto v_tension_default = i.tension();
+	
+	double random_value1 = math::random(0.0,1.0);
+	auto random_value2 = math::random(0.0,1.0);
+	
+	i.bias(random_value1);
+	i.tension(random_value2);
+	
+	REQUIRE( i.bias() != v_bias_default );
+	REQUIRE( i.bias() == random_value1 );
+	REQUIRE( i.tension() != v_tension_default );
+	REQUIRE( i.tension() == random_value2 );
+	
+}
+

@@ -87,7 +87,11 @@ namespace lib {
 				- 2
 				+ offset;
 			
-			return m_interpolator(m_history.tail(true_offset+1), m_history.tail(true_offset), m_size_fractional);
+			return m_interpolator(m_history.tail(true_offset+2),
+								  m_history.tail(true_offset+1),
+								  m_history.tail(true_offset),
+								  m_history.tail(true_offset-1),
+								  m_size_fractional);
 		}
 		
 		
@@ -103,6 +107,15 @@ namespace lib {
 
 		void clear() {
 			m_history.zero();
+		}
+		
+		
+		/// Change the interpolation algorithm used.
+		/// @tparam	new_interpolation_type	interpolator class that defines algorithm
+		
+		template <class new_interpolation_type = interpolator::none<>>
+		void change_interpolation() {
+			m_interpolator = new new_interpolation_type;
 		}
 
 

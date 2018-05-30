@@ -26,9 +26,29 @@ namespace lib {
 
 		///	Shared base class for all interpolator types.
 
+		template<class T = number>
 		class base {
 		protected:
 			MIN_CONSTEXPR base() noexcept {};
+		public:
+			virtual T operator()(T x1, T x2, double delta) noexcept {
+				return x1;
+			}
+			virtual T operator()(T x0, T x1, T x2, T x3, double delta) noexcept {
+				return x1;
+			}
+			virtual void bias(double new_bias) {
+				;
+			}
+			virtual double bias() {
+				return 0.0;
+			}
+			virtual void tension(double new_tension) {
+				;
+			}
+			virtual double tension() {
+				return 0.0;
+			}
 		};
 
 
@@ -36,7 +56,7 @@ namespace lib {
 		///	@tparam	T		The data type to interpolate. By default this is the number type.
 
 		template<class T = number>
-		class none : base {
+		class none : public base<T> {
 		public:
 			static const int 	delay = 0;
 
@@ -69,7 +89,7 @@ namespace lib {
 		///	@tparam	T		The data type to interpolate. By default this is the number type.
 
 		template<class T = number>
-        class nearest : base {
+        class nearest : public base<T> {
         public:
             static const int 	delay = 0;
 
@@ -107,7 +127,7 @@ namespace lib {
 		///	@tparam	T		The data type to interpolate. By default this is the number type.
 
 		template<class T = number>
-		class linear : base {
+		class linear : public base<T> {
 		public:
 			static const int 	delay = 1;
 
@@ -142,7 +162,7 @@ namespace lib {
 		///	@tparam	T		The data type to interpolate. By default this is the number type.
 
 		template<class T = number>
-        class allpass : base {
+        class allpass : public base<T> {
         public:
             static const int 	delay = 1;
 
@@ -190,7 +210,7 @@ namespace lib {
 		///	@tparam	T		The data type to interpolate. By default this is the number type.
 
  		template<class T = number>
-		class cosine : base {
+		class cosine : public base<T> {
 		public:
 			static const int 	delay = 1;
 
@@ -224,7 +244,7 @@ namespace lib {
 		///	@tparam	T		The data type to interpolate. By default this is the number type.
 
  		template<class T = number>
-		class cubic : base {
+		class cubic : public base<T> {
 		public:
 			static const int 	delay = 3;
 
@@ -250,7 +270,7 @@ namespace lib {
 		///	@tparam	T		The data type to interpolate. By default this is the number type.
 
  		template<class T = number>
-		class spline : base {
+		class spline : public base<T> {
 		public:
 			static const int 	delay = 3;
 
@@ -277,7 +297,7 @@ namespace lib {
 		///	@tparam	T		The data type to interpolate. By default this is the number type.
 
  		template<class T = number>
-		class hermite : base {
+		class hermite : public base<T> {
 		public:
 			static const int 	delay	{ 3 };
 
@@ -339,6 +359,108 @@ namespace lib {
 		private:
 			double m_bias		{ 0.0 };	// attribute
 			double m_tension	{ 0.0 };	// attribute
+		};
+		
+		
+		/// Contains the names of available interpolation algorithms.
+		/// Used with proxy::change_interpolation() to select a specific option.
+		
+		enum class type : int {
+			none,
+			nearest,
+			linear,
+			allpass,
+			cosine,
+			cubic,
+			spline,
+			hermite
+		};
+		
+		
+		/// Proxy that provides means for objects to switch between interpolation types.
+		/// @tparam	T		The data type to interpolate. By default this is the number type.
+		
+		template <class T = number>
+		class proxy {
+		public:
+			
+			/// Default constructor
+			/// @param	first_type	Option from the type enum. By default this is type::none.
+			
+			explicit proxy(type first_type = type::none)
+			{
+				// NW: The order here must match the order in type enum
+				m_type_vector.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::none<T>));
+				m_type_vector.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::nearest<T>));
+				m_type_vector.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::linear<T>));
+				m_type_vector.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::allpass<T>));
+				m_type_vector.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::cosine<T>));
+				m_type_vector.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::cubic<T>));
+				m_type_vector.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::spline<T>));
+				m_type_vector.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::hermite<T>));
+				
+				m_which_type = static_cast<int>(first_type);
+				
+			}
+			
+			
+			/// Set the bias attribute on hermite interpolator.
+			/// @param	new_bias	The new bias value used in interpolating.
+			
+			void bias(double new_bias) {
+				m_type_vector[m_hermite_type]->bias(new_bias);
+			}
+			
+			
+			/// Return the value of the bias attribute on hermite interpolator.
+			/// @return The current bias.
+			
+			double bias() {
+				return m_type_vector[m_hermite_type]->bias();
+			}
+			
+			
+			/// Set the tension attribute on hermite interpolator.
+			/// @param	new_tension		The new tension value used in interpolating.
+			
+			void tension(double new_tension) {
+				m_type_vector[m_hermite_type]->tension(new_tension);
+			}
+			
+			
+			/// Return the value of the tension attribute on hermite interpolator.
+			/// @return The current tension.
+			
+			double tension() {
+				return m_type_vector[m_hermite_type]->tension();
+			}
+			
+			
+			/// Interpolate based on 4 samples of input.
+			/// @param x0		Unused sample value
+			/// @param x1		Sample value that will be returned
+			/// @param x2		Unused sample value
+			/// @param x3		Unused sample value
+			/// @param delta	Unused fractional locationq
+			/// @return         The interpolated value
+			
+			MIN_CONSTEXPR T operator()(T x0, T x1, T x2, T x3, double delta) noexcept {
+				return m_type_vector[m_which_type]->operator()(x0, x1, x2, x3, delta);
+			}
+			
+			
+			/// Change the interpolation algorithm used.
+			/// @param	new_type	option from the type enum
+			
+			void change_interpolation(type new_type) {
+				m_which_type = static_cast<int>(new_type);
+			}
+			
+			
+		private:
+			std::vector<std::unique_ptr<interpolator::base<T>>>		m_type_vector;	///< vector with one instance of each interpolator type
+			int														m_which_type;	///< index within m_type_vector used for interpolation operator, stored to avoid repeat casting
+			static const int										m_hermite_type = static_cast<int>(type::hermite);		///< index of the hermite interpolator, stored to avoid repeat casting
 		};
 
 	}	// namespace interpolation
