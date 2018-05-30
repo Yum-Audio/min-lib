@@ -363,7 +363,7 @@ namespace lib {
 		
 		
 		/// Contains the names of available interpolation algorithms.
-		/// Used with multi_interpolator::change_interpolation() to select a specific option.
+		/// Used with proxy::change_interpolation() to select a specific option.
 		
 		enum class type : int {
 			none,
@@ -381,13 +381,13 @@ namespace lib {
 		/// @tparam	T		The data type to interpolate. By default this is the number type.
 		
 		template <class T = number>
-		class interpolator_proxy {
+		class proxy {
 		public:
 			
 			/// Default constructor
 			/// @param	first_type	Option from the type enum. By default this is type::none.
 			
-			explicit interpolator_proxy(type first_type = type::none)
+			explicit proxy(type first_type = type::none)
 			{
 				// NW: The order here must match the order in type enum
 				m_type_vector.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::none<T>));

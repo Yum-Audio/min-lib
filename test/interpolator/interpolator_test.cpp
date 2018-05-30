@@ -670,7 +670,7 @@ SCENARIO ("Using Spline Interpolation") {
 	}
 }
 
-TEST_CASE("Produce correct values when changing between types using interpolator_proxy") {
+TEST_CASE("Produce correct values when changing between types using interpolator::proxy") {
 	using namespace c74::min;
 	using namespace c74::min::lib;
 	using namespace c74::min::lib::interpolator;
@@ -711,7 +711,7 @@ TEST_CASE("Produce correct values when changing between types using interpolator
 	
 	
 	INFO("Default operator output is consistent with type::none");
-	interpolator::interpolator_proxy<> i;
+	interpolator::proxy<> i;
 	auto v_none = i(x0,x1,x2,x3,delta);
 	REQUIRE( v_none == v_none_reference );
 	
