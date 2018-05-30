@@ -684,7 +684,7 @@ TEST_CASE("Produce correct values when changing between types using interpolator
 	auto delta = 0.56;
 	
 	
-	// Creating separate instances of each interpolation_type to generate reference values
+	// Creating separate instances of each type to generate reference values
 	interpolator::none<> r_none;
 	auto v_none_reference = r_none(x0,x1,x2,x3,delta);
 	
@@ -710,43 +710,43 @@ TEST_CASE("Produce correct values when changing between types using interpolator
 	auto v_hermite_reference = r_hermite(x0,x1,x2,x3,delta);
 	
 	
-	INFO("Default operator output is consistent with interpolation_type::none");
+	INFO("Default operator output is consistent with type::none");
 	interpolator::interpolator_proxy<> i;
 	auto v_none = i(x0,x1,x2,x3,delta);
 	REQUIRE( v_none == v_none_reference );
 	
-	INFO("After change, operator output is consistent with interpolation_type::nearest");
-	i.change_interpolation(interpolator_type::nearest);
+	INFO("After change, operator output is consistent with type::nearest");
+	i.change_interpolation(type::nearest);
 	auto v_nearest = i(x0,x1,x2,x3,delta);
 	REQUIRE( v_nearest == v_nearest_reference );
 	
-	INFO("After change, operator output is consistent with interpolation_type::linear");
-	i.change_interpolation(interpolator_type::linear);
+	INFO("After change, operator output is consistent with type::linear");
+	i.change_interpolation(type::linear);
 	auto v_linear = i(x0,x1,x2,x3,delta);
 	REQUIRE( v_linear == v_linear_reference );
 	
-	INFO("After change, operator output is consistent with interpolation_type::allpass");
-	i.change_interpolation(interpolator_type::allpass);
+	INFO("After change, operator output is consistent with type::allpass");
+	i.change_interpolation(type::allpass);
 	auto v_allpass = i(x0,x1,x2,x3,delta);
 	REQUIRE( v_allpass == v_allpass_reference );
 
-	INFO("After change, operator output is consistent with interpolation_type::cosine");
-	i.change_interpolation(interpolator_type::cosine);
+	INFO("After change, operator output is consistent with type::cosine");
+	i.change_interpolation(type::cosine);
 	auto v_cosine = i(x0,x1,x2,x3,delta);
 	REQUIRE( v_cosine == v_cosine_reference );
 	
-	INFO("After change, operator output is consistent with interpolation_type::cubic");
-	i.change_interpolation(interpolator_type::cubic);
+	INFO("After change, operator output is consistent with type::cubic");
+	i.change_interpolation(type::cubic);
 	auto v_cubic = i(x0,x1,x2,x3,delta);
 	REQUIRE( v_cubic == v_cubic_reference );
 	
-	INFO("After change, operator output is consistent with interpolation_type::spline");
-	i.change_interpolation(interpolator_type::spline);
+	INFO("After change, operator output is consistent with type::spline");
+	i.change_interpolation(type::spline);
 	auto v_spline = i(x0,x1,x2,x3,delta);
 	REQUIRE( v_spline == v_spline_reference );
 	
-	INFO("After change, operator output is consistent with interpolation_type::hermite");
-	i.change_interpolation(interpolator_type::hermite);
+	INFO("After change, operator output is consistent with type::hermite");
+	i.change_interpolation(type::hermite);
 	auto v_hermite = i(x0,x1,x2,x3,delta);
 	REQUIRE( v_hermite == v_hermite_reference );
 	

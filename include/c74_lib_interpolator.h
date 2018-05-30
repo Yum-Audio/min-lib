@@ -365,7 +365,7 @@ namespace lib {
 		/// Contains the names of available interpolation algorithms.
 		/// Used with multi_interpolator::change_interpolation() to select a specific option.
 		
-		enum class interpolator_type : int {
+		enum class type : int {
 			none,
 			nearest,
 			linear,
@@ -385,11 +385,11 @@ namespace lib {
 		public:
 			
 			/// Default constructor
-			/// @param	first_type	Option from the interpolator_type enum. By default this is interpolator_type::none.
+			/// @param	first_type	Option from the type enum. By default this is type::none.
 			
-			explicit interpolator_proxy(interpolator_type first_type = interpolator_type::none)
+			explicit interpolator_proxy(type first_type = type::none)
 			{
-				// NW: The order here must match the order in interpolator_type enum
+				// NW: The order here must match the order in type enum
 				m_type_vector.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::none<T>));
 				m_type_vector.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::nearest<T>));
 				m_type_vector.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::linear<T>));
@@ -450,9 +450,9 @@ namespace lib {
 			
 			
 			/// Change the interpolation algorithm used.
-			/// @param	new_type	option from the interpolator_type enum
+			/// @param	new_type	option from the type enum
 			
-			void change_interpolation(interpolator_type new_type) {
+			void change_interpolation(type new_type) {
 				m_which_type = static_cast<int>(new_type);
 			}
 			
@@ -460,7 +460,7 @@ namespace lib {
 		private:
 			std::vector<std::unique_ptr<interpolator::base<T>>>		m_type_vector;	///< vector with one instance of each interpolator type
 			int														m_which_type;	///< index within m_type_vector used for interpolation operator, stored to avoid repeat casting
-			static const int										m_hermite_type = static_cast<int>(interpolator_type::hermite);		///< index of the hermite interpolator, stored to avoid repeat casting
+			static const int										m_hermite_type = static_cast<int>(type::hermite);		///< index of the hermite interpolator, stored to avoid repeat casting
 		};
 
 	}	// namespace interpolation
