@@ -11,10 +11,9 @@ namespace min {
 namespace lib {
 
 
-	///	A single-channel interpolating delay line.
-	/// @tparam The type of interpolation. The default is no interpolation.
 
-	template <class interpolation_type = interpolator::none<>>
+	///	A single-channel interpolating delay line.
+
 	class delay {
 	public:
 
@@ -111,11 +110,10 @@ namespace lib {
 		
 		
 		/// Change the interpolation algorithm used.
-		/// @tparam	new_interpolation_type	interpolator class that defines algorithm
+		/// @param	new_type	option from the interpolator::type enum that names algorithm
 		
-		template <class new_interpolation_type = interpolator::none<>>
-		void change_interpolation() {
-			m_interpolator = new new_interpolation_type;
+		void change_interpolation(interpolator::type new_type = interpolator::type::none) {
+			m_interpolator.change_interpolation(new_type);
 		}
 
 
@@ -130,10 +128,10 @@ namespace lib {
 		
 
 	private:
-		circular_storage<sample>		m_history;			///< Memory for storing the delayed samples.
-		number							m_size;				///< Delay time in samples. May include a fractional component.
-		double							m_size_fractional;	///< The fractional component of the delay time.
-		interpolation_type				m_interpolator;		///< The interpolator instance used to produce interpolated output.
+		circular_storage<sample>	m_history;			///< Memory for storing the delayed samples.
+		number						m_size;				///< Delay time in samples. May include a fractional component.
+		double						m_size_fractional;	///< The fractional component of the delay time.
+		interpolator::proxy<>		m_interpolator { interpolator::type::linear };		///< The interpolator instance used to produce interpolated output.
 	};
 
 
