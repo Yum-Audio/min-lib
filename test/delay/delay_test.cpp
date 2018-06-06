@@ -487,6 +487,53 @@ TEST_CASE ("Linear interpolation of delay times at the edge of a vector") {
 	REQUIRE( nonzero_count == 2 );
 }
 
+
+TEST_CASE ("Cubic interpolation of delay times at the edge of a vector") {
+	using namespace c74::min;
+	using namespace c74::min::lib;
+	INFO ("Using a delay of 63.7+ samples, vector-size of 64 samples");
+	
+	sample_vector zero(64, 0.0);
+	sample_vector impulse(64, 0.0);
+	impulse[0] = 1.0;
+	
+	delay my_delay;
+	my_delay.change_interpolation(interpolator::type::cubic);	  // default type, so technically not necessary
+	my_delay.size(63.70000000000000284);
+	
+	INFO ("We process 3 vectors of audio...");
+	sample_vector output[3];
+	for (auto& s : impulse)
+		output[0].push_back( my_delay(s) );
+	for (auto& s : zero)
+		output[1].push_back( my_delay(s) );
+	for (auto& s : zero)
+		output[2].push_back( my_delay(s) );
+	
+	INFO ("first test to see if the expected values are in the right place");
+	REQUIRE( output[0][62] == -0.062999999999999057 );
+	REQUIRE( output[0][63] == 0.36299999999999621 );
+	REQUIRE( output[1][0] == 0.84700000000000263 );
+	REQUIRE( output[1][1] == -0.1469999999999998 );
+	
+	INFO ("then test to see if the expected number of non-zeroes were produced");
+	int nonzero_count {};
+	for (auto& s : output[0]) {
+		if (s != 0.0)
+			++nonzero_count;
+	}
+	for (auto& s : output[1]) {
+		if (s != 0.0)
+			++nonzero_count;
+	}
+	for (auto& s : output[2]) {
+		if (s != 0.0)
+			++nonzero_count;
+	}
+	REQUIRE( nonzero_count == 4 );
+}
+
+
 // NW: developed in response to issue here: https://github.com/Cycling74/min-lib/issues/22
 TEST_CASE ("Clear message should reset values in memory to 0.0, but preserve size of memory allocation") {
 	
