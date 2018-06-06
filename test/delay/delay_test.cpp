@@ -289,23 +289,23 @@ TEST_CASE ("Cubic interpolation delay times less than 1 sample") {
 	
 	sample_vector		input		{ 0,1,0,0,	0,0,0,0,	2,0,0,0,	0,0,3,0 };
 	sample_vector		output;
-	sample_vector		reference	{ // needs a correct reference
+	sample_vector		reference	{ // reference is our goal
+		0,
+		0.74399999999999999,
+		0.49600000000000005,
+		-0.096000000000000016,
 		0,
 		0,
 		0,
 		0,
+		1.488,
+		0.9920000000000001,
+		-0.19200000000000003,
 		0,
 		0,
 		0,
-		0,
-		0,
-		0,
-		0,
-		0,
-		0,
-		0,
-		0,
-		0,
+		2.2319999999999998,
+		1.4880000000000002,
 	};
 	delay	my_delay(0.4);
 	my_delay.change_interpolation(interpolator::type::cubic);  // default type, so technically not necessary
