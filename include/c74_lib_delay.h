@@ -131,7 +131,7 @@ namespace lib {
 		circular_storage<sample>	m_history;			///< Memory for storing the delayed samples.
 		number						m_size;				///< Delay time in samples. May include a fractional component.
 		double						m_size_fractional;	///< The fractional component of the delay time.
-		interpolator::proxy<>		m_interpolator { interpolator::type::linear };		///< The interpolator instance used to produce interpolated output.
+		interpolator::proxy<>		m_interpolator { interpolator::type::cubic };		///< The interpolator instance used to produce interpolated output.
 	};
 
 
