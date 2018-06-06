@@ -13,7 +13,7 @@ TEST_CASE ("Delay times greater than 1 vector-size") {
 	using namespace c74::min::lib;
 	INFO ("Using a delay instance with no arguments, the default capacity and size are both 256 samples")
 
-	delay<> my_delay;
+	delay my_delay;
 	REQUIRE(my_delay.size() == 256);
 
 	INFO ("Changing the delay time to 100 samples...");
@@ -77,7 +77,7 @@ TEST_CASE ("Delay times greater than 1 vector-size, part 2") {
 	sample_vector impulse(4, 0.0);
 	impulse[0] = 1.0;
 
-	delay<> my_delay(6);
+	delay my_delay(6);
 
 	INFO ("We process 3 vectors of audio...");
 	sample_vector output[3];
@@ -127,7 +127,7 @@ TEST_CASE ("Delay times less than 1 vector-size") {
 	sample_vector impulse(4, 0.0);
 	impulse[0] = 1.0;
 
-	delay<> my_delay(3);
+	delay my_delay(3);
 
 	INFO ("We process 3 vectors of audio...");
 	sample_vector output[3];
@@ -162,7 +162,7 @@ TEST_CASE ("Delay times less than 1 vector-size, part 2") {
 
 	sample_vector	input		{ 0,1,0,0,   0,0,0,0,   2,0,0,0,   0,0,3,0 };
 	sample_vector	output;
-	delay<>			my_delay(3);
+	delay			my_delay(3);
 
 	INFO ("We process 1 vector of audio...");
 	for (auto& s : input)
@@ -198,7 +198,7 @@ TEST_CASE ("Delay times less than 1 vector-size, part 2") {
 TEST_CASE ("Setting an interpolating delay") {
 	using namespace c74::min;
 	using namespace c74::min::lib;
-	delay<interpolator::linear<>> my_delay;
+	delay my_delay;
 
 	my_delay.size(3.2);
 	REQUIRE( my_delay.size() == 3.2 );
@@ -207,7 +207,7 @@ TEST_CASE ("Setting an interpolating delay") {
 }
 
 
-TEST_CASE ("Linear interpolation delay times greater than 1 vector-size") {
+TEST_CASE ("Linear interpolation of floating-point delay times") {
 	using namespace c74::min;
 	using namespace c74::min::lib;
 	INFO ("Using a delay of 2.1 samples, vector-size of 16 samples");
@@ -215,7 +215,8 @@ TEST_CASE ("Linear interpolation delay times greater than 1 vector-size") {
 	sample_vector					input		{ 0,1,0,0,		0,0,0,0,	2,0,0,0,		0,0,3,0 };
 	sample_vector					output;
 	sample_vector					reference	{ 0,0,0,0.9,	0.1,0,0,0,	0,0,1.8,0.2,	0,0,0,0	};
-	delay<interpolator::linear<>>	my_delay(2.1);
+	delay	my_delay(2.1);
+	my_delay.change_interpolation(interpolator::type::linear);
 
 	INFO ("We process 1 vector of audio...");
 	for (auto& s : input)
@@ -225,7 +226,44 @@ TEST_CASE ("Linear interpolation delay times greater than 1 vector-size") {
 }
 
 
-TEST_CASE ("Linear interpolation delay times less than 1 sample") {
+TEST_CASE ("Cubic interpolation of floating-point delay times") {
+	using namespace c74::min;
+	using namespace c74::min::lib;
+	INFO ("Using a delay of 2.1 samples, vector-size of 16 samples");
+	
+	sample_vector	input		{ 0,1,0,0,		0,0,0,0,	2,0,0,0,		0,0,3,0 };
+	sample_vector	output;
+	sample_vector	reference	{
+		0,
+		0,
+		-0.081000000000000058,
+		0.98099999999999998,
+		0.1090000000000001,
+		-0.0090000000000000149,
+		0,
+		0,
+		0,
+		-0.16200000000000012,
+		1.962,
+		0.21800000000000019,
+		-0.01800000000000003,
+		0,
+		0,
+		-0.24300000000000016
+	};
+	
+	delay	my_delay(2.1);
+	my_delay.change_interpolation(interpolator::type::cubic); // default type, so technically not necessary
+	
+	INFO ("We process 1 vector of audio...");
+	for (auto& s : input)
+		output.push_back( my_delay(s) );
+	
+	REQUIRE_VECTOR_APPROX( output , reference );
+}
+
+
+TEST_CASE ("Linear interpolation of delay times less than 1 sample") {
 	using namespace c74::min;
 	using namespace c74::min::lib;
 	INFO ("Using a delay of 0.4 samples, vector-size of 16 samples");
@@ -233,7 +271,8 @@ TEST_CASE ("Linear interpolation delay times less than 1 sample") {
 	sample_vector					input		{ 0,1,0,0,		0,0,0,0,	2,0,0,0,		0,0,3,0 };
 	sample_vector					output;
 	sample_vector					reference	{ 0,0.6,0.4,0,	0,0,0,0,	1.2,0.8,0,0,	0,0,1.8,1.2 };
-	delay<interpolator::linear<>>	my_delay(0.4);
+	delay	my_delay(0.4);
+	my_delay.change_interpolation(interpolator::type::linear);
 
 	INFO ("We process 1 vector of audio...");
 	for (auto& s : input)
@@ -243,14 +282,51 @@ TEST_CASE ("Linear interpolation delay times less than 1 sample") {
 }
 
 
-TEST_CASE ("Linear interpolation delay time of zero") {
+TEST_CASE ("Cubic interpolation of delay times less than 1 sample") {
+	using namespace c74::min;
+	using namespace c74::min::lib;
+	INFO ("Using a delay of 0.4 samples, vector-size of 16 samples");
+	
+	sample_vector		input		{ 0,1,0,0,	0,0,0,0,	2,0,0,0,	0,0,3,0 };
+	sample_vector		output;
+	sample_vector		reference	{ // reference is our goal
+		0,
+		0.74399999999999999,
+		0.49600000000000005,
+		-0.096000000000000016,
+		0,
+		0,
+		0,
+		0,
+		1.488,
+		0.9920000000000001,
+		-0.19200000000000003,
+		0,
+		0,
+		0,
+		2.2319999999999998,
+		1.4880000000000002,
+	};
+	delay	my_delay(0.4);
+	my_delay.change_interpolation(interpolator::type::cubic);  // default type, so technically not necessary
+	
+	INFO ("We process 1 vector of audio...");
+	for (auto& s : input)
+		output.push_back( my_delay(s) );
+	
+	REQUIRE_VECTOR_APPROX( output , reference );
+}
+
+
+TEST_CASE ("Linear interpolation of delay time set to zero") {
 	using namespace c74::min;
 	using namespace c74::min::lib;
 	INFO ("Using a delay of 0 samples, vector-size of 16 samples");
 
 	sample_vector					input		{ 0,1,0,0,		0,0,0,0,	2,0,0,0,		0,0,3,0 };
 	sample_vector					output;
-	delay<interpolator::linear<>>	my_delay(0);
+	delay	my_delay(0);
+	my_delay.change_interpolation(interpolator::type::linear);
 
 	INFO ("We process 1 vector of audio...");
 	for (auto& s : input)
@@ -260,7 +336,25 @@ TEST_CASE ("Linear interpolation delay time of zero") {
 }
 
 
-TEST_CASE ("Linear interpolation delay times less than 1 vector-size") {
+TEST_CASE ("Cubic interpolation of delay time set to zero") {
+	using namespace c74::min;
+	using namespace c74::min::lib;
+	INFO ("Using a delay of 0 samples, vector-size of 16 samples");
+	
+	sample_vector					input		{ 0,1,0,0,		0,0,0,0,	2,0,0,0,		0,0,3,0 };
+	sample_vector					output;
+	delay	my_delay(0);
+	my_delay.change_interpolation(interpolator::type::cubic);  // default type, so technically not necessary
+	
+	INFO ("We process 1 vector of audio...");
+	for (auto& s : input)
+		output.push_back( my_delay(s) );
+	
+	REQUIRE_VECTOR_APPROX( output , input );
+}
+
+
+TEST_CASE ("Linear interpolation of delay times greater than 1 vector-size") {
 	using namespace c74::min;
 	using namespace c74::min::lib;
 	INFO ("Using a delay of 100.2+ samples, vector-size of 64 samples");
@@ -269,7 +363,8 @@ TEST_CASE ("Linear interpolation delay times less than 1 vector-size") {
 	sample_vector impulse(64, 0.0);
 	impulse[0] = 1.0;
 
-	delay<interpolator::linear<>> my_delay;
+	delay my_delay;
+	my_delay.change_interpolation(interpolator::type::linear);
 	my_delay.size(100.20000000000000284);
 
 	INFO ("We process 3 vectors of audio...");
@@ -303,7 +398,53 @@ TEST_CASE ("Linear interpolation delay times less than 1 vector-size") {
 }
 
 
-TEST_CASE ("Linear interpolation delay time at the edge of a vector") {
+TEST_CASE ("Cubic interpolation of delay times greater than 1 vector-size") {
+	using namespace c74::min;
+	using namespace c74::min::lib;
+	INFO ("Using a delay of 100.2+ samples, vector-size of 64 samples");
+	
+	sample_vector zero(64, 0.0);
+	sample_vector impulse(64, 0.0);
+	impulse[0] = 1.0;
+	
+	delay my_delay;
+	my_delay.change_interpolation(interpolator::type::cubic);	  // default type, so technically not necessary
+	my_delay.size(100.20000000000000284);
+	
+	INFO ("We process 3 vectors of audio...");
+	sample_vector output[3];
+	for (auto& s : impulse)
+		output[0].push_back( my_delay(s) );
+	for (auto& s : zero)
+		output[1].push_back( my_delay(s) );
+	for (auto& s : zero)
+		output[2].push_back( my_delay(s) );
+	
+	INFO ("first test to see if the expected values are in the right place");
+	REQUIRE( output[1][35] == -0.12800000000000089 );
+	REQUIRE( output[1][36] == 0.92799999999999805 );
+	REQUIRE( output[1][37] == 0.23200000000000365 );
+	REQUIRE( output[1][38] == -0.032000000000000799 );
+	
+	INFO ("then test to see if the expected number of non-zeroes were produced");
+	int nonzero_count {};
+	for (auto& s : output[0]) {
+		if (s != 0.0)
+			++nonzero_count;
+	}
+	for (auto& s : output[1]) {
+		if (s != 0.0)
+			++nonzero_count;
+	}
+	for (auto& s : output[2]) {
+		if (s != 0.0)
+			++nonzero_count;
+	}
+	REQUIRE( nonzero_count == 4 );
+}
+
+
+TEST_CASE ("Linear interpolation of delay times at the edge of a vector") {
 	using namespace c74::min;
 	using namespace c74::min::lib;
 	INFO ("Using a delay of 63.7+ samples, vector-size of 64 samples");
@@ -312,7 +453,8 @@ TEST_CASE ("Linear interpolation delay time at the edge of a vector") {
 	sample_vector impulse(64, 0.0);
 	impulse[0] = 1.0;
 
-	delay<interpolator::linear<>> my_delay;
+	delay my_delay;
+	my_delay.change_interpolation(interpolator::type::linear);
 	my_delay.size(63.70000000000000284);
 
 	INFO ("We process 3 vectors of audio...");
@@ -345,6 +487,53 @@ TEST_CASE ("Linear interpolation delay time at the edge of a vector") {
 	REQUIRE( nonzero_count == 2 );
 }
 
+
+TEST_CASE ("Cubic interpolation of delay times at the edge of a vector") {
+	using namespace c74::min;
+	using namespace c74::min::lib;
+	INFO ("Using a delay of 63.7+ samples, vector-size of 64 samples");
+	
+	sample_vector zero(64, 0.0);
+	sample_vector impulse(64, 0.0);
+	impulse[0] = 1.0;
+	
+	delay my_delay;
+	my_delay.change_interpolation(interpolator::type::cubic);	  // default type, so technically not necessary
+	my_delay.size(63.70000000000000284);
+	
+	INFO ("We process 3 vectors of audio...");
+	sample_vector output[3];
+	for (auto& s : impulse)
+		output[0].push_back( my_delay(s) );
+	for (auto& s : zero)
+		output[1].push_back( my_delay(s) );
+	for (auto& s : zero)
+		output[2].push_back( my_delay(s) );
+	
+	INFO ("first test to see if the expected values are in the right place");
+	REQUIRE( output[0][62] == -0.062999999999999057 );
+	REQUIRE( output[0][63] == 0.36299999999999621 );
+	REQUIRE( output[1][0] == 0.84700000000000263 );
+	REQUIRE( output[1][1] == -0.1469999999999998 );
+	
+	INFO ("then test to see if the expected number of non-zeroes were produced");
+	int nonzero_count {};
+	for (auto& s : output[0]) {
+		if (s != 0.0)
+			++nonzero_count;
+	}
+	for (auto& s : output[1]) {
+		if (s != 0.0)
+			++nonzero_count;
+	}
+	for (auto& s : output[2]) {
+		if (s != 0.0)
+			++nonzero_count;
+	}
+	REQUIRE( nonzero_count == 4 );
+}
+
+
 // NW: developed in response to issue here: https://github.com/Cycling74/min-lib/issues/22
 TEST_CASE ("Clear message should reset values in memory to 0.0, but preserve size of memory allocation") {
 	
@@ -356,7 +545,7 @@ TEST_CASE ("Clear message should reset values in memory to 0.0, but preserve siz
 	sample_vector impulse(4, 0.0);
 	impulse[0] = 1.0;
 	
-	delay<> my_delay { 6 };
+	delay my_delay { 6 };
 	
 	INFO ("We process impulse, then two empty vectors of audio...");
 	sample_vector output[3];
@@ -419,7 +608,7 @@ TEST_CASE ("Using tail() and write() functions") {
 	sample_vector					input		{ 0,1,0,0,		0,0,2,0,	3,0,0,0,	0,0,0,0 };
 	sample_vector					output;
 	sample_vector					reference	{ 0,0,0,0,		0,1,0,0,	0,0,2,0,	3,0,0,0 };
-	delay<interpolator::linear<>>	my_delay(4);
+	delay	my_delay(4);
 	
 	INFO ("We process 1 vector of audio...");
 	for (auto& s : input) {
@@ -446,6 +635,7 @@ TEST_CASE ("Using tail() and write() functions") {
 	sample_vector					reference3	{ 0,0,0,0.9,	0.1,0,0,0,	1.8,0.2,2.7,0.3, 0,0,0,0	};
 	
 	my_delay.size(2.1);
+	my_delay.change_interpolation(interpolator::type::linear);
 	
 	INFO ("We process third vector of audio...");
 	for (auto& s : input) {

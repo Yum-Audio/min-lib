@@ -116,8 +116,8 @@ namespace lib {
 		}
 
 	private:
-		c74::min::lib::delay<>		m_feedforward_history {};	///< Delay line for the FIR side of the filter.
-		c74::min::lib::delay<>		m_feedback_history {};		///< Delay line for the IIR side of the filter.
+		c74::min::lib::delay		m_feedforward_history {};	///< Delay line for the FIR side of the filter.
+		c74::min::lib::delay		m_feedback_history {};		///< Delay line for the IIR side of the filter.
 		number						m_gain {};				///< Feedback coefficient.
 		
 	};
