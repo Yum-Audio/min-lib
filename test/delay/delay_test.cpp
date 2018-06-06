@@ -207,7 +207,7 @@ TEST_CASE ("Setting an interpolating delay") {
 }
 
 
-TEST_CASE ("Linear interpolation delay times greater than 1 vector-size") {
+TEST_CASE ("Linear interpolation of floating-point delay times") {
 	using namespace c74::min;
 	using namespace c74::min::lib;
 	INFO ("Using a delay of 2.1 samples, vector-size of 16 samples");
@@ -226,7 +226,7 @@ TEST_CASE ("Linear interpolation delay times greater than 1 vector-size") {
 }
 
 
-TEST_CASE ("Cubic interpolation delay times greater than 1 vector-size") {
+TEST_CASE ("Cubic interpolation of floating-point delay times") {
 	using namespace c74::min;
 	using namespace c74::min::lib;
 	INFO ("Using a delay of 2.1 samples, vector-size of 16 samples");
@@ -263,7 +263,7 @@ TEST_CASE ("Cubic interpolation delay times greater than 1 vector-size") {
 }
 
 
-TEST_CASE ("Linear interpolation delay times less than 1 sample") {
+TEST_CASE ("Linear interpolation of delay times less than 1 sample") {
 	using namespace c74::min;
 	using namespace c74::min::lib;
 	INFO ("Using a delay of 0.4 samples, vector-size of 16 samples");
@@ -282,7 +282,7 @@ TEST_CASE ("Linear interpolation delay times less than 1 sample") {
 }
 
 
-TEST_CASE ("Cubic interpolation delay times less than 1 sample") {
+TEST_CASE ("Cubic interpolation of delay times less than 1 sample") {
 	using namespace c74::min;
 	using namespace c74::min::lib;
 	INFO ("Using a delay of 0.4 samples, vector-size of 16 samples");
@@ -318,7 +318,7 @@ TEST_CASE ("Cubic interpolation delay times less than 1 sample") {
 }
 
 
-TEST_CASE ("Linear interpolation delay time of zero") {
+TEST_CASE ("Linear interpolation of delay time set to zero") {
 	using namespace c74::min;
 	using namespace c74::min::lib;
 	INFO ("Using a delay of 0 samples, vector-size of 16 samples");
@@ -336,7 +336,7 @@ TEST_CASE ("Linear interpolation delay time of zero") {
 }
 
 
-TEST_CASE ("Cubic interpolation delay time of zero") {
+TEST_CASE ("Cubic interpolation of delay time set to zero") {
 	using namespace c74::min;
 	using namespace c74::min::lib;
 	INFO ("Using a delay of 0 samples, vector-size of 16 samples");
@@ -354,7 +354,7 @@ TEST_CASE ("Cubic interpolation delay time of zero") {
 }
 
 
-TEST_CASE ("Linear interpolation delay times less than 1 vector-size") {
+TEST_CASE ("Linear interpolation of delay times greater than 1 vector-size") {
 	using namespace c74::min;
 	using namespace c74::min::lib;
 	INFO ("Using a delay of 100.2+ samples, vector-size of 64 samples");
@@ -398,7 +398,7 @@ TEST_CASE ("Linear interpolation delay times less than 1 vector-size") {
 }
 
 
-TEST_CASE ("Linear interpolation delay time at the edge of a vector") {
+TEST_CASE ("Linear interpolation of delay times at the edge of a vector") {
 	using namespace c74::min;
 	using namespace c74::min::lib;
 	INFO ("Using a delay of 63.7+ samples, vector-size of 64 samples");
