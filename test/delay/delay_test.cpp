@@ -314,8 +314,7 @@ TEST_CASE ("Cubic interpolation delay times less than 1 sample") {
 	for (auto& s : input)
 		output.push_back( my_delay(s) );
 	
-	// not passing so we comment out
-	//REQUIRE_VECTOR_APPROX( output , reference );
+	REQUIRE_VECTOR_APPROX( output , reference );
 }
 
 

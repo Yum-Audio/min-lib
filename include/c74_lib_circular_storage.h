@@ -79,6 +79,8 @@ namespace lib {
 			++m_index;
 			if (m_index >= size())
 				m_index = 0;
+			
+			m_items[m_index] = T(); // delays <1 sample require us to clear the old value at new index
 		}
 
 
