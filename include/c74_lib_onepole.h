@@ -6,9 +6,7 @@
 #pragma once
 
 
-namespace c74 {
-namespace min {
-namespace lib {
+namespace c74 { namespace min { namespace lib {
 
 
 	///	Single-channel, basic <a href="https://en.wikipedia.org/wiki/Low-pass_filter">low-pass filter</a>.
@@ -16,25 +14,22 @@ namespace lib {
 
 	class onepole {
 	public:
-
-		
 		/// Default constructor with minimum number of initial values.
 		/// @param	initial_coefficient		Sets the gain coefficient that is applied to samples from history.
 		///									Default value is 0.5.
-		
-		explicit onepole(number initial_coefficient = 0.5)
-		{
+
+		explicit onepole(number initial_coefficient = 0.5) {
 			this->coefficient(initial_coefficient);
 		}
-		
-		
+
+
 		/// Set filter coefficient directly.
 		/// @param new_coefficient	The new value of the feedback coefficient in the range [0.0, 1.0].
 
 		void coefficient(number new_coefficient) {
 			new_coefficient = MIN_CLAMP(new_coefficient, 0.0, 1.0);
-			b_1 = new_coefficient;
-			a_0 = 1 - new_coefficient;
+			b_1             = new_coefficient;
+			a_0             = 1 - new_coefficient;
 		}
 
 		/// Get the current coefficent of the filter.
@@ -61,7 +56,7 @@ namespace lib {
 			y_1 = 0.0;
 		}
 
-		
+
 		/// Retrieve the filter's history
 		/// @return	The value stored in the filter's history.
 
@@ -75,14 +70,14 @@ namespace lib {
 
 		sample operator()(sample x) {
 			auto y = (x * a_0) + (y_1 * b_1);
-			y_1 = y;
+			y_1    = y;
 			return y;
 		}
 
 	private:
-		number a_0 { 0.5 };	///< gain coefficient
-		number b_1 { 0.5 };	///< feedback coefficient
-		sample y_1 {};		///< previous output sample
+		number a_0{0.5};    ///< gain coefficient
+		number b_1{0.5};    ///< feedback coefficient
+		sample y_1{};       ///< previous output sample
 	};
 
-}}}  // namespace c74::min::lib
+}}}    // namespace c74::min::lib

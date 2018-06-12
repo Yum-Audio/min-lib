@@ -6,10 +6,7 @@
 #pragma once
 
 
-namespace c74 {
-namespace min {
-namespace lib {
-namespace filters {
+namespace c74 { namespace min { namespace lib { namespace filters {
 
 
 	/// Utility: generate an impulse response from a set of coefficients
@@ -19,31 +16,31 @@ namespace filters {
 	///	@return		A vector of samples the generated impulse response of the specified filter.
 
 	inline auto generate_impulse_response(const sample_vector& a, const sample_vector& b, int N = 64) {
-		sample_vector	x(N);				// input -- feedforward history
-		sample_vector	y(N);				// output -- feedback history
+		sample_vector x(N);    // input -- feedforward history
+		sample_vector y(N);    // output -- feedback history
 
 		std::fill_n(x.begin(), N, 0.0);
 		std::fill_n(y.begin(), N, 0.0);
 		x[0] = 1.0;
 
-		for (int n=0; n<N; n++) {
-			for (auto i=0; i<a.size(); i++) {
-				if (n-i < 0 )
+		for (int n = 0; n < N; n++) {
+			for (auto i = 0; i < a.size(); i++) {
+				if (n - i < 0)
 					y[n] += 0.0;
 				else
-					y[n] += ( a[i] * x[n-i]);
+					y[n] += (a[i] * x[n - i]);
 			}
 
 			// ignore b[0] and assume it is normalized to 1.0
-			for (auto i=1; i<b.size(); i++) {
-				if (n-i < 0)
+			for (auto i = 1; i < b.size(); i++) {
+				if (n - i < 0)
 					y[n] -= 0.0;
 				else
-					y[n] -= ( b[i] * y[n - i] );
+					y[n] -= (b[i] * y[n - i]);
 			}
 		}
 		return y;
 	}
 
 
-}}}} // namespace c74::min::lib::filters
+}}}}    // namespace c74::min::lib::filters

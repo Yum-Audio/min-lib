@@ -5,25 +5,23 @@
 
 #pragma once
 
-namespace c74 {
-namespace min {
-namespace lib {
+namespace c74 { namespace min { namespace lib {
 
-	///	Generate a non-bandlimited <a href="https://en.wikipedia.org/wiki/Sawtooth_wave">sawtooth wave</a> oscillator (a phasor~ in MSP parlance).
+	///	Generate a non-bandlimited <a href="https://en.wikipedia.org/wiki/Sawtooth_wave">sawtooth wave</a> oscillator (a phasor~ in MSP
+	///parlance).
 	/// This function is typically used as a control signal for <a href="https://en.wikipedia.org/wiki/Phase_(waves)">phase</a> ramping.
 
 	class sync {
 	public:
-
 		/// Set the frequency of the oscillator.
 		/// @param	oscillator_frequency	The frequency of the oscillator in hertz.
 		/// @param	sampling_frequency		The sampling frequency of the environment in hertz.
 
 		void frequency(number oscillator_frequency, number sampling_frequency) {
-			m_fs = sampling_frequency;
+			m_fs           = sampling_frequency;
 			auto f_nyquist = sampling_frequency * 0.5;
-			m_f = fold(oscillator_frequency, -f_nyquist, f_nyquist);
-			m_step = m_f / m_fs;
+			m_f            = fold(oscillator_frequency, -f_nyquist, f_nyquist);
+			m_step         = m_f / m_fs;
 		}
 
 
@@ -66,11 +64,11 @@ namespace lib {
 		}
 
 	private:
-		number	m_phase		{};		///< current phase
-		number	m_step		{};		///< increment for each sample iteration
-		number	m_f			{};		///< oscillator frequency
-		number	m_fs		{};		///< sampling frequency
+		number m_phase{};    ///< current phase
+		number m_step{};     ///< increment for each sample iteration
+		number m_f{};        ///< oscillator frequency
+		number m_fs{};       ///< sampling frequency
 	};
 
 
-}}}  // namespace c74::min::lib
+}}}    // namespace c74::min::lib

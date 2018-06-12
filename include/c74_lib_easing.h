@@ -5,11 +5,8 @@
 
 #pragma once
 
-namespace c74 {
-namespace min {
-namespace lib {
-namespace easing {
-			
+namespace c74 { namespace min { namespace lib { namespace easing {
+
 
 	/// The "linear" easing function as formalized and popularized by Robert Penner.
 	/// @tparam	T		The type of number to use for the calculations (e.g. float, double, number, or sample).
@@ -20,7 +17,7 @@ namespace easing {
 	T linear(T x) {
 		return x;
 	}
-	
+
 
 	/// The "in-back" easing function as formalized and popularized by Robert Penner.
 	/// @tparam	T		The type of number to use for the calculations (e.g. float, double, number, or sample).
@@ -45,7 +42,7 @@ namespace easing {
 			return 0.5 * (f * f * f - f * sin(f * M_PI));
 		}
 		else {
-			double f = (1 - (2*x - 1));
+			double f = (1 - (2 * x - 1));
 			return 0.5 * (1 - (f * f * f - f * sin(f * M_PI))) + 0.5;
 		}
 	}
@@ -73,14 +70,14 @@ namespace easing {
 		double f = 1.0 - x;
 		double y;
 
-		if (f < 4/11.0)
-			y = (121 * f * f)/16.0;
-		else if (f < 8/11.0)
-			y = (363/40.0 * f * f) - (99/10.0 * f) + 17/5.0;
-		else if (f < 9/10.0)
-			y = (4356/361.0 * f * f) - (35442/1805.0 * f) + 16061/1805.0;
+		if (f < 4 / 11.0)
+			y = (121 * f * f) / 16.0;
+		else if (f < 8 / 11.0)
+			y = (363 / 40.0 * f * f) - (99 / 10.0 * f) + 17 / 5.0;
+		else if (f < 9 / 10.0)
+			y = (4356 / 361.0 * f * f) - (35442 / 1805.0 * f) + 16061 / 1805.0;
 		else
-			y = (54/5.0 * f * f) - (513/25.0 * f) + 268/25.0;
+			y = (54 / 5.0 * f * f) - (513 / 25.0 * f) + 268 / 25.0;
 		return 1.0 - y;
 	}
 
@@ -96,28 +93,28 @@ namespace easing {
 			double f = 1 - 2 * x;
 			double y;
 
-			if (f < 4/11.0)
-				y = (121 * f * f)/16.0;
-			else if (f < 8/11.0)
-				y = (363/40.0 * f * f) - (99/10.0 * f) + 17/5.0;
-			else if (f < 9/10.0)
-				y = (4356/361.0 * f * f) - (35442/1805.0 * f) + 16061/1805.0;
+			if (f < 4 / 11.0)
+				y = (121 * f * f) / 16.0;
+			else if (f < 8 / 11.0)
+				y = (363 / 40.0 * f * f) - (99 / 10.0 * f) + 17 / 5.0;
+			else if (f < 9 / 10.0)
+				y = (4356 / 361.0 * f * f) - (35442 / 1805.0 * f) + 16061 / 1805.0;
 			else
-				y = (54/5.0 * f * f) - (513/25.0 * f) + 268/25.0;
+				y = (54 / 5.0 * f * f) - (513 / 25.0 * f) + 268 / 25.0;
 			return 0.5 * (1 - y);
 		}
 		else {
 			double f = x * 2 - 1;
 			double y;
 
-			if (f < 4/11.0)
-				y = (121 * f * f)/16.0;
-			else if (f < 8/11.0)
-				y = (363/40.0 * f * f) - (99/10.0 * f) + 17/5.0;
-			else if (f < 9/10.0)
-				y = (4356/361.0 * f * f) - (35442/1805.0 * f) + 16061/1805.0;
+			if (f < 4 / 11.0)
+				y = (121 * f * f) / 16.0;
+			else if (f < 8 / 11.0)
+				y = (363 / 40.0 * f * f) - (99 / 10.0 * f) + 17 / 5.0;
+			else if (f < 9 / 10.0)
+				y = (4356 / 361.0 * f * f) - (35442 / 1805.0 * f) + 16061 / 1805.0;
 			else
-				y = (54/5.0 * f * f) - (513/25.0 * f) + 268/25.0;
+				y = (54 / 5.0 * f * f) - (513 / 25.0 * f) + 268 / 25.0;
 			return 0.5 * y + 0.5;
 		}
 	}
@@ -130,14 +127,14 @@ namespace easing {
 
 	template<typename T>
 	T out_bounce(T x) {
-		if (x < 4/11.0)
-			return (121 * x * x)/16.0;
-		else if (x < 8/11.0)
-			return (363/40.0 * x * x) - (99/10.0 * x) + 17/5.0;
-		else if (x < 9/10.0)
-			return (4356/361.0 * x * x) - (35442/1805.0 * x) + 16061/1805.0;
+		if (x < 4 / 11.0)
+			return (121 * x * x) / 16.0;
+		else if (x < 8 / 11.0)
+			return (363 / 40.0 * x * x) - (99 / 10.0 * x) + 17 / 5.0;
+		else if (x < 9 / 10.0)
+			return (4356 / 361.0 * x * x) - (35442 / 1805.0 * x) + 16061 / 1805.0;
 		else
-			return (54/5.0 * x * x) - (513/25.0 * x) + 268/25.0;
+			return (54 / 5.0 * x * x) - (513 / 25.0 * x) + 268 / 25.0;
 	}
 
 
@@ -275,7 +272,7 @@ namespace easing {
 	T in_out_exponential(T x) {
 		if (x == 0.0 || x == 1.0)
 			return x;
-		else if(x < 0.5)
+		else if (x < 0.5)
 			return 0.5 * pow(2, (20 * x) - 10);
 		else
 			return -0.5 * pow(2, (-20 * x) + 10) + 1;
@@ -451,40 +448,40 @@ namespace easing {
 	enum class function {
 		linear,
 
-		in_back,				///< in-back
-		in_bounce,				///< in-bounce
-		in_circular,			///< in-circular
-		in_cubic,				///< in-cubic
-		in_elastic,				///< in-elastic
-		in_exponential,			///< in-exponential
-		in_quadratic,			///< in-quadratic
-		in_quartic,				///< in-quartic
-		in_quintic,				///< in-quintic
-		in_sine,				///< in-sine
+		in_back,           ///< in-back
+		in_bounce,         ///< in-bounce
+		in_circular,       ///< in-circular
+		in_cubic,          ///< in-cubic
+		in_elastic,        ///< in-elastic
+		in_exponential,    ///< in-exponential
+		in_quadratic,      ///< in-quadratic
+		in_quartic,        ///< in-quartic
+		in_quintic,        ///< in-quintic
+		in_sine,           ///< in-sine
 
-		in_out_back,			///< in-out-back
-		in_out_bounce,			///< in-out-bounce
-		in_out_circular,		///< in-out-circular
-		in_out_cubic,			///< in-out-cubic
-		in_out_elastic,			///< in-out-elastic
-		in_out_exponential,		///< in-out-exponential
-		in_out_quadratic,		///< in-out-quadratic
-		in_out_quartic,			///< in-out-quartic
-		in_out_quintic,			///< in-out-quintic
-		in_out_sine,			///< in-out-sine
+		in_out_back,           ///< in-out-back
+		in_out_bounce,         ///< in-out-bounce
+		in_out_circular,       ///< in-out-circular
+		in_out_cubic,          ///< in-out-cubic
+		in_out_elastic,        ///< in-out-elastic
+		in_out_exponential,    ///< in-out-exponential
+		in_out_quadratic,      ///< in-out-quadratic
+		in_out_quartic,        ///< in-out-quartic
+		in_out_quintic,        ///< in-out-quintic
+		in_out_sine,           ///< in-out-sine
 
-		out_back,				///< out-back
-		out_bounce,				///< out-bounce
-		out_circular,			///< out-circular
-		out_cubic,				///< out-cubic
-		out_elastic,			///< out-elastic
-		out_exponential,		///< out-exponential
-		out_quadratic,			///< out-quadratic
-		out_quartic,			///< out-quartic
-		out_quintic,			///< out-quintic
-		out_sine,				///< out-sine
+		out_back,           ///< out-back
+		out_bounce,         ///< out-bounce
+		out_circular,       ///< out-circular
+		out_cubic,          ///< out-cubic
+		out_elastic,        ///< out-elastic
+		out_exponential,    ///< out-exponential
+		out_quadratic,      ///< out-quadratic
+		out_quartic,        ///< out-quartic
+		out_quintic,        ///< out-quintic
+		out_sine,           ///< out-sine
 
-		enum_count				///< the number of available easing functions
+		enum_count    ///< the number of available easing functions
 	};
 
 
@@ -492,42 +489,16 @@ namespace easing {
 	/// @see easing::function_info
 	/// @see attribute
 
-	static enum_map function_info = {
-		"linear",
+	static enum_map function_info = {"linear",
 
-		"in_back",
-		"in_bounce",
-		"in_circular",
-		"in_cubic",
-		"in_elastic",
-		"in_exponential",
-		"in_quadratic",
-		"in_quartic",
-		"in_quintic",
+		"in_back", "in_bounce", "in_circular", "in_cubic", "in_elastic", "in_exponential", "in_quadratic", "in_quartic", "in_quintic",
 		"in_sine",
 
-		"in_out_back",
-		"in_out_bounce",
-		"in_out_circular",
-		"in_out_cubic",
-		"in_out_elastic",
-		"in_out_exponential",
-		"in_out_quadratic",
-		"in_out_quartic",
-		"in_out_quintic",
-		"in_out_sine",
+		"in_out_back", "in_out_bounce", "in_out_circular", "in_out_cubic", "in_out_elastic", "in_out_exponential", "in_out_quadratic",
+		"in_out_quartic", "in_out_quintic", "in_out_sine",
 
-		"out_back",
-		"out_bounce",
-		"out_circular",
-		"out_cubic",
-		"out_elastic",
-		"out_exponential",
-		"out_quadratic",
-		"out_quartic",
-		"out_quintic",
-		"out_sine"
-	};
+		"out_back", "out_bounce", "out_circular", "out_cubic", "out_elastic", "out_exponential", "out_quadratic", "out_quartic",
+		"out_quintic", "out_sine"};
 
 
 	/// Apply one of the standard easing functions to a number as formalized and popularized by Robert Penner.
@@ -539,41 +510,73 @@ namespace easing {
 	template<typename T>
 	T apply(easing::function name, T x) {
 		switch (name) {
-			case easing::function::linear:				return linear(x);
-			case easing::function::in_back:				return in_back(x);
-			case easing::function::in_out_back:			return in_out_back(x);
-			case easing::function::out_back:			return out_back(x);
-			case easing::function::in_bounce:			return in_bounce(x);
-			case easing::function::in_out_bounce:		return in_out_bounce(x);
-			case easing::function::out_bounce:			return out_bounce(x);
-			case easing::function::in_circular:			return in_circular(x);
-			case easing::function::in_out_circular:		return in_out_circular(x);
-			case easing::function::out_circular:		return out_circular(x);
-			case easing::function::in_cubic:			return in_cubic(x);
-			case easing::function::in_out_cubic:		return in_out_cubic(x);
-			case easing::function::out_cubic:			return out_cubic(x);
-			case easing::function::in_elastic:			return in_elastic(x);
-			case easing::function::in_out_elastic:		return in_out_elastic(x);
-			case easing::function::out_elastic:			return out_elastic(x);
-			case easing::function::in_exponential:		return in_exponential(x);
-			case easing::function::in_out_exponential:	return in_out_exponential(x);
-			case easing::function::out_exponential:		return out_exponential(x);
-			case easing::function::in_quadratic:		return in_quadratic(x);
-			case easing::function::in_out_quadratic:	return in_out_quadratic(x);
-			case easing::function::out_quadratic:		return out_quadratic(x);
-			case easing::function::in_quartic:			return in_quartic(x);
-			case easing::function::in_out_quartic:		return in_out_quartic(x);
-			case easing::function::out_quartic:			return out_quartic(x);
-			case easing::function::in_quintic:			return in_quintic(x);
-			case easing::function::in_out_quintic:		return in_out_quintic(x);
-			case easing::function::out_quintic:			return out_quintic(x);
-			case easing::function::in_sine:				return in_sine(x);
-			case easing::function::in_out_sine:			return in_out_sine(x);
-			case easing::function::out_sine:			return out_sine(x);
-			case easing::function::enum_count:			assert(false);
+			case easing::function::linear:
+				return linear(x);
+			case easing::function::in_back:
+				return in_back(x);
+			case easing::function::in_out_back:
+				return in_out_back(x);
+			case easing::function::out_back:
+				return out_back(x);
+			case easing::function::in_bounce:
+				return in_bounce(x);
+			case easing::function::in_out_bounce:
+				return in_out_bounce(x);
+			case easing::function::out_bounce:
+				return out_bounce(x);
+			case easing::function::in_circular:
+				return in_circular(x);
+			case easing::function::in_out_circular:
+				return in_out_circular(x);
+			case easing::function::out_circular:
+				return out_circular(x);
+			case easing::function::in_cubic:
+				return in_cubic(x);
+			case easing::function::in_out_cubic:
+				return in_out_cubic(x);
+			case easing::function::out_cubic:
+				return out_cubic(x);
+			case easing::function::in_elastic:
+				return in_elastic(x);
+			case easing::function::in_out_elastic:
+				return in_out_elastic(x);
+			case easing::function::out_elastic:
+				return out_elastic(x);
+			case easing::function::in_exponential:
+				return in_exponential(x);
+			case easing::function::in_out_exponential:
+				return in_out_exponential(x);
+			case easing::function::out_exponential:
+				return out_exponential(x);
+			case easing::function::in_quadratic:
+				return in_quadratic(x);
+			case easing::function::in_out_quadratic:
+				return in_out_quadratic(x);
+			case easing::function::out_quadratic:
+				return out_quadratic(x);
+			case easing::function::in_quartic:
+				return in_quartic(x);
+			case easing::function::in_out_quartic:
+				return in_out_quartic(x);
+			case easing::function::out_quartic:
+				return out_quartic(x);
+			case easing::function::in_quintic:
+				return in_quintic(x);
+			case easing::function::in_out_quintic:
+				return in_out_quintic(x);
+			case easing::function::out_quintic:
+				return out_quintic(x);
+			case easing::function::in_sine:
+				return in_sine(x);
+			case easing::function::in_out_sine:
+				return in_out_sine(x);
+			case easing::function::out_sine:
+				return out_sine(x);
+			case easing::function::enum_count:
+				assert(false);
 		}
 		return 0.0;
 	}
 
 
-}}}} // namespace c74::min::lib::easing
+}}}}    // namespace c74::min::lib::easing
