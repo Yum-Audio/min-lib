@@ -40,7 +40,8 @@ namespace c74 { namespace min { namespace lib {
 
 		void size(number new_size) {
 			m_size            = new_size;
-			m_size_fractional = m_size - static_cast<std::size_t>(m_size);
+			m_size_integral   = static_cast<std::size_t>(m_size);
+			m_size_fractional = m_size - m_size_integral;
 		}
 
 
@@ -56,7 +57,7 @@ namespace c74 { namespace min { namespace lib {
 		/// @return The integer part of the delay time in samples.
 
 		std::size_t integral_size() {
-			return static_cast<std::size_t>(m_size);
+			return m_size_integral;
 		}
 
 
@@ -80,7 +81,7 @@ namespace c74 { namespace min { namespace lib {
 			size_t true_offset = m_history.capacity() - integral_size() - 2 + offset;
 
 			return m_interpolator(m_history.tail(true_offset + 2), m_history.tail(true_offset + 1), m_history.tail(true_offset),
-				m_history.tail(true_offset - 1), m_size_fractional);
+				m_history.tail(true_offset - 1), fractional_size());
 		}
 
 
@@ -120,6 +121,7 @@ namespace c74 { namespace min { namespace lib {
 	private:
 		circular_storage<sample> m_history;            ///< Memory for storing the delayed samples.
 		number                   m_size;               ///< Delay time in samples. May include a fractional component.
+		std::size_t              m_size_integral;      ///< The integral component of the delay time.
 		double                   m_size_fractional;    ///< The fractional component of the delay time.
 		interpolator::proxy<>    m_interpolator{
             interpolator::type::cubic};    ///< The interpolator instance used to produce interpolated output.
