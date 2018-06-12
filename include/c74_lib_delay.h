@@ -51,6 +51,15 @@ namespace c74 { namespace min { namespace lib {
 		number size() const {
 			return m_size;
 		}
+		
+		
+		/// Set a new delay time in milliseconds.
+		/// @param	new_size_ms		The new delay time in milliseconds.
+		/// @param	sampling_frequency		The sampling frequency of the environment in hertz.
+		
+		void size_ms(number new_size_ms, number sampling_frequency) {
+			size(new_size_ms * 0.001 * sampling_frequency);
+		}
 
 
 		/// Return the integer part of the current delay time in samples.
