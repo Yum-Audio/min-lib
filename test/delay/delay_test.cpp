@@ -214,11 +214,11 @@ TEST_CASE ("Setting delay time in milliseconds") {
 	
 	number sampling_rate = 44100.0;
 	number test_time_1 = 500.0;
-	number test_time_1_ms = test_time_1 * 0.001 * sampling_rate;
+	number test_time_1_ms = math::milliseconds_to_samples(test_time_1, sampling_rate);
 	number test_time_2 = 1250.0;
-	number test_time_2_ms = test_time_2 * 0.001 * sampling_rate;
+	number test_time_2_ms = math::milliseconds_to_samples(test_time_2, sampling_rate);
 	number test_time_3 = math::random(400.0,4000.0);
-	number test_time_3_ms = test_time_3 * 0.001 * sampling_rate;
+	number test_time_3_ms = math::milliseconds_to_samples(test_time_3, sampling_rate);
 	
 	my_delay.size_ms(test_time_1, sampling_rate);
 	REQUIRE( my_delay.size() == test_time_1_ms);

@@ -58,7 +58,7 @@ namespace c74 { namespace min { namespace lib {
 		/// @param	sampling_frequency		The sampling frequency of the environment in hertz.
 		
 		void size_ms(number new_size_ms, number sampling_frequency) {
-			size(new_size_ms * 0.001 * sampling_frequency);
+			size(math::milliseconds_to_samples(new_size_ms,sampling_frequency));
 		}
 
 
