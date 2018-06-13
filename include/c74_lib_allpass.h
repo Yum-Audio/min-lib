@@ -44,7 +44,7 @@ namespace c74 { namespace min { namespace lib {
 		/// @param	new_size	The new delay time in samples.
 		///						Note this may not exceed the capacity set when the object instance is created.
 
-		void delay(size_t new_size) {
+		void delay(number new_size) {
 			m_feedforward_history.size(new_size);
 			m_feedback_history.size(new_size);
 		};
@@ -56,6 +56,15 @@ namespace c74 { namespace min { namespace lib {
 		size_t delay() {
 			return m_feedforward_history.size();
 		};
+		
+		
+		/// Set a new delay time in milliseconds.
+		/// @param	new_size_ms		The new delay time in milliseconds.
+		/// @param	sampling_frequency		The sampling frequency of the environment in hertz.
+		
+		void delay_ms(number new_size_ms, number sampling_frequency) {
+			delay(new_size_ms * 0.001 * sampling_frequency);
+		}
 
 
 		/// Set the feedback coefficient.
