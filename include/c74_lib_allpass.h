@@ -53,7 +53,7 @@ namespace c74 { namespace min { namespace lib {
 		/// Return the current delay time in samples.
 		/// @return The delay time in samples.
 
-		size_t delay() {
+		number delay() {
 			return m_feedforward_history.size();
 		};
 		

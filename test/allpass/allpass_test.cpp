@@ -1044,3 +1044,28 @@ TEST_CASE ("Parameters are set properly with different constructors") {
 	REQUIRE( f4.delay() == 100 );	// check the initialized value
 	
 }
+
+
+TEST_CASE ("Setting delay time in milliseconds") {
+	using namespace c74::min;
+	using namespace c74::min::lib;
+	allpass my_allpass;
+	
+	number sampling_rate = 44100.0;
+	number test_time_1 = 500.0;
+	number test_time_1_ms = test_time_1 * 0.001 * sampling_rate;
+	number test_time_2 = 1250.0;
+	number test_time_2_ms = test_time_2 * 0.001 * sampling_rate;
+	number test_time_3 = math::random(400.0,4000.0);
+	number test_time_3_ms = test_time_3 * 0.001 * sampling_rate;
+	
+	my_allpass.delay_ms(test_time_1, sampling_rate);
+	REQUIRE( my_allpass.delay() == test_time_1_ms);
+	
+	my_allpass.delay_ms(test_time_2, sampling_rate);
+	REQUIRE( my_allpass.delay() == test_time_2_ms);
+	
+	my_allpass.delay_ms(test_time_3, sampling_rate);
+	REQUIRE( my_allpass.delay() == test_time_3_ms);
+	
+}
