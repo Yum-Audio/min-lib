@@ -17,7 +17,7 @@ namespace c74 { namespace min { namespace lib {
 		/// @param capacity	The number of samples to allocate for the maximum delay allowed, which will also be used as the initial delay.
 		/// Default is 256.
 
-		delay(number capacity = 256)
+		delay(size_t capacity = 256)
 		: m_history(static_cast<size_t>(capacity + 5))    // 5 extra samples to accomodate the 'now' sample + up to 4 interpolation samples
 		{
 			size(capacity);
@@ -41,6 +41,14 @@ namespace c74 { namespace min { namespace lib {
 		void size(number new_size) {
 			m_size            = new_size;
 			m_size_fractional = m_size - static_cast<std::size_t>(m_size);
+		}
+
+		/// Set a new delay time in samples.
+		/// @param	new_size	The new delay time in samples.
+
+		void size(size_t new_size) {
+			m_size = static_cast<number>(m_size);
+			m_size_fractional = 0;
 		}
 
 
