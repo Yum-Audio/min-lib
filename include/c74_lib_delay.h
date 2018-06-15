@@ -47,7 +47,7 @@ namespace c74 { namespace min { namespace lib {
 		/// @param	new_size	The new delay time in samples.
 
 		void size(size_t new_size) {
-			m_size = static_cast<number>(m_size);
+			m_size = static_cast<number>(new_size);
 			m_size_fractional = 0;
 		}
 
