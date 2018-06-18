@@ -15,14 +15,14 @@ namespace c74 { namespace min { namespace lib {
 	class allpass {
 	public:
 		/// Default constructor with minimum number of initial values.
-		/// @param	size			Sets capacity in samples for feedforward and feedback history.
+		/// @param	initial_size	Sets initial delay size in samples for feedforward and feedback history.
 		///							Default value is 4410 samples. Capacity is fixed at creation.
 		/// @param	initial_gain	Sets the gain coefficient that is applied to samples from history.
 		///							Default value is 0.0.
 
-		explicit allpass(number size = 4410, number initial_gain = 0.0)
-		: m_feedforward_history(size)
-		, m_feedback_history(size) {
+		explicit allpass(number initial_size = 4410, number initial_gain = 0.0)
+		: m_feedforward_history(initial_size)
+		, m_feedback_history(initial_size) {
 			this->gain(initial_gain);
 		}
 

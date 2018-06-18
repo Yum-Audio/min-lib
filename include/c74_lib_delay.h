@@ -13,20 +13,22 @@ namespace c74 { namespace min { namespace lib {
 
 	class delay {
 	public:
-		/// Capacity of the delay is fixed at instantiation
-		/// @param capacity	The number of samples to allocate for the maximum delay allowed, which will also be used as the initial delay.
-		/// Default is 256.
+		/// Default constructor with minimum number of initial values.
+		/// @param	initial_size	Sets initial delay size in samples.
+		///		Because capacity of the delay is fixed at instantiation, this will also be maximum delay allowed.
+		///		Default is 256 samples.
 
-		delay(number capacity = 256)
-		: m_history(static_cast<size_t>(capacity + 5))    // 5 extra samples to accomodate the 'now' sample + up to 4 interpolation samples
+		delay(number initial_size = 256)
+		: m_history(static_cast<size_t>(initial_size + 5))    // 5 extra samples to accomodate the 'now' sample + up to 4 interpolation samples
 		{
-			size(capacity);
+			size(initial_size);
 		}
 
 
-		/// Capacity of the delay is fixed at instantiation
-		/// @param capacity_and_size	The number of samples to allocate for the maximum delay allowed, along with a second initial delay
-		/// setting that is less than this maximum.
+		/// Constructor with initial values for capacity and size.
+		/// @param capacity_and_size	Sets capacity and size in samples for delay history.
+		///			Uses std::pair to ensure values are set together. Capacity is fixed at creation.
+		///			First value (capacity) must be greater than the second value (size).
 
 		delay(std::pair<size_t, number> capacity_and_size)
 		: m_history(capacity_and_size.first + 5) {
