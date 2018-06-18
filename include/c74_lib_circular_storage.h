@@ -160,7 +160,7 @@ namespace c74 { namespace min { namespace lib {
 		///	@return	output	The item from the buffer.
 		///	@see	head()
 
-		T tail(int offset = 0) {
+		T tail(size_t offset = 0) {
 			// TODO: benchmark / evaluate use of modulo here
 			return m_items[(m_index + offset) % size()];
 		}

@@ -873,7 +873,7 @@ TEST_CASE( "survives a sudden drop in delay time without crashing" ) {
     using namespace c74::min;
     using namespace c74::min::lib;
     
-    size_t test_size = 44100;
+    number test_size = 44100;
     
     INFO( "Start with a new instance of the allpass object." );
     // create an instance of our object
@@ -946,7 +946,7 @@ TEST_CASE( "produces valid output after sudden drop in delay time" ) {
     using namespace c74::min;
     using namespace c74::min::lib;
     
-    size_t test_size = 44100;
+    number test_size = 44100;
     
     INFO( "Start with a new instance of the allpass object." );
     // create an instance of our object

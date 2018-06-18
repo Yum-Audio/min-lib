@@ -17,7 +17,7 @@ TEST_CASE ("Delay times greater than 1 vector-size") {
 	REQUIRE(my_delay.size() == 256);
 
 	INFO ("Changing the delay time to 100 samples...");
-	my_delay.size(100);
+	my_delay.size(100.0);
 
 	INFO ("And then pushing an impulse through the unit, using a vector size of 64...");
 	sample_vector zero(64, 0.0);
@@ -77,7 +77,7 @@ TEST_CASE ("Delay times greater than 1 vector-size, part 2") {
 	sample_vector impulse(4, 0.0);
 	impulse[0] = 1.0;
 
-	delay my_delay(6);
+	delay my_delay(6.0);
 
 	INFO ("We process 3 vectors of audio...");
 	sample_vector output[3];

@@ -20,9 +20,9 @@ namespace c74 { namespace min { namespace lib {
 		/// @param	initial_gain	Sets the gain coefficient that is applied to samples from history.
 		///							Default value is 0.0.
 
-		explicit allpass(std::size_t capacity = 4410, number initial_gain = 0.0)
-		: m_feedforward_history(capacity)
-		, m_feedback_history(capacity) {
+		explicit allpass(number size = 4410, number initial_gain = 0.0)
+		: m_feedforward_history(size)
+		, m_feedback_history(size) {
 			this->gain(initial_gain);
 		}
 
@@ -33,7 +33,7 @@ namespace c74 { namespace min { namespace lib {
 		/// @param	initial_gain		Sets the gain coefficient that is applied to samples from history.
 		///								Default value is 0.0.
 
-		explicit allpass(std::pair<size_t, size_t> capacity_and_size, number initial_gain = 0.0)
+		explicit allpass(std::pair<size_t, number> capacity_and_size, number initial_gain = 0.0)
 		: m_feedforward_history(capacity_and_size)
 		, m_feedback_history(capacity_and_size) {
 			this->gain(initial_gain);
