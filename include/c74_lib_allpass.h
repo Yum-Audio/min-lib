@@ -92,6 +92,15 @@ namespace c74 { namespace min { namespace lib {
 			m_feedforward_history.clear();
 			m_feedback_history.clear();
 		}
+		
+		
+		/// Change the interpolation algorithm used.
+		/// @param	new_type	option from the interpolator::type enum that names algorithm
+		
+		void change_interpolation(interpolator::type new_type = interpolator::type::none) {
+			m_feedforward_history.change_interpolation(new_type);
+			m_feedback_history.change_interpolation(new_type);
+		}
 
 
 		/// Calculate one sample.

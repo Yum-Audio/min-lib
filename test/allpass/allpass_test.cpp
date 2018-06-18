@@ -1069,3 +1069,111 @@ TEST_CASE ("Setting delay time in milliseconds") {
 	REQUIRE( my_allpass.delay() == test_time_3_ms);
 	
 }
+
+
+TEST_CASE ("Produce the correct impulse response for 2.25 samples delay, 0.75 gain") {
+	
+	using namespace c74::min;
+	using namespace c74::min::lib;
+	INFO ("Using an allpass instance with arguments, which should set default gain at 0.0 and new capacity to 2 samples");
+	
+	allpass	f { 10 };
+	REQUIRE( f.gain() == 0.0 );		// check the default value
+	REQUIRE( f.delay() == 10 );     // check the initialized value
+	
+	INFO("Changing the gain to 0.75...");
+	f.gain(0.75);
+	REQUIRE( f.gain() == 0.75 );		// check the new value
+	
+	INFO("Changing the delay to 2.25 samples...");
+	f.delay(2.25);
+	REQUIRE( f.delay() == 2.25 );		// check the new value
+	
+	INFO ("And then pushing a 64-sample impulse through the unit...");
+	sample_vector impulse(64, 0.0);
+	impulse[0] = 1.0;
+	
+	// output from our object's processing
+	sample_vector	output;
+	
+	// run the calculations
+	for (auto x : impulse) {
+		auto y = f(x);
+		output.push_back(y);
+		//std::cout << y << ", ";
+	}
+	
+	INFO ("And finally checking our output against a reference produced earlier.");
+	// reference impulse response was captured using std::cout
+	// line is now commented out within the above for loop
+	
+	sample_vector reference = {
+		-0.75,
+		-0.0615234,
+		0.396137,
+		0.047007,
+		0.225443,
+		0.0979874,
+		0.136794,
+		0.0995687,
+		0.0947645,
+		0.0835273,
+		0.0718507,
+		0.0658151,
+		0.0563189,
+		0.051084,
+		0.0443596,
+		0.0396699,
+		0.0348411,
+		0.0309046,
+		0.0272865,
+		0.0241284,
+		0.021338,
+		0.0188556,
+		0.0166775,
+		0.0147387,
+		0.0130337,
+		0.0115208,
+		0.0101864,
+		0.00900508,
+		0.00796139,
+		0.00703847,
+		0.00622255,
+		0.00550126,
+		0.00486352,
+		0.00429976,
+		0.00380132,
+		0.00336068,
+		0.0029711,
+		0.00262669,
+		0.0023222,
+		0.00205301,
+		0.00181503,
+		0.00160463,
+		0.00141862,
+		0.00125417,
+		0.00110879,
+		0.000980258,
+		0.000866626,
+		0.000766166,
+		0.000677352,
+		0.000598833,
+		0.000529416,
+		0.000468046,
+		0.00041379,
+		0.000365823,
+		0.000323417,
+		0.000285926,
+		0.000252782,
+		0.000223479,
+		0.000197573,
+		0.000174671,
+		0.000154423,
+		0.000136522,
+		0.000120696,
+		0.000106705
+	};
+	
+	// check it
+	REQUIRE_VECTOR_APPROX(output, reference);
+}
