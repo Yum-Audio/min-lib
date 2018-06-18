@@ -15,7 +15,7 @@ namespace c74 { namespace min { namespace lib {
 	class allpass {
 	public:
 		/// Default constructor with minimum number of initial values.
-		/// @param	capacity		Sets capacity in samples for feedforward and feedback history.
+		/// @param	size			Sets capacity in samples for feedforward and feedback history.
 		///							Default value is 4410 samples. Capacity is fixed at creation.
 		/// @param	initial_gain	Sets the gain coefficient that is applied to samples from history.
 		///							Default value is 0.0.

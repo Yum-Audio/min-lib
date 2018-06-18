@@ -39,9 +39,11 @@ TEST_CASE ("Produce the correct impulse response using default constructor") {
     }
 
     INFO ("And finally checking our output against a reference produced with Octave.");
-    // coefficients calculated in Octave using impz(a,b,64)
-    //	a1 = [-0.5, 1.0]; % fir coefficients
-    //  b1 = [1.0, -0.5]; % iir coefficients
+    // coefficients calculated in Octave using:
+	//  pkg load signal
+    //	a = [-0.5, 1.0] % fir coefficients
+    //  b = [1.0, -0.5] % iir coefficients
+	//  reference = impz(a,b,64)
 
     sample_vector reference = {
         -0.5,
@@ -145,9 +147,11 @@ TEST_CASE ("Produce the correct impulse response after constructor with initial 
 		}
 
 		INFO ("And finally checking our output against a reference produced with Octave.");
-		// coefficients calculated in Octave using impz(a,b,64)
-		//	a1 = [-0.5, 1.0]; % fir coefficients
-		//  b1 = [1.0, -0.5]; % iir coefficients
+		// coefficients calculated in Octave using:
+		//  pkg load signal
+		//	a = [-0.5, 1.0] % fir coefficients
+		//  b = [1.0, -0.5] % iir coefficients
+		//  reference = impz(a,b,64)
 
         sample_vector reference = {
             -0.5,
@@ -277,9 +281,11 @@ TEST_CASE ("Produce the correct impulse response for 2 samples delay, 0.75 gain"
     }
     
     INFO ("And finally checking our output against a reference produced with Octave.");
-    // coefficients calculated in Octave using impz(a,b,64)
-    //	a2 = [-0.75, 0.0, 1.0]; % fir coefficients
-    //  b2 = [1.0, 0.0, -0.75]; % iir coefficients
+	// coefficients calculated in Octave using:
+	//  pkg load signal
+	//	a = [-0.75, 0.0, 1.0] % fir coefficients
+	//  b = [1.0, 0.0, -0.75] % iir coefficients
+	//  reference = impz(a,b,64)
     
     sample_vector reference = {
         -0.75,
@@ -380,9 +386,11 @@ TEST_CASE ("Produce the correct impulse response for for 4 samples delay, 0.5 ga
     }
     
     INFO ("And finally checking our output against a reference produced with Octave.");
-    // coefficients calculated in Octave using impz(a,b,64)
-    //	a4 = [-0.5, 0.0, 0.0, 0.0, 1.0]; % fir coefficients
-    //  b4 = [1.0, 0.0, 0.0, 0.0, -0.5]; % iir coefficients
+	// coefficients calculated in Octave using:
+	//  pkg load signal
+	//	a = [-0.5, 0.0, 0.0, 0.0, 1.0] % fir coefficients
+	//  b = [1.0, 0.0, 0.0, 0.0, -0.5] % iir coefficients
+	//  reference = impz(a,b,64)
     
     sample_vector reference = {
         -0.5,
@@ -483,9 +491,11 @@ TEST_CASE ("Produce the correct impulse response for for 6 samples delay, -0.25 
     }
     
     INFO ("And finally checking our output against a reference produced with Octave.");
-    // coefficients calculated in Octave using impz(a,b,64)
-    //  a6 = [0.25, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0]; % fir coefficients
-    //  b6 = [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.25]; % iir coefficients
+	// coefficients calculated in Octave using:
+	//  pkg load signal
+	//	a = [0.25, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0] % fir coefficients
+	//  b = [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.25] % iir coefficients
+	//  reference = impz(a,b,64)
     
     sample_vector reference = {
         0.25,
@@ -586,9 +596,11 @@ TEST_CASE ("Produce the correct impulse response for 7 samples delay, -0.65 gain
     }
     
     INFO ("And finally checking our output against a reference produced with Octave.");
-    // coefficients calculated in Octave using impz(a,b,64)
-    //	a7 = [0.65, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0]; % fir coefficients
-    //  b7 = [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.65]; % iir coefficients
+	// coefficients calculated in Octave using:
+	//  pkg load signal
+	//	a = [0.65, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0] % fir coefficients
+	//  b = [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.65] % iir coefficients
+	//  reference = impz(a,b,64)
     
     sample_vector reference = {
         0.65,
@@ -689,9 +701,11 @@ TEST_CASE ("Produce the correct impulse response for for 8 samples delay, 0.05 g
     }
     
     INFO ("And finally checking our output against a reference produced with Octave.");
-    // coefficients calculated in Octave using impz(a,b,64)
-    //  a8 = [-0.05, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0]; % fir coefficients
-    //  b8 = [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -0.05]; % iir coefficients
+	// coefficients calculated in Octave using:
+	//  pkg load signal
+	//	a = [-0.05, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0] % fir coefficients
+	//  b = [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -0.05] % iir coefficients
+	//  reference = impz(a,b,64)
     
     sample_vector reference = {
         -0.05,
@@ -792,9 +806,11 @@ TEST_CASE ("Produce the correct impulse response for for 12 samples delay, 0.99 
     }
     
     INFO ("And finally checking our output against a reference produced with Octave.");
-    // coefficients calculated in Octave using impz(a,b,64)
-    //	a12 = [-0.99, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0]; % fir coefficients
-    //  b12 = [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -0.99]; % iir coefficients
+	// coefficients calculated in Octave using:
+	//  pkg load signal
+	//	a = [-0.99, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0] % fir coefficients
+	//  b = [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -0.99] % iir coefficients
+	//  reference = impz(a,b,64)
     
     sample_vector reference = {
         -0.99,
@@ -923,7 +939,7 @@ TEST_CASE( "survives a sudden drop in delay time without crashing" ) {
 
     
     // change the delay_time to something smaller
-    INFO( "Change the delay_time attribute BACK DOWB to 44 samples (approx 1 ms)." );
+    INFO( "Change the delay_time attribute BACK DOWN to 44 samples (approx 1 ms)." );
     my_object.delay(44);
     REQUIRE( my_object.delay() == 44 );
 
@@ -1075,7 +1091,7 @@ TEST_CASE ("Produce the correct impulse response for 2.25 samples delay, 0.75 ga
 	
 	using namespace c74::min;
 	using namespace c74::min::lib;
-	INFO ("Using an allpass instance with arguments, which should set default gain at 0.0 and new capacity to 2 samples");
+	INFO ("Using an allpass instance with arguments, which should set default gain at 0.0 and new capacity to 10 samples");
 	
 	allpass	f { 10 };
 	REQUIRE( f.gain() == 0.0 );		// check the default value
