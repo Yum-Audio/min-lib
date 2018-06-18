@@ -1177,3 +1177,49 @@ TEST_CASE ("Produce the correct impulse response for 2.25 samples delay, 0.75 ga
 	// check it
 	REQUIRE_VECTOR_APPROX(output, reference);
 }
+
+
+TEST_CASE ("Produce the correct impulse response for 0.0 samples delay, 0.6 gain") {
+	
+	using namespace c74::min;
+	using namespace c74::min::lib;
+	INFO ("Using an allpass instance with no arguments, which should set default gain at 0.0 and capacity at 4410 samples");
+	
+	allpass	f { };
+	REQUIRE( f.gain() == 0.0 );		// check the default value
+	REQUIRE( f.delay() == 4410 );     // check the initialized value
+	
+	INFO("Changing the gain to 0.6...");
+	f.gain(0.6);
+	REQUIRE( f.gain() == 0.6 );		// check the new value
+	
+	INFO("Changing the delay to 0.0 samples...");
+	f.delay(0.0);
+	REQUIRE( f.delay() == 0.0 );		// check the new value
+	
+	INFO ("And then pushing a 64-sample impulse through the unit...");
+	sample_vector impulse(64, 0.0);
+	impulse[0] = 1.0;
+	
+	// output from our object's processing
+	sample_vector	output;
+	
+	// run the calculations
+	for (auto x : impulse) {
+		auto y = f(x);
+		output.push_back(y);
+		//std::cout << y << ", ";
+	}
+	
+	INFO ("first test to see if the expected values are in the right place");
+	REQUIRE( output[0] == -0.6 );
+	
+	INFO ("then test to see if the expected number of non-zeroes were produced");
+	int nonzero_count {};
+	for (auto& s : output) {
+		if (s != 0.0)
+			++nonzero_count;
+	}
+	REQUIRE( nonzero_count == 1 );
+	
+}
