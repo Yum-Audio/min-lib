@@ -39,9 +39,11 @@ TEST_CASE ("Produce the correct impulse response using default constructor") {
     }
 
     INFO ("And finally checking our output against a reference produced with Octave.");
-    // coefficients calculated in Octave using impz(a,b,64)
-    //	a1 = [-0.5, 1.0]; % fir coefficients
-    //  b1 = [1.0, -0.5]; % iir coefficients
+    // coefficients calculated in Octave using:
+	//  pkg load signal
+    //	a = [-0.5, 1.0] % fir coefficients
+    //  b = [1.0, -0.5] % iir coefficients
+	//  reference = impz(a,b,64)
 
     sample_vector reference = {
         -0.5,
@@ -145,9 +147,11 @@ TEST_CASE ("Produce the correct impulse response after constructor with initial 
 		}
 
 		INFO ("And finally checking our output against a reference produced with Octave.");
-		// coefficients calculated in Octave using impz(a,b,64)
-		//	a1 = [-0.5, 1.0]; % fir coefficients
-		//  b1 = [1.0, -0.5]; % iir coefficients
+		// coefficients calculated in Octave using:
+		//  pkg load signal
+		//	a = [-0.5, 1.0] % fir coefficients
+		//  b = [1.0, -0.5] % iir coefficients
+		//  reference = impz(a,b,64)
 
         sample_vector reference = {
             -0.5,
@@ -277,9 +281,11 @@ TEST_CASE ("Produce the correct impulse response for 2 samples delay, 0.75 gain"
     }
     
     INFO ("And finally checking our output against a reference produced with Octave.");
-    // coefficients calculated in Octave using impz(a,b,64)
-    //	a2 = [-0.75, 0.0, 1.0]; % fir coefficients
-    //  b2 = [1.0, 0.0, -0.75]; % iir coefficients
+	// coefficients calculated in Octave using:
+	//  pkg load signal
+	//	a = [-0.75, 0.0, 1.0] % fir coefficients
+	//  b = [1.0, 0.0, -0.75] % iir coefficients
+	//  reference = impz(a,b,64)
     
     sample_vector reference = {
         -0.75,
@@ -380,9 +386,11 @@ TEST_CASE ("Produce the correct impulse response for for 4 samples delay, 0.5 ga
     }
     
     INFO ("And finally checking our output against a reference produced with Octave.");
-    // coefficients calculated in Octave using impz(a,b,64)
-    //	a4 = [-0.5, 0.0, 0.0, 0.0, 1.0]; % fir coefficients
-    //  b4 = [1.0, 0.0, 0.0, 0.0, -0.5]; % iir coefficients
+	// coefficients calculated in Octave using:
+	//  pkg load signal
+	//	a = [-0.5, 0.0, 0.0, 0.0, 1.0] % fir coefficients
+	//  b = [1.0, 0.0, 0.0, 0.0, -0.5] % iir coefficients
+	//  reference = impz(a,b,64)
     
     sample_vector reference = {
         -0.5,
@@ -483,9 +491,11 @@ TEST_CASE ("Produce the correct impulse response for for 6 samples delay, -0.25 
     }
     
     INFO ("And finally checking our output against a reference produced with Octave.");
-    // coefficients calculated in Octave using impz(a,b,64)
-    //  a6 = [0.25, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0]; % fir coefficients
-    //  b6 = [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.25]; % iir coefficients
+	// coefficients calculated in Octave using:
+	//  pkg load signal
+	//	a = [0.25, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0] % fir coefficients
+	//  b = [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.25] % iir coefficients
+	//  reference = impz(a,b,64)
     
     sample_vector reference = {
         0.25,
@@ -586,9 +596,11 @@ TEST_CASE ("Produce the correct impulse response for 7 samples delay, -0.65 gain
     }
     
     INFO ("And finally checking our output against a reference produced with Octave.");
-    // coefficients calculated in Octave using impz(a,b,64)
-    //	a7 = [0.65, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0]; % fir coefficients
-    //  b7 = [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.65]; % iir coefficients
+	// coefficients calculated in Octave using:
+	//  pkg load signal
+	//	a = [0.65, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0] % fir coefficients
+	//  b = [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.65] % iir coefficients
+	//  reference = impz(a,b,64)
     
     sample_vector reference = {
         0.65,
@@ -689,9 +701,11 @@ TEST_CASE ("Produce the correct impulse response for for 8 samples delay, 0.05 g
     }
     
     INFO ("And finally checking our output against a reference produced with Octave.");
-    // coefficients calculated in Octave using impz(a,b,64)
-    //  a8 = [-0.05, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0]; % fir coefficients
-    //  b8 = [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -0.05]; % iir coefficients
+	// coefficients calculated in Octave using:
+	//  pkg load signal
+	//	a = [-0.05, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0] % fir coefficients
+	//  b = [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -0.05] % iir coefficients
+	//  reference = impz(a,b,64)
     
     sample_vector reference = {
         -0.05,
@@ -792,9 +806,11 @@ TEST_CASE ("Produce the correct impulse response for for 12 samples delay, 0.99 
     }
     
     INFO ("And finally checking our output against a reference produced with Octave.");
-    // coefficients calculated in Octave using impz(a,b,64)
-    //	a12 = [-0.99, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0]; % fir coefficients
-    //  b12 = [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -0.99]; % iir coefficients
+	// coefficients calculated in Octave using:
+	//  pkg load signal
+	//	a = [-0.99, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0] % fir coefficients
+	//  b = [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -0.99] % iir coefficients
+	//  reference = impz(a,b,64)
     
     sample_vector reference = {
         -0.99,
@@ -923,7 +939,7 @@ TEST_CASE( "survives a sudden drop in delay time without crashing" ) {
 
     
     // change the delay_time to something smaller
-    INFO( "Change the delay_time attribute BACK DOWB to 44 samples (approx 1 ms)." );
+    INFO( "Change the delay_time attribute BACK DOWN to 44 samples (approx 1 ms)." );
     my_object.delay(44);
     REQUIRE( my_object.delay() == 44 );
 
@@ -1042,5 +1058,184 @@ TEST_CASE ("Parameters are set properly with different constructors") {
 	allpass	f4 { { 400, 100 } , 0.22 };
 	REQUIRE( f4.gain() == 0.22 );	// check the initialized value
 	REQUIRE( f4.delay() == 100 );	// check the initialized value
+	
+}
+
+
+TEST_CASE ("Setting delay time in milliseconds") {
+	using namespace c74::min;
+	using namespace c74::min::lib;
+	allpass my_allpass;
+	
+	number sampling_rate = 44100.0;
+	number test_time_1 = 500.0;
+	number test_time_1_ms = math::milliseconds_to_samples(test_time_1, sampling_rate);
+	number test_time_2 = 1250.0;
+	number test_time_2_ms = math::milliseconds_to_samples(test_time_2, sampling_rate);
+	number test_time_3 = math::random(400.0,4000.0);
+	number test_time_3_ms = math::milliseconds_to_samples(test_time_3, sampling_rate);
+	
+	my_allpass.delay_ms(test_time_1, sampling_rate);
+	REQUIRE( my_allpass.delay() == test_time_1_ms);
+	
+	my_allpass.delay_ms(test_time_2, sampling_rate);
+	REQUIRE( my_allpass.delay() == test_time_2_ms);
+	
+	my_allpass.delay_ms(test_time_3, sampling_rate);
+	REQUIRE( my_allpass.delay() == test_time_3_ms);
+	
+}
+
+
+TEST_CASE ("Produce the correct impulse response for 2.25 samples delay, 0.75 gain") {
+	
+	using namespace c74::min;
+	using namespace c74::min::lib;
+	INFO ("Using an allpass instance with arguments, which should set default gain at 0.0 and new capacity to 10 samples");
+	
+	allpass	f { 10 };
+	REQUIRE( f.gain() == 0.0 );		// check the default value
+	REQUIRE( f.delay() == 10 );     // check the initialized value
+	
+	INFO("Changing the gain to 0.75...");
+	f.gain(0.75);
+	REQUIRE( f.gain() == 0.75 );		// check the new value
+	
+	INFO("Changing the delay to 2.25 samples...");
+	f.delay(2.25);
+	REQUIRE( f.delay() == 2.25 );		// check the new value
+	
+	INFO ("And then pushing a 64-sample impulse through the unit...");
+	sample_vector impulse(64, 0.0);
+	impulse[0] = 1.0;
+	
+	// output from our object's processing
+	sample_vector	output;
+	
+	// run the calculations
+	for (auto x : impulse) {
+		auto y = f(x);
+		output.push_back(y);
+		//std::cout << y << ", ";
+	}
+	
+	INFO ("And finally checking our output against a reference produced earlier.");
+	// reference impulse response was captured using std::cout
+	// line is now commented out within the above for loop
+	
+	sample_vector reference = {
+		-0.75,
+		-0.0615234,
+		0.396137,
+		0.047007,
+		0.225443,
+		0.0979874,
+		0.136794,
+		0.0995687,
+		0.0947645,
+		0.0835273,
+		0.0718507,
+		0.0658151,
+		0.0563189,
+		0.051084,
+		0.0443596,
+		0.0396699,
+		0.0348411,
+		0.0309046,
+		0.0272865,
+		0.0241284,
+		0.021338,
+		0.0188556,
+		0.0166775,
+		0.0147387,
+		0.0130337,
+		0.0115208,
+		0.0101864,
+		0.00900508,
+		0.00796139,
+		0.00703847,
+		0.00622255,
+		0.00550126,
+		0.00486352,
+		0.00429976,
+		0.00380132,
+		0.00336068,
+		0.0029711,
+		0.00262669,
+		0.0023222,
+		0.00205301,
+		0.00181503,
+		0.00160463,
+		0.00141862,
+		0.00125417,
+		0.00110879,
+		0.000980258,
+		0.000866626,
+		0.000766166,
+		0.000677352,
+		0.000598833,
+		0.000529416,
+		0.000468046,
+		0.00041379,
+		0.000365823,
+		0.000323417,
+		0.000285926,
+		0.000252782,
+		0.000223479,
+		0.000197573,
+		0.000174671,
+		0.000154423,
+		0.000136522,
+		0.000120696,
+		0.000106705
+	};
+	
+	// check it
+	REQUIRE_VECTOR_APPROX(output, reference);
+}
+
+
+TEST_CASE ("Produce the correct impulse response for 0.0 samples delay, 0.6 gain") {
+	
+	using namespace c74::min;
+	using namespace c74::min::lib;
+	INFO ("Using an allpass instance with no arguments, which should set default gain at 0.0 and capacity at 4410 samples");
+	
+	allpass	f { };
+	REQUIRE( f.gain() == 0.0 );		// check the default value
+	REQUIRE( f.delay() == 4410 );     // check the initialized value
+	
+	INFO("Changing the gain to 0.6...");
+	f.gain(0.6);
+	REQUIRE( f.gain() == 0.6 );		// check the new value
+	
+	INFO("Changing the delay to 0.0 samples...");
+	f.delay(0.0);
+	REQUIRE( f.delay() == 0.0 );		// check the new value
+	
+	INFO ("And then pushing a 64-sample impulse through the unit...");
+	sample_vector impulse(64, 0.0);
+	impulse[0] = 1.0;
+	
+	// output from our object's processing
+	sample_vector	output;
+	
+	// run the calculations
+	for (auto x : impulse) {
+		auto y = f(x);
+		output.push_back(y);
+		//std::cout << y << ", ";
+	}
+	
+	INFO ("first test to see if the expected values are in the right place");
+	REQUIRE( output[0] == -0.6 );
+	
+	INFO ("then test to see if the expected number of non-zeroes were produced");
+	int nonzero_count {};
+	for (auto& s : output) {
+		if (s != 0.0)
+			++nonzero_count;
+	}
+	REQUIRE( nonzero_count == 1 );
 	
 }

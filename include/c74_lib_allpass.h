@@ -15,14 +15,14 @@ namespace c74 { namespace min { namespace lib {
 	class allpass {
 	public:
 		/// Default constructor with minimum number of initial values.
-		/// @param	capacity		Sets capacity in samples for feedforward and feedback history.
+		/// @param	initial_size	Sets initial delay size in samples for feedforward and feedback history.
 		///							Default value is 4410 samples. Capacity is fixed at creation.
 		/// @param	initial_gain	Sets the gain coefficient that is applied to samples from history.
 		///							Default value is 0.0.
 
-		explicit allpass(number size = 4410, number initial_gain = 0.0)
-		: m_feedforward_history(size)
-		, m_feedback_history(size) {
+		explicit allpass(number initial_size = 4410, number initial_gain = 0.0)
+		: m_feedforward_history(initial_size)
+		, m_feedback_history(initial_size) {
 			this->gain(initial_gain);
 		}
 
@@ -44,7 +44,7 @@ namespace c74 { namespace min { namespace lib {
 		/// @param	new_size	The new delay time in samples.
 		///						Note this may not exceed the capacity set when the object instance is created.
 
-		void delay(size_t new_size) {
+		void delay(number new_size) {
 			m_feedforward_history.size(new_size);
 			m_feedback_history.size(new_size);
 		};
@@ -56,6 +56,15 @@ namespace c74 { namespace min { namespace lib {
 		number delay() {
 			return m_feedforward_history.size();
 		};
+		
+		
+		/// Set a new delay time in milliseconds.
+		/// @param	new_size_ms		The new delay time in milliseconds.
+		/// @param	sampling_frequency		The sampling frequency of the environment in hertz.
+		
+		void delay_ms(number new_size_ms, number sampling_frequency) {
+			delay(math::milliseconds_to_samples(new_size_ms,sampling_frequency));
+		}
 
 
 		/// Set the feedback coefficient.
@@ -82,6 +91,15 @@ namespace c74 { namespace min { namespace lib {
 		void clear() {
 			m_feedforward_history.clear();
 			m_feedback_history.clear();
+		}
+		
+		
+		/// Change the interpolation algorithm used.
+		/// @param	new_type	option from the interpolator::type enum that names algorithm
+		
+		void change_interpolation(interpolator::type new_type = interpolator::type::none) {
+			m_feedforward_history.change_interpolation(new_type);
+			m_feedback_history.change_interpolation(new_type);
 		}
 
 

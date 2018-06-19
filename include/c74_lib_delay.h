@@ -13,20 +13,22 @@ namespace c74 { namespace min { namespace lib {
 
 	class delay {
 	public:
-		/// Capacity of the delay is fixed at instantiation
-		/// @param capacity	The number of samples to allocate for the maximum delay allowed, which will also be used as the initial delay.
-		/// Default is 256.
+		/// Default constructor with minimum number of initial values.
+		/// @param	initial_size	Sets initial delay size in samples.
+		///		Because capacity of the delay is fixed at instantiation, this will also be maximum delay allowed.
+		///		Default is 256 samples.
 
-		delay(number capacity = 256)
-		: m_history(static_cast<size_t>(capacity + 5))    // 5 extra samples to accomodate the 'now' sample + up to 4 interpolation samples
+		delay(number initial_size = 256)
+		: m_history(static_cast<size_t>(initial_size + 5))    // 5 extra samples to accomodate the 'now' sample + up to 4 interpolation samples
 		{
-			size(capacity);
+			size(initial_size);
 		}
 
 
-		/// Capacity of the delay is fixed at instantiation
-		/// @param capacity_and_size	The number of samples to allocate for the maximum delay allowed, along with a second initial delay
-		/// setting that is less than this maximum.
+		/// Constructor with initial values for capacity and size.
+		/// @param capacity_and_size	Sets capacity and size in samples for delay history.
+		///			Uses std::pair to ensure values are set together. Capacity is fixed at creation.
+		///			First value (capacity) must be greater than the second value (size).
 
 		delay(std::pair<size_t, number> capacity_and_size)
 		: m_history(capacity_and_size.first + 5) {
@@ -40,7 +42,8 @@ namespace c74 { namespace min { namespace lib {
 
 		void size(number new_size) {
 			m_size            = new_size;
-			m_size_fractional = m_size - static_cast<std::size_t>(m_size);
+			m_size_integral   = static_cast<std::size_t>(m_size);
+			m_size_fractional = m_size - m_size_integral;
 		}
 
 		/// Set a new delay time in samples.
@@ -58,13 +61,22 @@ namespace c74 { namespace min { namespace lib {
 		number size() const {
 			return m_size;
 		}
+		
+		
+		/// Set a new delay time in milliseconds.
+		/// @param	new_size_ms		The new delay time in milliseconds.
+		/// @param	sampling_frequency		The sampling frequency of the environment in hertz.
+		
+		void size_ms(number new_size_ms, number sampling_frequency) {
+			size(math::milliseconds_to_samples(new_size_ms,sampling_frequency));
+		}
 
 
 		/// Return the integer part of the current delay time in samples.
 		/// @return The integer part of the delay time in samples.
 
 		std::size_t integral_size() {
-			return static_cast<std::size_t>(m_size);
+			return m_size_integral;
 		}
 
 
@@ -88,7 +100,7 @@ namespace c74 { namespace min { namespace lib {
 			size_t true_offset = m_history.capacity() - integral_size() - 2 + offset;
 
 			return m_interpolator(m_history.tail(true_offset + 2), m_history.tail(true_offset + 1), m_history.tail(true_offset),
-				m_history.tail(true_offset - 1), m_size_fractional);
+				m_history.tail(true_offset - 1), fractional_size());
 		}
 
 
@@ -128,6 +140,7 @@ namespace c74 { namespace min { namespace lib {
 	private:
 		circular_storage<sample> m_history;            ///< Memory for storing the delayed samples.
 		number                   m_size;               ///< Delay time in samples. May include a fractional component.
+		std::size_t              m_size_integral;      ///< The integral component of the delay time.
 		double                   m_size_fractional;    ///< The fractional component of the delay time.
 		interpolator::proxy<>    m_interpolator{
             interpolator::type::cubic};    ///< The interpolator instance used to produce interpolated output.

@@ -45,6 +45,26 @@ namespace c74 { namespace min { namespace lib { namespace math {
 
 		return std::make_pair(mean, stdev);
 	}
+	
+	
+	/// Calculate the number of samples when given a duration in milliseconds and the sampling frequency.
+	/// @param	time_ms				The duration in milliseconds.
+	/// @param	sampling_frequency	The sampling frequency of the environment in hertz.
+	/// @return						The duration in samples.
+	
+	inline double milliseconds_to_samples(double time_ms, double sampling_frequency) {
+		return ( time_ms * 0.001 * sampling_frequency );
+	}
+	
+	
+	/// Calculate the duration in milliseconds when given a number of samples and the sampling frequency.
+	/// @param	time_samples		The duration in samples.
+	/// @param	sampling_frequency	The sampling frequency of the environment in hertz.
+	/// @return						The duration in milliseconds.
+	
+	inline double samples_to_milliseconds(double time_samples, double sampling_frequency) {
+		return ( time_samples * 1000.0 / sampling_frequency );
+	}
 
 
 }}}}    // namespace c74::min::lib::math

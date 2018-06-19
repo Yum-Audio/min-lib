@@ -207,6 +207,31 @@ TEST_CASE ("Setting an interpolating delay") {
 }
 
 
+TEST_CASE ("Setting delay time in milliseconds") {
+	using namespace c74::min;
+	using namespace c74::min::lib;
+	delay my_delay;
+	
+	number sampling_rate = 44100.0;
+	number test_time_1 = 500.0;
+	number test_time_1_ms = math::milliseconds_to_samples(test_time_1, sampling_rate);
+	number test_time_2 = 1250.0;
+	number test_time_2_ms = math::milliseconds_to_samples(test_time_2, sampling_rate);
+	number test_time_3 = math::random(400.0,4000.0);
+	number test_time_3_ms = math::milliseconds_to_samples(test_time_3, sampling_rate);
+	
+	my_delay.size_ms(test_time_1, sampling_rate);
+	REQUIRE( my_delay.size() == test_time_1_ms);
+	
+	my_delay.size_ms(test_time_2, sampling_rate);
+	REQUIRE( my_delay.size() == test_time_2_ms);
+	
+	my_delay.size_ms(test_time_3, sampling_rate);
+	REQUIRE( my_delay.size() == test_time_3_ms);
+	
+}
+
+
 TEST_CASE ("Linear interpolation of floating-point delay times") {
 	using namespace c74::min;
 	using namespace c74::min::lib;
