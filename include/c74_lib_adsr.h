@@ -13,6 +13,7 @@ namespace lib {
 	///	Generate an <a href="https://en.wikipedia.org/wiki/Synthesizer#Attack_Decay_Sustain_Release_.28ADSR.29_envelope">ADSR</a> envelope.
 
 	class adsr {
+	public:
 
 		class slope {
 			const int k_power_multiplier = 5.0; // higher number yields more extreme curves
@@ -45,8 +46,6 @@ namespace lib {
 			bool	m_is_linear	{ true };
 		};
 
-
-	public:
 
 		void initial(number initial_value) {
 			m_initial_cached = initial_value;
