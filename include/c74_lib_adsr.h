@@ -123,7 +123,7 @@ namespace lib {
 		/// @param	sampling_frequency	The sampling frequency of the environment in hertz.
 
 		void release_slope(number release_slope) {
-			m_attack_exp = release_slope;
+			m_release_exp = release_slope;
 		}
 
 
