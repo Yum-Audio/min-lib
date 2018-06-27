@@ -68,6 +68,23 @@ namespace c74 { namespace min { namespace lib {
 		void change_waveform() {
 			std::generate(m_wavetable.begin(), m_wavetable.end(), new_waveform_type(m_wavetable.size()));
 		}
+		
+		
+		/// Return the value at an interpolated position.
+		/// @param	new_position	Position within the sample_vector. Non-integer values will be interpolated.
+		/// @return Interpolated sample value.
+		
+		sample at(number new_position) {
+			std::size_t position_integral = static_cast<std::size_t>(new_position);
+			number position_fractional = new_position - position_integral;
+			
+			return m_interpolator(	m_wavetable.at(position_integral-1),
+									m_wavetable.at(position_integral),
+									m_wavetable.at(position_integral+1),
+									m_wavetable.at(position_integral+2),
+									position_fractional	);
+			
+		}
 
 
 		/// Calculate one sample.
@@ -84,8 +101,9 @@ namespace c74 { namespace min { namespace lib {
 
 
 	private:
-		sync          m_phase_ramp{};    ///< manages the frequency and phase of our oscillator
-		sample_vector m_wavetable{};     ///< vector containing single cycle of the waveform
+		sync					m_phase_ramp{};    ///< manages the frequency and phase of our oscillator
+		sample_vector			m_wavetable{};     ///< vector containing single cycle of the waveform
+		interpolator::cubic<>   m_interpolator{};    ///< The interpolator instance used to produce interpolated output.
 	};
 
 }}}    // namespace c74::min::lib
