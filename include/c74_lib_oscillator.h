@@ -7,8 +7,9 @@
 
 namespace c74 { namespace min { namespace lib {
 
-	/// Generate basic <a href="https://en.wikipedia.org/wiki/Waveform">waveforms</a> using a single-cycle <a
-	/// href="https://en.wikipedia.org/wiki/Wavetable_synthesis">wavetable</a>
+	/// Generate basic <a href="https://en.wikipedia.org/wiki/Waveform">waveforms</a> using a single-cycle
+	/// <a href="https://en.wikipedia.org/wiki/Wavetable_synthesis">wavetable</a>
+	/// @tparam initial_waveform_type	generator option defined in c74_lib_generator.h
 
 	template<class initial_waveform_type = generator::sine<>>
 	class oscillator {
@@ -18,7 +19,7 @@ namespace c74 { namespace min { namespace lib {
 		/// @param	wavetable_size	The number of samples in the wavetable.
 
 		oscillator(std::size_t wavetable_size = 4096)
-		: m_wavetable(wavetable_size + 8) {
+		: m_wavetable(wavetable_size + 8) {		// 8 extra samples to accomodate the padding at beginning and end
 			change_waveform<initial_waveform_type>();
 		}
 
@@ -64,10 +65,15 @@ namespace c74 { namespace min { namespace lib {
 		}
 
 
+		/// Generate a new shape for the internal wavetable.
+		/// @tparam new_waveform_type	generator object defined in c74_lib_generator.h
+		
 		template<class new_waveform_type = generator::sine<>>
 		void change_waveform() {
+			// first generate one cycle inside the padding
 			std::generate(m_wavetable.begin()+4, m_wavetable.end()-4, new_waveform_type(size()));
 			
+			// second copy samples to the padding
 			std::copy(m_wavetable.end()-8, m_wavetable.end()-4, m_wavetable.begin());
 			std::copy(m_wavetable.begin()+4, m_wavetable.begin()+8, m_wavetable.end()-4);
 		}
