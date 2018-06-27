@@ -67,6 +67,9 @@ namespace c74 { namespace min { namespace lib {
 		template<class new_waveform_type = generator::sine<>>
 		void change_waveform() {
 			std::generate(m_wavetable.begin()+4, m_wavetable.end()-4, new_waveform_type(size()));
+			
+			std::copy(m_wavetable.end()-8, m_wavetable.end()-4, m_wavetable.begin());
+			std::copy(m_wavetable.begin()+4, m_wavetable.begin()+8, m_wavetable.end()-4);
 		}
 		
 		
