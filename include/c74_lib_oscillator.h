@@ -5,6 +5,9 @@
 
 #pragma once
 
+#define TOTAL_PADDING 8
+#define HALF_PADDING 4
+
 namespace c74 { namespace min { namespace lib {
 
 	/// Generate basic <a href="https://en.wikipedia.org/wiki/Waveform">waveforms</a> using a single-cycle
@@ -19,7 +22,7 @@ namespace c74 { namespace min { namespace lib {
 		/// @param	wavetable_size	The number of samples in the wavetable.
 
 		oscillator(std::size_t wavetable_size = 4096)
-		: m_wavetable(wavetable_size + 8) {		// 8 extra samples to accomodate the padding at beginning and end
+		: m_wavetable(wavetable_size + TOTAL_PADDING) {		// extra samples to accomodate the padding at beginning and end
 			change_waveform<initial_waveform_type>();
 		}
 
@@ -28,7 +31,7 @@ namespace c74 { namespace min { namespace lib {
 		/// @return	The size of the sample_vector containing our single-cycle wavetable.
 
 		std::size_t size() {
-			return m_wavetable.size() - 8;
+			return m_wavetable.size() - TOTAL_PADDING;
 		}
 
 
@@ -71,11 +74,11 @@ namespace c74 { namespace min { namespace lib {
 		template<class new_waveform_type = generator::sine<>>
 		void change_waveform() {
 			// first generate one cycle inside the padding
-			std::generate(m_wavetable.begin()+4, m_wavetable.end()-4, new_waveform_type(size()));
+			std::generate(m_wavetable.begin()+HALF_PADDING, m_wavetable.end()-HALF_PADDING, new_waveform_type(size()));
 			
 			// second copy samples to the padding
-			std::copy(m_wavetable.end()-8, m_wavetable.end()-4, m_wavetable.begin());
-			std::copy(m_wavetable.begin()+4, m_wavetable.begin()+8, m_wavetable.end()-4);
+			std::copy(m_wavetable.end()-TOTAL_PADDING, m_wavetable.end()-HALF_PADDING, m_wavetable.begin());
+			std::copy(m_wavetable.begin()+HALF_PADDING, m_wavetable.begin()+TOTAL_PADDING, m_wavetable.end()-HALF_PADDING);
 		}
 		
 		
@@ -101,7 +104,7 @@ namespace c74 { namespace min { namespace lib {
 
 		sample operator()() {
 			sample phase_now    = m_phase_ramp();
-			sample position_now = phase_now * size() + 4;
+			sample position_now = phase_now * size() + HALF_PADDING;
 
 			return at(position_now);
 		}
