@@ -1076,3 +1076,197 @@ TEST_CASE ("Produce a unipolar triangle waveform") {
 	
 	
 }
+
+TEST_CASE ("Interpolate values between samples in unipolar sawtooth waveform") {
+	
+	using namespace c74::min;
+	using namespace c74::min::lib;
+	INFO ("Using an oscillator instance with wavetable size of 32, setting waveform to unipolar sawtooth");
+	
+	oscillator<> o { 32 };
+	o.change_waveform<generator::sawtooth_unipolar<>>();
+	
+	INFO ("Setting frequency to produce single cycle with duration of 64 samples, forcing oscillator to interpolate");
+	o.frequency(1.0, 64.0);
+	
+	c74::min::sample_vector reference = {
+		0,
+		-0.109375, // different from 64-item wavetable
+		0.03125,
+		0.046875,
+		0.0625,
+		0.078125,
+		0.09375,
+		0.109375,
+		0.125,
+		0.140625,
+		0.15625,
+		0.171875,
+		0.1875,
+		0.203125,
+		0.21875,
+		0.234375,
+		0.25,
+		0.265625,
+		0.28125,
+		0.296875,
+		0.3125,
+		0.328125,
+		0.34375,
+		0.359375,
+		0.375,
+		0.390625,
+		0.40625,
+		0.421875,
+		0.4375,
+		0.453125,
+		0.46875,
+		0.484375,
+		0.5,
+		0.515625,
+		0.53125,
+		0.546875,
+		0.5625,
+		0.578125,
+		0.59375,
+		0.609375,
+		0.625,
+		0.640625,
+		0.65625,
+		0.671875,
+		0.6875,
+		0.703125,
+		0.71875,
+		0.734375,
+		0.75,
+		0.765625,
+		0.78125,
+		0.796875,
+		0.8125,
+		0.828125,
+		0.84375,
+		0.859375,
+		0.875,
+		0.890625,
+		0.90625,
+		0.921875,
+		0.9375,
+		1.078125, // different from 64-item wavetable
+		0.96875,
+		0.484375 // different from 64-item wavetable
+	};
+	
+	// output from our object's processing
+	sample_vector	output;
+	
+	// run the calculations
+	for (auto x : reference) {
+		auto y = o();
+		output.push_back(y);
+		//std::cout << y << ", ";
+	}
+	
+	INFO("The output matches an externally generated reference set.");
+	// reference output was copied from earlier 64-item wavetable test
+	// 3 edge cases caused by discontinuous shape have been noted
+	REQUIRE_VECTOR_APPROX( output, reference );
+	
+	
+}
+
+TEST_CASE ("Interpolate values between samples in cosine waveform") {
+	
+	using namespace c74::min;
+	using namespace c74::min::lib;
+	INFO ("Using an oscillator instance with wavetable size of 32, setting waveform to cosine");
+	
+	oscillator<> o { 32 };
+	o.change_waveform<generator::cosine<>>();
+	
+	INFO ("Setting frequency to produce single cycle with duration of 64 samples, forcing oscillator to interpolate");
+	o.frequency(1.0, 64.0);
+	
+	c74::min::sample_vector reference = {
+		1,
+		0.999908,
+		0.980785,
+		0.961482,
+		0.92388,
+		0.886107,
+		0.83147,
+		0.776679,
+		0.707107,
+		0.637404,
+		0.55557,
+		0.473634,
+		0.382683,
+		0.291662,
+		0.19509,
+		0.0984823,
+		6.12323e-17,
+		-0.0984823,
+		-0.19509,
+		-0.291662,
+		-0.382683,
+		-0.473634,
+		-0.55557,
+		-0.637404,
+		-0.707107,
+		-0.776679,
+		-0.83147,
+		-0.886107,
+		-0.92388,
+		-0.961482,
+		-0.980785,
+		-0.999908,
+		-1,
+		-0.999908,
+		-0.980785,
+		-0.961482,
+		-0.92388,
+		-0.886107,
+		-0.83147,
+		-0.776679,
+		-0.707107,
+		-0.637404,
+		-0.55557,
+		-0.473634,
+		-0.382683,
+		-0.291662,
+		-0.19509,
+		-0.0984823,
+		-1.83697e-16,
+		0.0984823,
+		0.19509,
+		0.291662,
+		0.382683,
+		0.473634,
+		0.55557,
+		0.637404,
+		0.707107,
+		0.776679,
+		0.83147,
+		0.886107,
+		0.92388,
+		0.961482,
+		0.980785,
+		0.999908
+	};
+	
+	// output from our object's processing
+	sample_vector	output;
+	
+	// run the calculations
+	for (auto x : reference) {
+		auto y = o();
+		output.push_back(y);
+		//std::cout << y << ", ";
+	}
+	
+	INFO("The output matches an externally generated reference set.");
+	// reference output was captured using std::cout
+	// line is now commented out within the above for loop
+	REQUIRE_VECTOR_APPROX( output, reference );
+	
+	
+}
