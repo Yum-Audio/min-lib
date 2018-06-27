@@ -5,8 +5,8 @@
 
 #pragma once
 
-#define TOTAL_PADDING 8
-#define HALF_PADDING 4
+const int k_total_padding = 8;
+const int k_half_padding = k_total_padding / 2;
 
 namespace c74 { namespace min { namespace lib {
 
@@ -22,7 +22,7 @@ namespace c74 { namespace min { namespace lib {
 		/// @param	wavetable_size	The number of samples in the wavetable.
 
 		oscillator(std::size_t wavetable_size = 4096)
-		: m_wavetable(wavetable_size + TOTAL_PADDING) {		// extra samples to accomodate the padding at beginning and end
+		: m_wavetable(wavetable_size + k_total_padding) {	// extra samples to accomodate the padding at beginning and end
 			change_waveform<initial_waveform_type>();
 		}
 
@@ -31,7 +31,7 @@ namespace c74 { namespace min { namespace lib {
 		/// @return	The size of the sample_vector containing our single-cycle wavetable.
 
 		std::size_t size() {
-			return m_wavetable.size() - TOTAL_PADDING;
+			return m_wavetable.size() - k_total_padding;
 		}
 
 
@@ -74,11 +74,11 @@ namespace c74 { namespace min { namespace lib {
 		template<class new_waveform_type = generator::sine<>>
 		void change_waveform() {
 			// first generate one cycle inside the padding
-			std::generate(m_wavetable.begin()+HALF_PADDING, m_wavetable.end()-HALF_PADDING, new_waveform_type(size()));
+			std::generate(m_wavetable.begin()+k_half_padding, m_wavetable.end()-k_half_padding, new_waveform_type(size()));
 			
 			// second copy samples to the padding
-			std::copy(m_wavetable.end()-TOTAL_PADDING, m_wavetable.end()-HALF_PADDING, m_wavetable.begin());
-			std::copy(m_wavetable.begin()+HALF_PADDING, m_wavetable.begin()+TOTAL_PADDING, m_wavetable.end()-HALF_PADDING);
+			std::copy(m_wavetable.end()-k_total_padding, m_wavetable.end()-k_half_padding, m_wavetable.begin());
+			std::copy(m_wavetable.begin()+k_half_padding, m_wavetable.begin()+k_total_padding, m_wavetable.end()-k_half_padding);
 		}
 		
 		
@@ -104,7 +104,7 @@ namespace c74 { namespace min { namespace lib {
 
 		sample operator()() {
 			sample phase_now    = m_phase_ramp();
-			sample position_now = phase_now * size() + HALF_PADDING;
+			sample position_now = phase_now * size() + k_half_padding;
 
 			return at(position_now);
 		}
