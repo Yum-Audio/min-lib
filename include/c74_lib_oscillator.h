@@ -18,7 +18,7 @@ namespace c74 { namespace min { namespace lib {
 		/// @param	wavetable_size	The number of samples in the wavetable.
 
 		oscillator(std::size_t wavetable_size = 4096)
-		: m_wavetable(wavetable_size) {
+		: m_wavetable(wavetable_size + 8) {
 			change_waveform<initial_waveform_type>();
 		}
 
@@ -27,7 +27,7 @@ namespace c74 { namespace min { namespace lib {
 		/// @return	The size of the sample_vector containing our single-cycle wavetable.
 
 		std::size_t size() {
-			return m_wavetable.size();
+			return m_wavetable.size() - 8;
 		}
 
 
@@ -66,7 +66,7 @@ namespace c74 { namespace min { namespace lib {
 
 		template<class new_waveform_type = generator::sine<>>
 		void change_waveform() {
-			std::generate(m_wavetable.begin(), m_wavetable.end(), new_waveform_type(m_wavetable.size()));
+			std::generate(m_wavetable.begin()+4, m_wavetable.end()-4, new_waveform_type(m_wavetable.size()));
 		}
 		
 		
@@ -94,7 +94,7 @@ namespace c74 { namespace min { namespace lib {
 			sample phase_now    = m_phase_ramp();
 			sample position_now = phase_now * m_wavetable.size();
 
-			int position_now_integer = int(position_now);
+			int position_now_integer = int(position_now)+4;
 
 			return m_wavetable.at(position_now_integer);
 		}

@@ -112,11 +112,16 @@ TEST_CASE ("Confirm sample operator changes the phase") {
 	REQUIRE( o.phase() == Approx(0.5) );	// check the new value for phase
 	
 	INFO ("After another 128 samples of output, phase should be 1.0");
-	for (int i=0; i < 128; i++)
+	for (int i=0; i < 124; i++)
 	{
 		output = o();
 	}
-	REQUIRE( o.phase() == Approx(1.0) );	// check the new value for phase
+	REQUIRE( o.phase() != Approx(1.0) );	// check the new value for phase
+	
+	output = o();
+	output = o();
+	output = o();
+	output = o();
 	
 	INFO ("After another 64 samples of output, phase should be back at 0.25");
 	for (int i=0; i < 64; i++)
