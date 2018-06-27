@@ -23,7 +23,7 @@ namespace c74 { namespace min { namespace lib {
 		}
 
 
-		///	Return the size of the internal wavetable.
+		///	Return the size of the internal wavetable without padding.
 		/// @return	The size of the sample_vector containing our single-cycle wavetable.
 
 		std::size_t size() {
@@ -66,7 +66,7 @@ namespace c74 { namespace min { namespace lib {
 
 		template<class new_waveform_type = generator::sine<>>
 		void change_waveform() {
-			std::generate(m_wavetable.begin()+4, m_wavetable.end()-4, new_waveform_type(m_wavetable.size()));
+			std::generate(m_wavetable.begin()+4, m_wavetable.end()-4, new_waveform_type(size()));
 		}
 		
 		
@@ -92,7 +92,7 @@ namespace c74 { namespace min { namespace lib {
 
 		sample operator()() {
 			sample phase_now    = m_phase_ramp();
-			sample position_now = phase_now * m_wavetable.size();
+			sample position_now = phase_now * size();
 
 			int position_now_integer = int(position_now)+4;
 
