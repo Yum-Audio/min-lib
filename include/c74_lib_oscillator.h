@@ -101,11 +101,9 @@ namespace c74 { namespace min { namespace lib {
 
 		sample operator()() {
 			sample phase_now    = m_phase_ramp();
-			sample position_now = phase_now * size();
+			sample position_now = phase_now * size() + 4;
 
-			int position_now_integer = int(position_now)+4;
-
-			return m_wavetable.at(position_now_integer);
+			return at(position_now);
 		}
 
 
