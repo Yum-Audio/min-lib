@@ -24,24 +24,24 @@ namespace lib {
 				if (m_is_linear)
 					m_exp = 1.0;
 				else {
-					m_slope = percentage / 100.0;
-					if (m_slope > 0)
-						m_exp = 1.0 + m_slope * k_power_multiplier;
-					else if (m_slope < 0)
-						m_exp = 1.0 + (-m_slope) * k_power_multiplier;
+					m_curve = percentage / 100.0;
+					if (m_curve > 0)
+						m_exp = 1.0 + m_curve * k_power_multiplier;
+					else if (m_curve < 0)
+						m_exp = 1.0 + (-m_curve) * k_power_multiplier;
 				}
 			}
 
 			number operator()(number x) {
 				// Profile this: What's worse? branching or calculating even when linear?
-				if (m_slope > 0.0)
+				if (m_curve > 0.0)
 					return 1.0 - pow(abs(x - 1.0), m_exp);
 				else
 					return pow(x, m_exp);
 			}
 
 		private:
-			number	m_slope		{ 0.0 };
+			number	m_curve		{ 0.0 };
 			number	m_exp		{ 1.0 };
 			bool	m_is_linear	{ true };
 		};
@@ -80,11 +80,11 @@ namespace lib {
 
 
 		/// Set the attack slope of the envelope generator.
-		/// @param	attack_slope		The attack slope as a +/- percentage.
+		/// @param	attack_curve		The attack slope as a +/- percentage.
 		/// @param	sampling_frequency	The sampling frequency of the environment in hertz.
 
-		void attack_slope(number attack_slope) {
-			m_attack_exp = attack_slope;
+		void attack_curve(number attack_curve) {
+			m_attack_exp = attack_curve;
 		}
 
 
@@ -99,11 +99,11 @@ namespace lib {
 
 
 		/// Set the decay slope of the envelope generator.
-		/// @param	decay_slope			The decay slope as a +/- percentage.
+		/// @param	decay_curve			The decay slope as a +/- percentage.
 		/// @param	sampling_frequency	The sampling frequency of the environment in hertz.
 
-		void decay_slope(number decay_slope) {
-			m_decay_exp = decay_slope;
+		void decay_curve(number decay_curve) {
+			m_decay_exp = decay_curve;
 		}
 
 
@@ -118,11 +118,11 @@ namespace lib {
 
 
 		/// Set the release slope of the envelope generator.
-		/// @param	release_slope		The release slope as a +/- percentage.
+		/// @param	release_curve		The release slope as a +/- percentage.
 		/// @param	sampling_frequency	The sampling frequency of the environment in hertz.
 
-		void release_slope(number release_slope) {
-			m_release_exp = release_slope;
+		void release_curve(number release_curve) {
+			m_release_exp = release_curve;
 		}
 
 
