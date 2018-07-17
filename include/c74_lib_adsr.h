@@ -16,7 +16,7 @@ namespace lib {
 	public:
 
 		class slope {
-			const int k_power_multiplier = 5.0; // higher number yields more extreme curves
+			const int k_power_multiplier = 5; // higher number yields more extreme curves
 		public:
 
 			void operator = (number percentage) {
@@ -73,7 +73,7 @@ namespace lib {
 		/// @param	sampling_frequency	The sampling frequency of the environment in hertz.
 
 		void attack(number attack_ms, number sampling_frequency) {
-			m_attack_step_count = (attack_ms / 1000.0) * sampling_frequency;
+			m_attack_step_count = static_cast<int>( (attack_ms / 1000.0) * sampling_frequency );
 			m_attack_step_count = std::max(m_attack_step_count, 1);
 			recalc();
 		}
@@ -93,7 +93,7 @@ namespace lib {
 		/// @param	sampling_frequency	The sampling frequency of the environment in hertz.
 
 		void decay(number decay_ms, number sampling_frequency) {
-			m_decay_step_count = (decay_ms / 1000.0) * sampling_frequency;
+			m_decay_step_count = static_cast<int>( (decay_ms / 1000.0) * sampling_frequency );
 			recalc();
 		}
 
@@ -112,7 +112,7 @@ namespace lib {
 		/// @param	sampling_frequency	The sampling frequency of the environment in hertz.
 
 		void release(number release_ms, number sampling_frequency) {
-			m_release_step_count = (release_ms / 1000.0) * sampling_frequency;
+			m_release_step_count = static_cast<int>( (release_ms / 1000.0) * sampling_frequency );
 			recalc();
 		}
 
