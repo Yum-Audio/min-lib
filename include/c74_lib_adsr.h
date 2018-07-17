@@ -20,7 +20,7 @@ namespace lib {
 		public:
 
 			void operator = (number percentage) {
-				m_is_linear = fabs(percentage) < 0.001;
+				m_is_linear = std::abs(percentage) < 0.001;
 				if (m_is_linear)
 					m_exp = 1.0;
 				else {
@@ -35,7 +35,7 @@ namespace lib {
 			number operator()(number x) {
 				// Profile this: What's worse? branching or calculating even when linear?
 				if (m_curve > 0.0)
-					return 1.0 - pow(abs(x - 1.0), m_exp);
+					return 1.0 - pow(std::abs(x - 1.0), m_exp);
 				else
 					return pow(x, m_exp);
 			}
