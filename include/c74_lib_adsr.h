@@ -47,6 +47,11 @@ namespace lib {
 		};
 
 
+		sample active() {
+			return m_state != adsr_state::inactive;
+		}
+
+
 		void initial(number initial_value) {
 			m_initial_cached = initial_value;
 			recalc();
@@ -178,10 +183,15 @@ namespace lib {
 				case adsr_state::release:
 					m_release_current += m_release_step;
 					++m_index;
-					if (m_index >= m_release_step_count)
+					if (m_index >= m_release_step_count) {
 						output = m_end_cached;
+						m_state = adsr_state::inactive;
+					}
 					else
 						output = m_release_exp(m_release_current) * (m_end_cached - m_sustain_cached) + m_sustain_cached;
+					break;
+				case adsr_state::inactive:
+					output = m_end_cached;
 					break;
 			}
 			return output;
@@ -211,12 +221,13 @@ namespace lib {
 		int	m_index { 0xFFFFFF };
 
 		enum class adsr_state {
+			inactive,
 			attack,
 			decay,
 			sustain,
 			release
 		};
-		adsr_state m_state { adsr_state::release };
+		adsr_state m_state { adsr_state::inactive };
 
 		bool	m_active		{ false };
 
