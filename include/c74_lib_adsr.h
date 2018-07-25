@@ -132,17 +132,19 @@ namespace lib {
 
 
 		void trigger(bool active) {
-			m_active = active;
+			if (active != m_active) {
+				m_active = active;
 
-			if (m_active) {
-				m_state = adsr_state::attack;
-				m_index = 0;
-				m_attack_current = 0.0;
-			}
-			else {
-				m_state = adsr_state::release;
-				m_index = 0;
-				m_release_current = 0.0;
+				if (m_active) {
+					m_state = adsr_state::attack;
+					m_index = 0;
+					m_attack_current = 0.0;
+				}
+				else {
+					m_state = adsr_state::release;
+					m_index = 0;
+					m_release_current = 0.0;
+				}
 			}
 		}
 
