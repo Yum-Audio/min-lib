@@ -27,10 +27,12 @@ namespace c74 { namespace min { namespace lib {
 		template<class T = number>
 		class base {
 		protected:
-			MIN_CONSTEXPR base() noexcept {};
-
+			MIN_CONSTEXPR base() noexcept {}
+ 
 		public:
-			virtual T operator()(T x1, T x2, double delta) noexcept {
+            virtual ~base() {}
+
+            virtual T operator()(T x1, T x2, double delta) noexcept {
 				return x1;
 			}
 			virtual T operator()(T x0, T x1, T x2, T x3, double delta) noexcept {
