@@ -107,7 +107,7 @@ SCENARIO ("produce the correct impulse response") {
 			THEN("The result produced matches an externally produced reference impulse")
 
 			// check it
-			REQUIRE( output == reference );
+			REQUIRE_VECTOR_APPROX( output, reference );
 		}
 	}
 }
@@ -202,22 +202,22 @@ SCENARIO ("responds appropriately to messages and attrs") {
 		WHEN ("frequency is set to 1K fc @ 96K fs") {
 			f.frequency(1000.0, 96000.0);
 			THEN("coefficient is set correctly")
-			REQUIRE( f.coefficient() == Approx(0.06335217076965427) );
+			REQUIRE( f.coefficient() == Approx(0.0633539788) );
 		}
 		AND_WHEN ("frequency is set to 4K fc @ 96K fs") {
 			f.frequency(4000.0, 96000.0);
 			THEN("coefficient is set correctly")
-			REQUIRE( f.coefficient() == Approx(0.23032864479520065) );
+			REQUIRE( f.coefficient() == Approx(0.2303345875) );
 		}
 		AND_WHEN ("frequency is set to 1K fc @ 44.1K fs") {
 			f.frequency(1000.0, 44100.0);
 			THEN("coefficient is set correctly")
-			REQUIRE( f.coefficient() == Approx(0.132787865213287) );
+			REQUIRE( f.coefficient() == Approx(0.1327915092) );
 		}
 		AND_WHEN ("frequency is set to 4K fc @ 44.1K fs") {
 			f.frequency(4000.0, 44100.0);
 			THEN("coefficient is set correctly")
-			REQUIRE( f.coefficient() == Approx(0.43441043913502342) );
+			REQUIRE( f.coefficient() == Approx(0.4344199454));
 		}
 	}
 }
