@@ -214,6 +214,7 @@ TEST_CASE ("Produce a sine waveform") {
 	for (auto x : reference) {
 		auto y = o();
 		output.push_back(y);
+		x = 0; // unused
 	}
 	
 	INFO("The output matches an externally generated reference set.");
@@ -309,6 +310,7 @@ TEST_CASE ("Produce a ramp waveform") {
 	for (auto x : reference) {
 		auto y = o();
 		output.push_back(y);
+		x = 0; // unused
 	}
 	
 	INFO("The output matches an externally generated reference set.");
@@ -404,6 +406,7 @@ TEST_CASE ("Produce a sawtooth waveform") {
 	for (auto x : reference) {
 		auto y = o();
 		output.push_back(y);
+		x = 0; // unused
 	}
 	
 	INFO("The output matches an externally generated reference set.");
@@ -499,6 +502,7 @@ TEST_CASE ("Produce a unipolar ramp waveform") {
 	for (auto x : reference) {
 		auto y = o();
 		output.push_back(y);
+		x = 0; // unused
 	}
 	
 	INFO("The output matches an externally generated reference set.");
@@ -594,6 +598,7 @@ TEST_CASE ("Produce a unipolar sawtooth waveform") {
 	for (auto x : reference) {
 		auto y = o();
 		output.push_back(y);
+		x = 0; // unused
 	}
 	
 	INFO("The output matches an externally generated reference set.");
@@ -689,6 +694,7 @@ TEST_CASE ("Produce a unipolar sine waveform") {
 	for (auto x : reference) {
 		auto y = o();
 		output.push_back(y);
+		x = 0; // unused
 	}
 	
 	INFO("The output matches an externally generated reference set.");
@@ -784,6 +790,7 @@ TEST_CASE ("Produce a cosine waveform") {
 	for (auto x : reference) {
 		auto y = o();
 		output.push_back(y);
+		x = 0; // unused
 	}
 	
 	INFO("The output matches an externally generated reference set.");
@@ -879,6 +886,7 @@ TEST_CASE ("Produce a unipolar cosine waveform") {
 	for (auto x : reference) {
 		auto y = o();
 		output.push_back(y);
+		x = 0; // unused
 	}
 	
 	INFO("The output matches an externally generated reference set.");
@@ -974,6 +982,7 @@ TEST_CASE ("Produce a triangle waveform") {
 	for (auto x : reference) {
 		auto y = o();
 		output.push_back(y);
+		x = 0; // unused
 	}
 	
 	INFO("The output matches an externally generated reference set.");
@@ -1069,6 +1078,7 @@ TEST_CASE ("Produce a unipolar triangle waveform") {
 	for (auto x : reference) {
 		auto y = o();
 		output.push_back(y);
+		x = 0; // unused
 	}
 	
 	INFO("The output matches an externally generated reference set.");
@@ -1164,6 +1174,7 @@ TEST_CASE ("Interpolate values between samples in unipolar sawtooth waveform") {
 		auto y = o();
 		output.push_back(y);
 		//std::cout << y << ", ";
+		x = 0; // unused
 	}
 	
 	INFO("The output matches an externally generated reference set.");
@@ -1261,6 +1272,7 @@ TEST_CASE ("Interpolate values between samples in cosine waveform") {
 		auto y = o();
 		output.push_back(y);
 		//std::cout << y << ", ";
+		x = 0; // unused
 	}
 	
 	INFO("The output matches an externally generated reference set.");
