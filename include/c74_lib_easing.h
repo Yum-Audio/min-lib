@@ -145,7 +145,8 @@ namespace c74 { namespace min { namespace lib { namespace easing {
 
 	template<typename T>
 	T in_circular(T x) {
-		return 1 - sqrt(1 - (x * x));
+		x = 1 - x * x;
+		return 1 - sqrt( std::max(x, 0.0) );
 	}
 
 
@@ -156,10 +157,14 @@ namespace c74 { namespace min { namespace lib { namespace easing {
 
 	template<typename T>
 	T in_out_circular(T x) {
-		if (x < 0.5)
-			return 0.5 * (1 - sqrt(1 - 4 * (x * x)));
-		else
-			return 0.5 * (sqrt(-((2 * x) - 3) * ((2 * x) - 1)) + 1);
+		if (x < 0.5) {
+			x = 1 - 4 * (x * x);
+			return 0.5 * (1 - sqrt( std::max(x, 0.0) ));
+		}
+		else {
+			x = -((2 * x) - 3) * ((2 * x) - 1);
+			return 0.5 * (sqrt( std::max(x, 0.0) ) + 1);
+		}
 	}
 
 
@@ -170,7 +175,8 @@ namespace c74 { namespace min { namespace lib { namespace easing {
 
 	template<typename T>
 	T out_circular(T x) {
-		return sqrt((2 - x) * x);
+		x = (2 - x) * x;
+		return sqrt( std::max(x, 0.0) );
 	}
 
 
