@@ -379,17 +379,18 @@ namespace c74 { namespace min { namespace lib {
 			/// Default constructor
 			/// @param	first_type	Option from the type enum. By default this is type::none.
 
-			explicit proxy(type first_type = type::none) {
+			explicit proxy(interpolator::type first_type = type::none) {
 				// NW: The order here must match the order in type enum
-				m_type_vector.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::none<T>));
-				m_type_vector.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::nearest<T>));
-				m_type_vector.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::linear<T>));
-				m_type_vector.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::allpass<T>));
-				m_type_vector.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::cosine<T>));
-				m_type_vector.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::cubic<T>));
-				m_type_vector.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::spline<T>));
-				m_type_vector.push_back(std::unique_ptr<interpolator::base<T>>(new interpolator::hermite<T>));
 
+				m_type_vector.push_back(new interpolator::none<T>);
+				m_type_vector.push_back(new interpolator::nearest<T>);
+				m_type_vector.push_back(new interpolator::linear<T>);
+				m_type_vector.push_back(new interpolator::allpass<T>);
+				m_type_vector.push_back(new interpolator::cosine<T>);
+				m_type_vector.push_back(new interpolator::cubic<T>);
+				m_type_vector.push_back(new interpolator::spline<T>);
+				m_type_vector.push_back(new interpolator::hermite<T>);
+				
 				m_which_type = static_cast<int>(first_type);
 			}
 
@@ -448,7 +449,7 @@ namespace c74 { namespace min { namespace lib {
 
 
 		private:
-			std::vector<std::unique_ptr<interpolator::base<T>>> m_type_vector;    ///< vector with one instance of each interpolator type
+			std::vector<interpolator::base<T>*> m_type_vector;    ///< vector with one instance of each interpolator type
 			int m_which_type;    ///< index within m_type_vector used for interpolation operator, stored to avoid repeat casting
 			static const int m_hermite_type
 				= static_cast<int>(type::hermite);    ///< index of the hermite interpolator, stored to avoid repeat casting
