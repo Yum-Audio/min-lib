@@ -366,8 +366,9 @@ namespace c74 { namespace min { namespace lib {
 
 		/// Contains the names of available interpolation algorithms.
 		/// Used with proxy::change_interpolation() to select a specific option.
+        /// The final definition "type_count" is included to provide a method for querying the size of this enum list.
 
-		enum class type : int { none, nearest, linear, allpass, cosine, cubic, spline, hermite };
+        enum class type : unsigned int { none, nearest, linear, allpass, cosine, cubic, spline, hermite, type_count };
 
 
 		/// Proxy that provides means for objects to switch between interpolation types.
@@ -382,14 +383,14 @@ namespace c74 { namespace min { namespace lib {
 			explicit proxy(interpolator::type first_type = type::none) {
 				// NW: The order here must match the order in type enum
 
-				m_type_vector.push_back(new interpolator::none<T>);
-				m_type_vector.push_back(new interpolator::nearest<T>);
-				m_type_vector.push_back(new interpolator::linear<T>);
-				m_type_vector.push_back(new interpolator::allpass<T>);
-				m_type_vector.push_back(new interpolator::cosine<T>);
-				m_type_vector.push_back(new interpolator::cubic<T>);
-				m_type_vector.push_back(new interpolator::spline<T>);
-				m_type_vector.push_back(new interpolator::hermite<T>);
+                std::get<0>(m_type_vector) = std::unique_ptr<interpolator::base<T>>(new interpolator::none<T>);
+				std::get<1>(m_type_vector) = std::unique_ptr<interpolator::base<T>>(new interpolator::nearest<T>);
+				std::get<2>(m_type_vector) = std::unique_ptr<interpolator::base<T>>(new interpolator::linear<T>);
+				std::get<3>(m_type_vector) = std::unique_ptr<interpolator::base<T>>(new interpolator::allpass<T>);
+				std::get<4>(m_type_vector) = std::unique_ptr<interpolator::base<T>>(new interpolator::cosine<T>);
+				std::get<5>(m_type_vector) = std::unique_ptr<interpolator::base<T>>(new interpolator::cubic<T>);
+				std::get<6>(m_type_vector) = std::unique_ptr<interpolator::base<T>>(new interpolator::spline<T>);
+				std::get<7>(m_type_vector) = std::unique_ptr<interpolator::base<T>>(new interpolator::hermite<T>);
 				
 				m_which_type = static_cast<int>(first_type);
 			}
@@ -449,7 +450,7 @@ namespace c74 { namespace min { namespace lib {
 
 
 		private:
-			std::vector<interpolator::base<T>*> m_type_vector;    ///< vector with one instance of each interpolator type
+            std::array<std::unique_ptr<interpolator::base<T>>, std::size_t(type::type_count)> m_type_vector;    ///< vector with one instance of each interpolator type
 			int m_which_type;    ///< index within m_type_vector used for interpolation operator, stored to avoid repeat casting
 			static const int m_hermite_type
 				= static_cast<int>(type::hermite);    ///< index of the hermite interpolator, stored to avoid repeat casting
