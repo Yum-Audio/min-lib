@@ -37,10 +37,10 @@ namespace c74 { namespace min { namespace lib {
 			m_gain_buffer.resize(m_buffer_size);
 		}
 
-
+#if 0
 #pragma mark -
 #pragma mark attributes
-
+#endif 0
 
 		/// Set the bypass state.
 		/// @param	a_state	The new state of the limiter bypass.
