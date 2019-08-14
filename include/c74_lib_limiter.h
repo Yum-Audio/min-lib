@@ -182,10 +182,10 @@ namespace c74 { namespace min { namespace lib {
 			return m_release;
 		}
 
-
+#if 0
 #pragma mark -
 #pragma mark methods
-
+#endif
 
 		/// Reset the limiter history.
 
@@ -212,10 +212,10 @@ namespace c74 { namespace min { namespace lib {
 				m_recover *= 0.707;
 		}
 
-
+#if 0
 #pragma mark -
 #pragma mark audio
-
+#endif
 
 		/// Calculate n-samples for m-channels.
 		/// The number of channels at the input and output must match the channel count of the limiter.
