@@ -40,7 +40,7 @@ namespace c74 { namespace min { namespace lib {
 #if 0
 #pragma mark -
 #pragma mark attributes
-#endif 0
+#endif
 
 		/// Set the bypass state.
 		/// @param	a_state	The new state of the limiter bypass.
