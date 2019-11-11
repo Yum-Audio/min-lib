@@ -508,7 +508,7 @@ namespace c74 { namespace min { namespace lib { namespace easing {
 
 
 	/// Apply one of the standard easing functions to a number as formalized and popularized by Robert Penner.
-	/// @tparam	The type of number to use for the calculations (e.g. float, double, number, or sample).
+	/// @tparam	T		The type of number to use for the calculations (e.g. float, double, number, or sample).
 	/// @param	name	The easing function to apply as enumerated in the #easing::function enum.
 	///	@param	x		The value to feed as input into the easing function.
 	///	@return			The "eased" output.

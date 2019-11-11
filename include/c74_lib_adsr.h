@@ -86,7 +86,6 @@ namespace lib {
 
 		/// Set the attack slope of the envelope generator.
 		/// @param	attack_curve		The attack slope as a +/- percentage.
-		/// @param	sampling_frequency	The sampling frequency of the environment in hertz.
 
 		void attack_curve(number attack_curve) {
 			m_attack_exp = attack_curve;
@@ -105,7 +104,6 @@ namespace lib {
 
 		/// Set the decay slope of the envelope generator.
 		/// @param	decay_curve			The decay slope as a +/- percentage.
-		/// @param	sampling_frequency	The sampling frequency of the environment in hertz.
 
 		void decay_curve(number decay_curve) {
 			m_decay_exp = decay_curve;
@@ -124,8 +122,7 @@ namespace lib {
 
 		/// Set the release slope of the envelope generator.
 		/// @param	release_curve		The release slope as a +/- percentage.
-		/// @param	sampling_frequency	The sampling frequency of the environment in hertz.
-
+	
 		void release_curve(number release_curve) {
 			m_release_exp = release_curve;
 		}
