@@ -18,7 +18,7 @@
 }
 
 SCENARIO ("Using Linear Easing") {
-    
+
     // The following output was generated using the Octave code in EasingTargetOutput.m by NW
     c74::min::sample_vector reference = {
         0,
@@ -67,36 +67,36 @@ SCENARIO ("Using Linear Easing") {
         0.6825396825396826,
         0.6984126984126984,
         0.7142857142857143,
-        0.7301587301587301, 
-        0.746031746031746, 
-        0.7619047619047619, 
-        0.7777777777777778, 
-        0.7936507936507936, 
-        0.8095238095238095, 
-        0.8253968253968254, 
-        0.8412698412698413, 
-        0.8571428571428571, 
-        0.873015873015873, 
-        0.8888888888888888, 
-        0.9047619047619048, 
-        0.9206349206349206, 
-        0.9365079365079365, 
-        0.9523809523809523, 
-        0.9682539682539683, 
-        0.9841269841269841, 
+        0.7301587301587301,
+        0.746031746031746,
+        0.7619047619047619,
+        0.7777777777777778,
+        0.7936507936507936,
+        0.8095238095238095,
+        0.8253968253968254,
+        0.8412698412698413,
+        0.8571428571428571,
+        0.873015873015873,
+        0.8888888888888888,
+        0.9047619047619048,
+        0.9206349206349206,
+        0.9365079365079365,
+        0.9523809523809523,
+        0.9682539682539683,
+        0.9841269841269841,
         1
     };
-    
-	GIVEN ("A loop that generates input of evenly-spaced steps from 0.0 to 1.0"){
+
+    GIVEN ("A loop that generates input of evenly-spaced steps from 0.0 to 1.0"){
         THEN("The output matches an externally generated reference set.")
-        
-		EASING_TEST_LOOP(c74::min::lib::easing::linear, reference);
-	
-	}
+
+        EASING_TEST_LOOP(c74::min::lib::easing::linear, reference);
+
+    }
 }
 
 SCENARIO ("Using In Back Easing") {
-    
+
     // The following output was generated using the Octave code in EasingTargetOutput.m by NW
     c74::min::sample_vector reference = {
         0,
@@ -146,35 +146,35 @@ SCENARIO ("Using In Back Easing") {
         -0.226395859843127,
         -0.1940195720252691,
         -0.1581884739694183,
-        -0.1188454557001511, 
-        -0.07594199737734691, 
-        -0.02943837406346755, 
-        0.02069616820401338, 
-        0.07448326581330578, 
-        0.1319353211392744, 
-        0.1930554168582522, 
-        0.2578372615143961, 
-        0.3262651667375155, 
-        0.3983140564128485, 
-        0.4739495080024873, 
-        0.553127826116286, 
-        0.6357961483275298, 
-        0.7218925831255953, 
-        0.8113463797947321, 
-        0.9040781299051253, 
+        -0.1188454557001511,
+        -0.07594199737734691,
+        -0.02943837406346755,
+        0.02069616820401338,
+        0.07448326581330578,
+        0.1319353211392744,
+        0.1930554168582522,
+        0.2578372615143961,
+        0.3262651667375155,
+        0.3983140564128485,
+        0.4739495080024873,
+        0.553127826116286,
+        0.6357961483275298,
+        0.7218925831255953,
+        0.8113463797947321,
+        0.9040781299051253,
         0.9999999999999999
     };
-    
+
     GIVEN ("A loop that generates input of evenly-spaced steps from 0.0 to 1.0"){
         THEN("The output matches an externally generated reference set.")
-        
+
         EASING_TEST_LOOP(c74::min::lib::easing::in_back, reference);
-        
+
     }
 }
 
 SCENARIO ("Using In Out Back Easing") {
-    
+
     // The following output was generated using the Octave code in EasingTargetOutput.m by NW
     c74::min::sample_vector reference = {
         0,
@@ -223,36 +223,36 @@ SCENARIO ("Using In Out Back Easing") {
         1.161390996718619,
         1.176159478425294,
         1.18525637141055,
-        1.189153863021486, 
-        1.18836563451583, 
-        1.183439625611111, 
-        1.174950419736595, 
-        1.163491356704459, 
-        1.149666482303032, 
-        1.134082445703807, 
-        1.117340455553772, 
-        1.100028404200972, 
-        1.082713266696639, 
-        1.065933877070795, 
-        1.050194178945267, 
-        1.035957040899271, 
-        1.023638719223414, 
-        1.013604041886968, 
-        1.006162377811838, 
-        1.001564445016892, 
+        1.189153863021486,
+        1.18836563451583,
+        1.183439625611111,
+        1.174950419736595,
+        1.163491356704459,
+        1.149666482303032,
+        1.134082445703807,
+        1.117340455553772,
+        1.100028404200972,
+        1.082713266696639,
+        1.065933877070795,
+        1.050194178945267,
+        1.035957040899271,
+        1.023638719223414,
+        1.013604041886968,
+        1.006162377811838,
+        1.001564445016892,
         1
     };
-    
+
     GIVEN ("A loop that generates input of evenly-spaced steps from 0.0 to 1.0"){
         THEN("The output matches an externally generated reference set.")
-        
+
         EASING_TEST_LOOP(c74::min::lib::easing::in_out_back, reference);
-        
+
     }
 }
 
 SCENARIO ("Using Out Back Easing") {
-    
+
     // The following output was generated using the Octave code in EasingTargetOutput.m by NW
     c74::min::sample_vector reference = {
         1.110223024625157e-16,
@@ -301,36 +301,36 @@ SCENARIO ("Using Out Back Easing") {
         1.234680911107545,
         1.217439349198504,
         1.200056808401944,
-        1.182673605793479, 
-        1.165426533393279, 
-        1.148448427468403, 
-        1.13186775414159, 
-        1.115808212694268, 
-        1.100388357890533, 
-        1.085721242583776, 
-        1.071914081798542, 
-        1.059067939407465, 
-        1.047277438446828, 
-        1.036630496034814, 
-        1.027208083773936, 
-        1.019084014433942, 
-        1.012324755623677, 
-        1.006989271070478, 
-        1.003128890033784, 
-        1.000787205286156, 
+        1.182673605793479,
+        1.165426533393279,
+        1.148448427468403,
+        1.13186775414159,
+        1.115808212694268,
+        1.100388357890533,
+        1.085721242583776,
+        1.071914081798542,
+        1.059067939407465,
+        1.047277438446828,
+        1.036630496034814,
+        1.027208083773936,
+        1.019084014433942,
+        1.012324755623677,
+        1.006989271070478,
+        1.003128890033784,
+        1.000787205286156,
         1
     };
-    
+
     GIVEN ("A loop that generates input of evenly-spaced steps from 0.0 to 1.0"){
         THEN("The output matches an externally generated reference set.")
-        
+
         EASING_TEST_LOOP(c74::min::lib::easing::out_back, reference);
-        
+
     }
 }
 
 SCENARIO ("Using Out Bounce Easing") {
-    
+
     // The following output was generated using the Octave code in EasingTargetOutput.m by NW
     c74::min::sample_vector reference = {
         0,
@@ -380,35 +380,35 @@ SCENARIO ("Using Out Bounce Easing") {
         0.9123204837490539,
         0.9586734693877541,
         0.9940854642872861,
-        0.9651484601227374, 
-        0.9422918197750025, 
-        0.9255155432440763, 
-        0.9148196305299594, 
-        0.9102040816326538, 
-        0.9116688965521575, 
-        0.9192140752884708, 
-        0.9328396178415979, 
-        0.9525455242115335, 
-        0.9783317943982759, 
-        0.9951020408163274, 
-        0.9823129251700706, 
-        0.9749659863945599, 
-        0.9730612244897987, 
-        0.9765986394557835, 
-        0.9855782312925179, 
+        0.9651484601227374,
+        0.9422918197750025,
+        0.9255155432440763,
+        0.9148196305299594,
+        0.9102040816326538,
+        0.9116688965521575,
+        0.9192140752884708,
+        0.9328396178415979,
+        0.9525455242115335,
+        0.9783317943982759,
+        0.9951020408163274,
+        0.9823129251700706,
+        0.9749659863945599,
+        0.9730612244897987,
+        0.9765986394557835,
+        0.9855782312925179,
         1.000000000000002
     };
-    
+
     GIVEN ("A loop that generates input of evenly-spaced steps from 0.0 to 1.0"){
         THEN("The output matches an externally generated reference set.")
-        
+
         EASING_TEST_LOOP(c74::min::lib::easing::out_bounce, reference);
-        
+
     }
 }
 
 SCENARIO ("Using In Bounce Easing") {
-    
+
     // The following output was generated using the Octave code in EasingTargetOutput.m by NW
     c74::min::sample_vector reference = {
         -1.77635683940025e-15,
@@ -457,36 +457,36 @@ SCENARIO ("Using In Bounce Easing") {
         0.2378432854623331,
         0.3121535651297555,
         0.3826530612244898,
-        0.4493417737465354, 
-        0.5122197026958932, 
-        0.5712868480725621, 
-        0.6265432098765433, 
-        0.6779887881078357, 
-        0.7256235827664399, 
-        0.7694475938523556, 
-        0.8094608213655833, 
-        0.8456632653061223, 
-        0.8780549256739734, 
-        0.9066358024691357, 
-        0.93140589569161, 
-        0.9523652053413958, 
-        0.9695137314184933, 
-        0.9828514739229025, 
-        0.9923784328546233, 
-        0.9980946082136558, 
+        0.4493417737465354,
+        0.5122197026958932,
+        0.5712868480725621,
+        0.6265432098765433,
+        0.6779887881078357,
+        0.7256235827664399,
+        0.7694475938523556,
+        0.8094608213655833,
+        0.8456632653061223,
+        0.8780549256739734,
+        0.9066358024691357,
+        0.93140589569161,
+        0.9523652053413958,
+        0.9695137314184933,
+        0.9828514739229025,
+        0.9923784328546233,
+        0.9980946082136558,
         1
     };
-    
+
     GIVEN ("A loop that generates input of evenly-spaced steps from 0.0 to 1.0"){
         THEN("The output matches an externally generated reference set.")
-        
+
         EASING_TEST_LOOP(c74::min::lib::easing::in_bounce, reference);
-        
+
     }
 }
 
 SCENARIO ("Using In Out Bounce Easing") {
-    
+
     // The following output was generated using the Octave code in EasingTargetOutput.m by NW
     c74::min::sample_vector reference = {
         -8.881784197001252e-16,
@@ -536,35 +536,35 @@ SCENARIO ("Using In Out Bounce Easing") {
         0.9502362055933484,
         0.9119897959183674,
         0.8828892668178379,
-        0.8629346182917608, 
-        0.8521258503401359, 
-        0.8504629629629628, 
-        0.8579459561602412, 
-        0.8745748299319727, 
-        0.9003495842781555, 
-        0.9352702191987905, 
-        0.9793367346938771, 
-        0.9825742300613687, 
-        0.9627577716220377, 
-        0.9551020408163269, 
-        0.9596070376442363, 
-        0.9762727621057667, 
-        0.9975510204081646, 
-        0.9874829931972799, 
-        0.9882993197278926, 
+        0.8629346182917608,
+        0.8521258503401359,
+        0.8504629629629628,
+        0.8579459561602412,
+        0.8745748299319727,
+        0.9003495842781555,
+        0.9352702191987905,
+        0.9793367346938771,
+        0.9825742300613687,
+        0.9627577716220377,
+        0.9551020408163269,
+        0.9596070376442363,
+        0.9762727621057667,
+        0.9975510204081646,
+        0.9874829931972799,
+        0.9882993197278926,
         1.000000000000001
     };
-    
+
     GIVEN ("A loop that generates input of evenly-spaced steps from 0.0 to 1.0"){
         THEN("The output matches an externally generated reference set.")
-        
+
         EASING_TEST_LOOP(c74::min::lib::easing::in_out_bounce, reference);
-        
+
     }
 }
 
 SCENARIO ("Using In Circular Easing") {
-    
+
     // The following output was generated using the Octave code in EasingTargetOutput.m by NW
     c74::min::sample_vector reference = {
         0,
@@ -613,36 +613,36 @@ SCENARIO ("Using In Circular Easing") {
         0.2691514645573754,
         0.2843047417399684,
         0.3001457877762348,
-        0.3167224365069561, 
-        0.3340896202094276, 
-        0.3523109281554549, 
-        0.3714606389452911, 
-        0.3916264159766094, 
-        0.4129129520981927, 
-        0.4354470081340083, 
-        0.4593845598118603, 
-        0.4849212463622872, 
-        0.5123082064845329, 
-        0.5418771527091488, 
-        0.5740822900000402, 
-        0.6095754325000367, 
-        0.6493536185019917, 
-        0.6950893220270071, 
-        0.750031496063117, 
-        0.8225342875000163, 
+        0.3167224365069561,
+        0.3340896202094276,
+        0.3523109281554549,
+        0.3714606389452911,
+        0.3916264159766094,
+        0.4129129520981927,
+        0.4354470081340083,
+        0.4593845598118603,
+        0.4849212463622872,
+        0.5123082064845329,
+        0.5418771527091488,
+        0.5740822900000402,
+        0.6095754325000367,
+        0.6493536185019917,
+        0.6950893220270071,
+        0.750031496063117,
+        0.8225342875000163,
         1
     };
-    
+
     GIVEN ("A loop that generates input of evenly-spaced steps from 0.0 to 1.0"){
         THEN("The output matches an externally generated reference set.")
-        
+
         EASING_TEST_LOOP(c74::min::lib::easing::in_circular, reference);
-        
+
     }
 }
 
 SCENARIO ("Using Out Circular Easing") {
-    
+
     // The following output was generated using the Octave code in EasingTargetOutput.m by NW
     c74::min::sample_vector reference = {
         0,
@@ -691,36 +691,36 @@ SCENARIO ("Using Out Circular Easing") {
         0.9482715575392918,
         0.9534385662019813,
         0.9583148474999098,
-        0.9629048182922603, 
-        0.9672125547036269, 
-        0.9712418121129114, 
-        0.9749960430435691, 
-        0.9784784131696789, 
-        0.9816918156232526, 
-        0.9846388837632268, 
-        0.987322002545015, 
-        0.9897433186107869, 
-        0.991904749204317, 
-        0.9938079899999065, 
-        0.995454521922232, 
-        0.9968456170227037, 
-        0.997982343467819, 
-        0.9988655696858586, 
-        0.9994959677099152, 
-        0.9998740157475315, 
+        0.9629048182922603,
+        0.9672125547036269,
+        0.9712418121129114,
+        0.9749960430435691,
+        0.9784784131696789,
+        0.9816918156232526,
+        0.9846388837632268,
+        0.987322002545015,
+        0.9897433186107869,
+        0.991904749204317,
+        0.9938079899999065,
+        0.995454521922232,
+        0.9968456170227037,
+        0.997982343467819,
+        0.9988655696858586,
+        0.9994959677099152,
+        0.9998740157475315,
         1
     };
-    
+
     GIVEN ("A loop that generates input of evenly-spaced steps from 0.0 to 1.0"){
         THEN("The output matches an externally generated reference set.")
-        
+
         EASING_TEST_LOOP(c74::min::lib::easing::out_circular, reference);
-        
+
     }
 }
 
 SCENARIO ("Using In Out Circular Easing") {
-    
+
     // The following output was generated using the Octave code in EasingTargetOutput.m by NW
     c74::min::sample_vector reference = {
         0,
@@ -769,36 +769,36 @@ SCENARIO ("Using In Out Circular Easing") {
         0.8862886832900939,
         0.8988045881397179,
         0.9103259033241449,
-        0.9209343049579719, 
-        0.9306972555941313, 
-        0.9396710788718902, 
-        0.9479032082388084, 
-        0.9554338646159863, 
-        0.9622973294987524, 
-        0.9685229251792203, 
-        0.9741357787696459, 
-        0.979157423749955, 
-        0.9836062773518135, 
-        0.9874980215217846, 
-        0.9908459078116263, 
-        0.9936610012725076, 
-        0.9959523746021586, 
-        0.997727260961116, 
-        0.9989911717339095, 
-        0.9997479838549577, 
+        0.9209343049579719,
+        0.9306972555941313,
+        0.9396710788718902,
+        0.9479032082388084,
+        0.9554338646159863,
+        0.9622973294987524,
+        0.9685229251792203,
+        0.9741357787696459,
+        0.979157423749955,
+        0.9836062773518135,
+        0.9874980215217846,
+        0.9908459078116263,
+        0.9936610012725076,
+        0.9959523746021586,
+        0.997727260961116,
+        0.9989911717339095,
+        0.9997479838549577,
         1
     };
-    
+
     GIVEN ("A loop that generates input of evenly-spaced steps from 0.0 to 1.0"){
         THEN("The output matches an externally generated reference set.")
-        
+
         EASING_TEST_LOOP(c74::min::lib::easing::in_out_circular, reference);
-        
+
     }
 }
 
 SCENARIO ("Using In Cubic Easing") {
-    
+
     // The following output was generated using the Octave code in EasingTargetOutput.m by NW
     c74::min::sample_vector reference = {
         0,
@@ -847,36 +847,36 @@ SCENARIO ("Using In Cubic Easing") {
         0.3179682219742689,
         0.3406719536727095,
         0.3644314868804665,
-        0.3892708170863877, 
-        0.4152139397793215, 
-        0.4422848504481157, 
-        0.4705075445816187, 
-        0.4999060176686782, 
-        0.5305042651981428, 
-        0.5623262826588601, 
-        0.5953960655396785, 
-        0.629737609329446, 
-        0.6653749095170108, 
-        0.7023319615912208, 
-        0.7406327610409243, 
-        0.7803013033549692, 
-        0.8213615840222038, 
-        0.863837598531476, 
-        0.9077533423716341, 
-        0.9531328110315259, 
+        0.3892708170863877,
+        0.4152139397793215,
+        0.4422848504481157,
+        0.4705075445816187,
+        0.4999060176686782,
+        0.5305042651981428,
+        0.5623262826588601,
+        0.5953960655396785,
+        0.629737609329446,
+        0.6653749095170108,
+        0.7023319615912208,
+        0.7406327610409243,
+        0.7803013033549692,
+        0.8213615840222038,
+        0.863837598531476,
+        0.9077533423716341,
+        0.9531328110315259,
         1
     };
-    
+
     GIVEN ("A loop that generates input of evenly-spaced steps from 0.0 to 1.0"){
         THEN("The output matches an externally generated reference set.")
-        
+
         EASING_TEST_LOOP(c74::min::lib::easing::in_cubic, reference);
-        
+
     }
 }
 
 SCENARIO ("Using In Out Cubic Easing") {
-    
+
     // The following output was generated using the Octave code in EasingTargetOutput.m by NW
     c74::min::sample_vector reference = {
         0,
@@ -925,36 +925,36 @@ SCENARIO ("Using In Out Cubic Easing") {
         0.8720240594768184,
         0.8902766279939371,
         0.9067055393586005,
-        0.921406775526201, 
-        0.934476318452131, 
-        0.9460101500917827, 
-        0.9561042524005487, 
-        0.9648546073338212, 
-        0.9723571968469927, 
-        0.9787080028954557, 
-        0.9840030074346023, 
-        0.988338192419825, 
-        0.9918095398065164, 
-        0.9945130315500685, 
-        0.9965446496058741, 
-        0.9980003759293253, 
-        0.9989761924758146, 
-        0.9995680812007343, 
-        0.9998720240594768, 
-        0.9999840030074346, 
+        0.921406775526201,
+        0.934476318452131,
+        0.9460101500917827,
+        0.9561042524005487,
+        0.9648546073338212,
+        0.9723571968469927,
+        0.9787080028954557,
+        0.9840030074346023,
+        0.988338192419825,
+        0.9918095398065164,
+        0.9945130315500685,
+        0.9965446496058741,
+        0.9980003759293253,
+        0.9989761924758146,
+        0.9995680812007343,
+        0.9998720240594768,
+        0.9999840030074346,
         1
     };
-    
+
     GIVEN ("A loop that generates input of evenly-spaced steps from 0.0 to 1.0"){
         THEN("The output matches an externally generated reference set.")
-        
+
         EASING_TEST_LOOP(c74::min::lib::easing::in_out_cubic, reference);
-        
+
     }
 }
 
 SCENARIO ("Using Out Cubic Easing") {
-    
+
     // The following output was generated using the Octave code in EasingTargetOutput.m by NW
     c74::min::sample_vector reference = {
         0,
@@ -1003,36 +1003,36 @@ SCENARIO ("Using Out Cubic Easing") {
         0.9680060148692046,
         0.9725691569984842,
         0.9766763848396501,
-        0.9803516938815503, 
-        0.9836190796130327, 
-        0.9865025375229457, 
-        0.9890260631001372, 
-        0.9912136518334553, 
-        0.9930892992117482, 
-        0.9946770007238639, 
-        0.9960007518586506, 
-        0.9970845481049563, 
-        0.9979523849516291, 
-        0.9986282578875172, 
-        0.9991361624014685, 
-        0.9995000939823313, 
-        0.9997440481189537, 
-        0.9998920203001835, 
-        0.9999680060148692, 
-        0.9999960007518587, 
+        0.9803516938815503,
+        0.9836190796130327,
+        0.9865025375229457,
+        0.9890260631001372,
+        0.9912136518334553,
+        0.9930892992117482,
+        0.9946770007238639,
+        0.9960007518586506,
+        0.9970845481049563,
+        0.9979523849516291,
+        0.9986282578875172,
+        0.9991361624014685,
+        0.9995000939823313,
+        0.9997440481189537,
+        0.9998920203001835,
+        0.9999680060148692,
+        0.9999960007518587,
         1
     };
-    
+
     GIVEN ("A loop that generates input of evenly-spaced steps from 0.0 to 1.0"){
         THEN("The output matches an externally generated reference set.")
-        
+
         EASING_TEST_LOOP(c74::min::lib::easing::out_cubic, reference);
-        
+
     }
 }
 
 SCENARIO ("Using In Elastic Easing") {
-    
+
     // The following output was generated using the Octave code in EasingTargetOutput.m by NW
     c74::min::sample_vector reference = {
         0,
@@ -1100,17 +1100,17 @@ SCENARIO ("Using In Elastic Easing") {
         0.8491658360389701,
         1
     };
-    
+
     GIVEN ("A loop that generates input of evenly-spaced steps from 0.0 to 1.0"){
         THEN("The output matches an externally generated reference set.")
-        
+
         EASING_TEST_LOOP(c74::min::lib::easing::in_elastic, reference);
-        
+
     }
 }
 
 SCENARIO ("Using Out Elastic Easing") {
-    
+
     // The following output was generated using the Octave code in EasingTargetOutput.m by NW
     c74::min::sample_vector reference = {
         0,
@@ -1178,17 +1178,17 @@ SCENARIO ("Using Out Elastic Easing") {
         0.9996528047176221,
         1
     };
-    
+
     GIVEN ("A loop that generates input of evenly-spaced steps from 0.0 to 1.0"){
         THEN("The output matches an externally generated reference set.")
-        
+
         EASING_TEST_LOOP(c74::min::lib::easing::out_elastic, reference);
-        
+
     }
 }
 
 SCENARIO ("Using In Out Elastic Easing") {
-    
+
     // The following output was generated using the Octave code in EasingTargetOutput.m by NW
     c74::min::sample_vector reference = {
         0,
@@ -1256,17 +1256,17 @@ SCENARIO ("Using In Out Elastic Easing") {
         0.9996326065523159,
         1
     };
-    
+
     GIVEN ("A loop that generates input of evenly-spaced steps from 0.0 to 1.0"){
         THEN("The output matches an externally generated reference set.")
-        
+
         EASING_TEST_LOOP(c74::min::lib::easing::in_out_elastic, reference);
-        
+
     }
 }
 
 SCENARIO ("Using In Exponential Easing") {
-    
+
     // The following output was generated using the Octave code in EasingTargetOutput.m by NW
     c74::min::sample_vector reference = {
         0,
@@ -1334,17 +1334,17 @@ SCENARIO ("Using In Exponential Easing") {
         0.8958132070696182,
         1
     };
-    
+
     GIVEN ("A loop that generates input of evenly-spaced steps from 0.0 to 1.0"){
         THEN("The output matches an externally generated reference set.")
-        
+
         EASING_TEST_LOOP(c74::min::lib::easing::in_exponential, reference);
-        
+
     }
 }
 
 SCENARIO ("Using Out Exponential Easing") {
-    
+
     // The following output was generated using the Octave code in EasingTargetOutput.m by NW
     c74::min::sample_vector reference = {
         0,
@@ -1412,17 +1412,17 @@ SCENARIO ("Using Out Exponential Easing") {
         0.9989098592292532,
         1
     };
-    
+
     GIVEN ("A loop that generates input of evenly-spaced steps from 0.0 to 1.0"){
         THEN("The output matches an externally generated reference set.")
-        
+
         EASING_TEST_LOOP(c74::min::lib::easing::out_exponential, reference);
-        
+
     }
 }
 
 SCENARIO ("Using In Out Exponential Easing") {
-    
+
     // The following output was generated using the Octave code in EasingTargetOutput.m by NW
     c74::min::sample_vector reference = {
         0,
@@ -1490,17 +1490,17 @@ SCENARIO ("Using In Out Exponential Easing") {
         0.9993915356671773,
         1
     };
-    
+
     GIVEN ("A loop that generates input of evenly-spaced steps from 0.0 to 1.0"){
         THEN("The output matches an externally generated reference set.")
-        
+
         EASING_TEST_LOOP(c74::min::lib::easing::in_out_exponential, reference);
-        
+
     }
 }
 
 SCENARIO ("Using In Quadratic Easing") {
-    
+
     // The following output was generated using the Octave code in EasingTargetOutput.m by NW
     c74::min::sample_vector reference = {
         0,
@@ -1568,17 +1568,17 @@ SCENARIO ("Using In Quadratic Easing") {
         0.9685059208868732,
         1
     };
-    
+
     GIVEN ("A loop that generates input of evenly-spaced steps from 0.0 to 1.0"){
         THEN("The output matches an externally generated reference set.")
-        
+
         EASING_TEST_LOOP(c74::min::lib::easing::in_quadratic, reference);
-        
+
     }
 }
 
 SCENARIO ("Using Out Quadratic Easing") {
-    
+
     // The following output was generated using the Octave code in EasingTargetOutput.m by NW
     c74::min::sample_vector reference = {
         0,
@@ -1646,17 +1646,17 @@ SCENARIO ("Using Out Quadratic Easing") {
         0.9997480473670949,
         1
     };
-    
+
     GIVEN ("A loop that generates input of evenly-spaced steps from 0.0 to 1.0"){
         THEN("The output matches an externally generated reference set.")
-        
+
         EASING_TEST_LOOP(c74::min::lib::easing::out_quadratic, reference);
-        
+
     }
 }
 
 SCENARIO ("Using In Out Quadratic Easing") {
-    
+
     // The following output was generated using the Octave code in EasingTargetOutput.m by NW
     c74::min::sample_vector reference = {
         0,
@@ -1724,17 +1724,17 @@ SCENARIO ("Using In Out Quadratic Easing") {
         0.99949609473419,
         1
     };
-    
+
     GIVEN ("A loop that generates input of evenly-spaced steps from 0.0 to 1.0"){
         THEN("The output matches an externally generated reference set.")
-        
+
         EASING_TEST_LOOP(c74::min::lib::easing::in_out_quadratic, reference);
-        
+
     }
 }
 
 SCENARIO ("Using In Quartic Easing") {
-    
+
     // The following output was generated using the Octave code in EasingTargetOutput.m by NW
     c74::min::sample_vector reference = {
         0,
@@ -1802,17 +1802,17 @@ SCENARIO ("Using In Quartic Easing") {
         0.9380037187929302,
         1
     };
-    
+
     GIVEN ("A loop that generates input of evenly-spaced steps from 0.0 to 1.0"){
         THEN("The output matches an externally generated reference set.")
-        
+
         EASING_TEST_LOOP(c74::min::lib::easing::in_quartic, reference);
-        
+
     }
 }
 
 SCENARIO ("Using Out Quartic Easing") {
-    
+
     // The following output was generated using the Octave code in EasingTargetOutput.m by NW
     c74::min::sample_vector reference = {
         0,
@@ -1880,17 +1880,17 @@ SCENARIO ("Using Out Quartic Easing") {
         0.9999999365198707,
         1
     };
-    
+
     GIVEN ("A loop that generates input of evenly-spaced steps from 0.0 to 1.0"){
         THEN("The output matches an externally generated reference set.")
-        
+
         EASING_TEST_LOOP(c74::min::lib::easing::out_quartic, reference);
-        
+
     }
 }
 
 SCENARIO ("Using In Out Quartic Easing") {
-    
+
     // The following output was generated using the Octave code in EasingTargetOutput.m by NW
     c74::min::sample_vector reference = {
         0,
@@ -1958,17 +1958,17 @@ SCENARIO ("Using In Out Quartic Easing") {
         0.9999994921589662,
         1
     };
-    
+
     GIVEN ("A loop that generates input of evenly-spaced steps from 0.0 to 1.0"){
         THEN("The output matches an externally generated reference set.")
-        
+
         EASING_TEST_LOOP(c74::min::lib::easing::in_out_quartic, reference);
-        
+
     }
 }
 
 SCENARIO ("Using In Quintic Easing") {
-    
+
     // The following output was generated using the Octave code in EasingTargetOutput.m by NW
     c74::min::sample_vector reference = {
         0,
@@ -2036,17 +2036,17 @@ SCENARIO ("Using In Quintic Easing") {
         0.923114770875582,
         1
     };
-    
+
     GIVEN ("A loop that generates input of evenly-spaced steps from 0.0 to 1.0"){
         THEN("The output matches an externally generated reference set.")
-        
+
         EASING_TEST_LOOP(c74::min::lib::easing::in_quintic, reference);
-        
+
     }
 }
 
 SCENARIO ("Using Out Quintic Easing") {
-    
+
     // The following output was generated using the Octave code in EasingTargetOutput.m by NW
     c74::min::sample_vector reference = {
         0,
@@ -2114,17 +2114,17 @@ SCENARIO ("Using Out Quintic Easing") {
         0.9999999989923789,
         1
     };
-    
+
     GIVEN ("A loop that generates input of evenly-spaced steps from 0.0 to 1.0"){
         THEN("The output matches an externally generated reference set.")
-        
+
         EASING_TEST_LOOP(c74::min::lib::easing::out_quintic, reference);
-        
+
     }
 }
 
 SCENARIO ("Using In Out Quintic Easing") {
-    
+
     // The following output was generated using the Octave code in EasingTargetOutput.m by NW
     c74::min::sample_vector reference = {
         0,
@@ -2192,17 +2192,17 @@ SCENARIO ("Using In Out Quintic Easing") {
         0.9999999838780624,
         1
     };
-    
+
     GIVEN ("A loop that generates input of evenly-spaced steps from 0.0 to 1.0"){
         THEN("The output matches an externally generated reference set.")
-        
+
         EASING_TEST_LOOP(c74::min::lib::easing::in_out_quintic, reference);
-        
+
     }
 }
 
 SCENARIO ("Using In Sine Easing") {
-    
+
     // The following output was generated using the Octave code in EasingTargetOutput.m by NW
     c74::min::sample_vector reference = {
         0,
@@ -2270,17 +2270,17 @@ SCENARIO ("Using In Sine Easing") {
         0.9750693082619271,
         1
     };
-    
+
     GIVEN ("A loop that generates input of evenly-spaced steps from 0.0 to 1.0"){
         THEN("The output matches an externally generated reference set.")
-        
+
         EASING_TEST_LOOP(c74::min::lib::easing::in_sine, reference);
-        
+
     }
 }
 
 SCENARIO ("Using Out Sine Easing") {
-    
+
     // The following output was generated using the Octave code in EasingTargetOutput.m by NW
     c74::min::sample_vector reference = {
         0,
@@ -2348,17 +2348,17 @@ SCENARIO ("Using Out Sine Easing") {
         0.9996891820008162,
         1
     };
-    
+
     GIVEN ("A loop that generates input of evenly-spaced steps from 0.0 to 1.0"){
         THEN("The output matches an externally generated reference set.")
-        
+
         EASING_TEST_LOOP(c74::min::lib::easing::out_sine, reference);
-        
+
     }
 }
 
 SCENARIO ("Using In Out Sine Easing") {
-    
+
     // The following output was generated using the Octave code in EasingTargetOutput.m by NW
     c74::min::sample_vector reference = {
         0,
@@ -2426,11 +2426,11 @@ SCENARIO ("Using In Out Sine Easing") {
         0.9993784606094611,
         1
     };
-    
+
     GIVEN ("A loop that generates input of evenly-spaced steps from 0.0 to 1.0"){
         THEN("The output matches an externally generated reference set.")
-        
+
         EASING_TEST_LOOP(c74::min::lib::easing::in_out_sine, reference);
-        
+
     }
 }

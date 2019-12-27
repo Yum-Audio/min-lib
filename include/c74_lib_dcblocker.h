@@ -11,31 +11,31 @@
 namespace c74 { namespace min { namespace lib {
 
 
-	/// one-channel dc-blocking filter
+    /// one-channel dc-blocking filter
 
-	class dcblocker {
-	public:
-		/// Clear the filter's history
+    class dcblocker {
+    public:
+        /// Clear the filter's history
 
-		void clear() {
-			x_1 = y_1 = 0.0;
-		}
+        void clear() {
+            x_1 = y_1 = 0.0;
+        }
 
 
-		/// Calculate one sample.
-		///	@return		Calculated sample
+        /// Calculate one sample.
+        ///	@return		Calculated sample
 
-		sample operator()(sample x) {
-			auto y = x - x_1 + y_1 * 0.9997;
-			y_1    = y;
-			x_1    = x;
-			return y;
-		}
+        sample operator()(sample x) {
+            auto y = x - x_1 + y_1 * 0.9997;
+            y_1    = y;
+            x_1    = x;
+            return y;
+        }
 
-	private:
-		sample x_1{};    ///< feedforward history
-		sample y_1{};    ///< feedback history
-	};
+    private:
+        sample x_1{};    ///< feedforward history
+        sample y_1{};    ///< feedback history
+    };
 
 
 }}}    // namespace c74::min::lib
