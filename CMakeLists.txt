@@ -1,13 +1,13 @@
 # Copyright 2018 The Min-Lib Authors. All rights reserved.
 # Use of this source code is governed by the MIT License found in the License.md file.
 
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.10)
 project(MinLib)
 
 
 if (${CMAKE_GENERATOR} MATCHES "Xcode")
- 		if (${XCODE_VERSION} VERSION_LESS 9)
-  			message(STATUS "Xcode 9 is required. Please install from the Mac App Store.")
+ 		if (${XCODE_VERSION} VERSION_LESS 10)
+  			message(STATUS "Xcode 10 is required. Please install from the Mac App Store.")
 			return ()
 		endif ()
 endif ()
