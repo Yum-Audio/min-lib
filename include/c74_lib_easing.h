@@ -5,7 +5,7 @@
 
 #pragma once
 
-namespace c74 { namespace min { namespace lib { namespace easing {
+namespace c74::min::lib::easing {
 
 
     /// The "linear" easing function as formalized and popularized by Robert Penner.
@@ -585,4 +585,4 @@ namespace c74 { namespace min { namespace lib { namespace easing {
     }
 
 
-}}}}    // namespace c74::min::lib::easing
+}    // namespace c74::min::lib::easing

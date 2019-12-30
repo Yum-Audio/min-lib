@@ -8,7 +8,7 @@
 #include "c74_min_api.h"
 
 
-namespace c74 { namespace min { namespace lib {
+namespace c74::min::lib {
 
 
     ///	Lookahead limiter for n-channels of audio.
@@ -334,4 +334,4 @@ namespace c74 { namespace min { namespace lib {
         sample_vector						m_gain_buffer;
     };
 
-}}}    // namespace c74::min::lib
+}    // namespace c74::min::lib

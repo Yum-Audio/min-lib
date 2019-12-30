@@ -7,9 +7,9 @@
 
 #include "c74_lib_delay.h"
 
-namespace c74 { namespace min { namespace lib {
+namespace c74::min::lib {
 
-
+    
     ///	A single-channel generalized allpass filter.
 
     class allpass {
@@ -135,4 +135,4 @@ namespace c74 { namespace min { namespace lib {
     };
 
 
-}}}    // namespace c74::min::lib
+}    // namespace c74::min::lib

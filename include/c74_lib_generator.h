@@ -6,7 +6,7 @@
 #pragma once
 
 
-namespace c74 { namespace min { namespace lib {
+namespace c74::min::lib {
 
     /// Defines several functions for use with <a href="http://en.cppreference.com/w/cpp/algorithm/generate">std::generate</a> to fill
     /// vectors with common shapes used in computer sound.
@@ -382,4 +382,4 @@ namespace c74 { namespace min { namespace lib {
         };
 
     }    // namespace generator
-}}}      // namespace c74::min::lib
+}      // namespace c74::min::lib

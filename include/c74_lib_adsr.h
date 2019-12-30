@@ -6,9 +6,8 @@
 
 #pragma once
 
-namespace c74 {
-namespace min {
-namespace lib {
+namespace c74::min::lib {
+    
 
     ///	Generate an <a href="https://en.wikipedia.org/wiki/Synthesizer#Attack_Decay_Sustain_Release_.28ADSR.29_envelope">ADSR</a> envelope.
 
@@ -238,4 +237,5 @@ namespace lib {
         }
     };
 
-}}}  // namespace c74::min::lib
+    
+}  // namespace c74::min::lib

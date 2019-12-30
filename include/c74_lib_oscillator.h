@@ -8,7 +8,7 @@
 const int k_total_padding = 8;
 const int k_half_padding = k_total_padding / 2;
 
-namespace c74 { namespace min { namespace lib {
+namespace c74::min::lib {
 
     /// Generate basic <a href="https://en.wikipedia.org/wiki/Waveform">waveforms</a> using a single-cycle
     /// <a href="https://en.wikipedia.org/wiki/Wavetable_synthesis">wavetable</a>
@@ -116,4 +116,4 @@ namespace c74 { namespace min { namespace lib {
         interpolator::cubic<>   m_interpolator{};    ///< The interpolator instance used to produce interpolated output.
     };
 
-}}}    // namespace c74::min::lib
+}    // namespace c74::min::lib

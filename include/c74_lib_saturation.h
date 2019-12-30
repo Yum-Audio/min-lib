@@ -7,8 +7,7 @@
 
 #include "c74_min_api.h"
 
-
-namespace c74 { namespace min { namespace lib {
+namespace c74::min::lib {
 
 
     ///	A single-channel soft-saturation/distortion effect.
@@ -78,4 +77,4 @@ namespace c74 { namespace min { namespace lib {
     };
 
 
-}}}    // namespace c74::min::lib
+}    // namespace c74::min::lib

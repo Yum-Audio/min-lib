@@ -7,10 +7,9 @@
 
 #include "c74_min_api.h"
 
+namespace c74::min::lib {
 
-namespace c74 { namespace min { namespace lib {
-
-
+    
     /// one-channel dc-blocking filter
 
     class dcblocker {
@@ -38,4 +37,4 @@ namespace c74 { namespace min { namespace lib {
     };
 
 
-}}}    // namespace c74::min::lib
+}   // namespace c74::min::lib

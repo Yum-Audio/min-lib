@@ -6,7 +6,7 @@
 #pragma once
 
 
-namespace c74 { namespace min { namespace lib {
+namespace c74::min::lib {
 
 
     ///	Single-channel, basic <a href="https://en.wikipedia.org/wiki/Low-pass_filter">low-pass filter</a>.
@@ -80,4 +80,4 @@ namespace c74 { namespace min { namespace lib {
         sample y_1{};       ///< previous output sample
     };
 
-}}}    // namespace c74::min::lib
+}    // namespace c74::min::lib

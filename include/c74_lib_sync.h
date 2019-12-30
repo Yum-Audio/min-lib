@@ -5,7 +5,7 @@
 
 #pragma once
 
-namespace c74 { namespace min { namespace lib {
+namespace c74::min::lib {
 
     ///	Generate a non-bandlimited <a href="https://en.wikipedia.org/wiki/Sawtooth_wave">sawtooth wave</a> oscillator (a phasor~ in MSP
     ///parlance).
@@ -71,4 +71,4 @@ namespace c74 { namespace min { namespace lib {
     };
 
 
-}}}    // namespace c74::min::lib
+}    // namespace c74::min::lib

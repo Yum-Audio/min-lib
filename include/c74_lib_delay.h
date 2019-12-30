@@ -5,8 +5,7 @@
 
 #pragma once
 
-
-namespace c74 { namespace min { namespace lib {
+namespace c74::min::lib {
 
 
     ///	A single-channel interpolating delay line.
@@ -156,4 +155,4 @@ namespace c74 { namespace min { namespace lib {
     };
 
 
-}}}    // namespace c74::min::lib
+}    // namespace c74::min::lib

@@ -6,11 +6,10 @@
 #pragma once
 
 #include <thread>
-//#include <cassert>
 
-namespace c74 { namespace min { namespace lib {
+namespace c74::min::lib {
 
-
+    
     ///	A generic circular buffer designed specifically for access from a single thread.
     ///
     ///	Allows items of a single datatype to be written into a vector that wraps around to the beginning whenever the end is exceeded.
@@ -248,4 +247,4 @@ namespace c74 { namespace min { namespace lib {
     };
 
 
-}}}    // namespace c74::min::lib
+}    // namespace c74::min::lib

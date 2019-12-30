@@ -12,7 +12,7 @@
 #define MIN_CONSTEXPR
 #endif
 
-namespace c74 { namespace min { namespace lib {
+namespace c74::min::lib {
 
     /// Defines several methods for <a href="http://en.wikipedia.org/wiki/Interpolation">interpolating</a> between discrete data points such
     /// as those found in an array or matrix. These methods are commonly used in digital audio whenever we alter the rate at which a signal
@@ -457,4 +457,4 @@ namespace c74 { namespace min { namespace lib {
         };
 
     }    // namespace interpolator
-}}}      // namespace c74::min::lib
+}      // namespace c74::min::lib

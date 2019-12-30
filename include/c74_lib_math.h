@@ -8,7 +8,7 @@
 #include <random>
 #include <numeric>
 
-namespace c74 { namespace min { namespace lib { namespace math {
+namespace c74::min::lib::math {
 
 
     /// Generate a random number.
@@ -67,4 +67,4 @@ namespace c74 { namespace min { namespace lib { namespace math {
     }
 
 
-}}}}    // namespace c74::min::lib::math
+}    // namespace c74::min::lib::math

@@ -6,7 +6,7 @@
 #pragma once
 
 
-namespace c74 { namespace min { namespace lib { namespace filters {
+namespace c74::min::lib::filters {
 
 
     /// Utility: generate an impulse response from a set of coefficients
@@ -43,4 +43,4 @@ namespace c74 { namespace min { namespace lib { namespace filters {
     }
 
 
-}}}}    // namespace c74::min::lib::filters
+}    // namespace c74::min::lib::filters
