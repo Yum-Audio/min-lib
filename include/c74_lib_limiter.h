@@ -324,8 +324,8 @@ namespace c74::min::lib {
         number								m_linear_postamp	{1.0};
         number								m_threshold			{0.0};		// in db
         number								m_linear_threshold	{1.0};
-        number								m_release			{1000.0};	// in ms
-        number								m_recover;
+        number								m_release	 		{1000.0};	// in ms
+		number                              m_recover {0.0};
         number								m_last				{0.0};
         int									m_lookahead			{100};		// in samples
         number								m_lookahead_inv		{1/100};

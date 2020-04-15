@@ -149,7 +149,7 @@ namespace c74::min::lib {
         ///	@return		Calculated sample
 
         sample operator()() {
-            sample output;
+			sample output {};
 
             switch (m_state) {
                 case adsr_state::attack:

@@ -25,18 +25,20 @@ namespace c74::min::lib::filters {
 
         for (int n = 0; n < N; n++) {
             for (auto i = 0; i < a.size(); i++) {
-                if (n - i < 0)
+				auto j = n - i;
+                if (j < 0)
                     y[n] += 0.0;
                 else
-                    y[n] += (a[i] * x[n - i]);
+                    y[n] += (a[i] * x[j]);
             }
 
             // ignore b[0] and assume it is normalized to 1.0
             for (auto i = 1; i < b.size(); i++) {
-                if (n - i < 0)
+				auto j = n - i;
+                if (j < 0)
                     y[n] -= 0.0;
                 else
-                    y[n] -= (b[i] * y[n - i]);
+                    y[n] -= (b[i] * y[j]);
             }
         }
         return y;
