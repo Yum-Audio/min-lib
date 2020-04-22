@@ -203,6 +203,7 @@ namespace c74::min::lib {
                         else
                             m_state = adsr_state::release;
                         m_index = 0;
+                        m_release_current = 0;
                     }
                     else
                         output = m_decay_exp(m_decay_current) * (m_sustain_cached - m_peak_cached) + m_peak_cached;
