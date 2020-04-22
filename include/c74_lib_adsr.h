@@ -216,6 +216,7 @@ namespace c74::min::lib {
                     if (m_index >= m_release_step_count) {
                         output = m_end_cached;
                         m_state = adsr_state::inactive;
+                        m_active = false;
                     }
                     else
                         output = m_release_exp(m_release_current) * (m_end_cached - m_sustain_cached) + m_sustain_cached;
