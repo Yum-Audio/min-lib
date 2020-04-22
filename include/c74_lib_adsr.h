@@ -14,6 +14,15 @@ namespace c74::min::lib {
     class adsr {
     public:
 
+        enum class adsr_state {
+            inactive,
+            attack,
+            decay,
+            sustain,
+            release
+        };
+
+
         class slope {
             const int k_power_multiplier = 5; // higher number yields more extreme curves
         public:
@@ -44,6 +53,21 @@ namespace c74::min::lib {
             number	m_exp		{ 1.0 };
             bool	m_is_linear	{ true };
         };
+
+
+        enum class envelope_mode {
+            adsr,
+            adr,
+            enum_count
+        };
+
+        void mode(envelope_mode mode_value) {
+            m_envelope_mode = mode_value;
+        }
+
+        envelope_mode mode() {
+            return m_envelope_mode;
+        }
 
 
         sample active() {
@@ -145,11 +169,16 @@ namespace c74::min::lib {
         }
 
 
+        adsr_state state() {
+            return m_state;
+        }
+
+
         /// Calculate one sample.
         ///	@return		Calculated sample
 
         sample operator()() {
-			sample output {};
+            sample output;
 
             switch (m_state) {
                 case adsr_state::attack:
@@ -169,7 +198,10 @@ namespace c74::min::lib {
                     ++m_index;
                     if (m_index == m_decay_step_count) {
                         output = m_sustain_cached;
-                        m_state = adsr_state::sustain;
+                        if (m_envelope_mode == envelope_mode::adsr)
+                            m_state = adsr_state::sustain;
+                        else
+                            m_state = adsr_state::release;
                         m_index = 0;
                     }
                     else
@@ -218,16 +250,10 @@ namespace c74::min::lib {
 
         int	m_index { 0xFFFFFF };
 
-        enum class adsr_state {
-            inactive,
-            attack,
-            decay,
-            sustain,
-            release
-        };
         adsr_state m_state { adsr_state::inactive };
 
-        bool	m_active		{ false };
+        bool	        m_active { false };
+        envelope_mode   m_envelope_mode { envelope_mode::adsr };
 
 
         void recalc() {
