@@ -246,7 +246,7 @@ namespace c74::min::lib {
                     // Analysis
 
                     m_lookahead_buffers[channel][m_lookahead_index] = v * m_linear_postamp;
-                    v                                               = fabs(v);
+                    v = fabs(v);
                     if (v > hot_sample)
                         hot_sample = v;
                 }
