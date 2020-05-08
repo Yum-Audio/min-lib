@@ -35,6 +35,7 @@ namespace c74::min::lib {
             for (auto& buffer : m_lookahead_buffers)
                 buffer.resize(m_buffer_size);
             m_gain_buffer.resize(m_buffer_size);
+            clear();
         }
 
 #if 0
