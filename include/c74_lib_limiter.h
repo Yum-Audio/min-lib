@@ -259,9 +259,6 @@ namespace c74::min::lib {
                     else
                         v = m_last + m_recover;
                 }
-
-                if (v > m_linear_threshold)
-                    v = m_linear_threshold;
                 m_gain_buffer[m_lookahead_index] = v;
 
                 int lookahead_playback = m_lookahead_index - lookahead;
