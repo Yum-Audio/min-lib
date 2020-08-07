@@ -161,6 +161,11 @@ namespace c74::min::lib {
         }
 
 
+        void return_to_zero(bool rtz) {
+            m_return_to_zero = rtz;
+        }
+
+
         void trigger(bool active) {
             if (active != m_active) {
                 m_active = active;
@@ -238,12 +243,54 @@ namespace c74::min::lib {
                         output = m_release_exp(m_release_current) * (m_end_cached - m_sustain_cached) + m_sustain_cached;
                     break;
                 case adsr_state::retrigger:
-                    ++m_index;
-                    output = m_retrigger_start - (((m_retrigger_start - m_end_cached) / m_retrigger_step_count) * m_index);
-                    if (m_index >= m_retrigger_step_count) {
-                        m_state = adsr_state::attack;
-                        m_index = 0;
-                        m_attack_current = 0.0;
+                    if (m_return_to_zero) {
+                        ++m_index;
+                        output = m_retrigger_start - (((m_retrigger_start - m_end_cached) / m_retrigger_step_count) * m_index);
+                        if (m_index >= m_retrigger_step_count) {
+                            m_state = adsr_state::attack;
+                            m_index = 0;
+                            m_attack_current = 0.0;
+                        }
+                    }
+                    else {
+                        if (m_return_to_zero) {
+                            m_state = adsr_state::attack;
+                            m_index = 0;
+                            m_attack_current = 0.0;
+                            output = m_initial_cached;
+                        }
+                        else {
+                            // we aren't returning to zero -- instead starting in the middle of the attack ftom the value where already are
+
+                            number attack_current {};
+                            number attack_curved {};
+
+                            bool was_below { false };
+                            if (m_peak_cached > m_initial_cached)
+                                was_below = true;
+                            bool is_below;
+                            bool found {};
+
+                            for (auto i=0; i<m_attack_step_count; ++i) {
+                                attack_current += m_attack_step;
+                                attack_curved = m_attack_exp(attack_current) * (m_peak_cached - m_initial_cached) + m_initial_cached;
+                                is_below = attack_curved < m_last_output;
+                                if (is_below != was_below) { // we found the position from which to retrigger
+                                    m_state = adsr_state::attack;
+                                    m_index = i;
+                                    m_attack_current = attack_current;
+                                    output = m_last_output;
+                                    found = true;
+                                }
+                            }
+
+                            if (!found) { // so return to zero
+                                m_state = adsr_state::attack;
+                                m_index = 0;
+                                m_attack_current = 0.0;
+                                output = m_initial_cached;
+                            }
+                        }
                     }
                     break;
                 case adsr_state::inactive:
@@ -284,6 +331,7 @@ namespace c74::min::lib {
         sample          m_last_output {};
         sample          m_retrigger_start {};
         int             m_retrigger_step_count {};
+        bool            m_return_to_zero { true };
 
         void recalc() {
             m_attack_step = 1.0 / m_attack_step_count;
