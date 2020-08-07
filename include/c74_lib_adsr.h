@@ -103,9 +103,7 @@ namespace c74::min::lib {
         /// @param	sampling_frequency	The sampling frequency of the environment in hertz.
 
         void attack(number attack_ms, number sampling_frequency) {
-            m_attack_step_count = static_cast<int>( (attack_ms / 1000.0) * sampling_frequency );
-            m_attack_step_count = std::max(m_attack_step_count, 1);
-            recalc();
+            m_attack_new = static_cast<int>( (attack_ms / 1000.0) * sampling_frequency );
         }
 
 
@@ -122,8 +120,7 @@ namespace c74::min::lib {
         /// @param	sampling_frequency	The sampling frequency of the environment in hertz.
 
         void decay(number decay_ms, number sampling_frequency) {
-            m_decay_step_count = static_cast<int>( (decay_ms / 1000.0) * sampling_frequency );
-            recalc();
+            m_decay_new = static_cast<int>( (decay_ms / 1000.0) * sampling_frequency );
         }
 
 
@@ -140,8 +137,7 @@ namespace c74::min::lib {
         /// @param	sampling_frequency	The sampling frequency of the environment in hertz.
 
         void release(number release_ms, number sampling_frequency) {
-            m_release_step_count = static_cast<int>( (release_ms / 1000.0) * sampling_frequency );
-            recalc();
+            m_release_new = static_cast<int>( (release_ms / 1000.0) * sampling_frequency );
         }
 
 
@@ -195,6 +191,8 @@ namespace c74::min::lib {
                 m_index = 0;
                 m_retrigger_start = m_last_output;
             }
+
+            recalc();
         }
 
 
@@ -322,16 +320,19 @@ namespace c74::min::lib {
         }
 
     private:
+        int     m_attack_new;
         slope	m_attack_exp;
         number	m_attack_step;
         int		m_attack_step_count;
         sample	m_attack_current;
 
+        int     m_decay_new;
         slope	m_decay_exp;
         number	m_decay_step;
         int		m_decay_step_count;
         sample 	m_decay_current;
 
+        int     m_release_new;
         slope	m_release_exp;
         number	m_release_step;
         int		m_release_step_count;
@@ -354,6 +355,10 @@ namespace c74::min::lib {
         bool            m_return_to_zero { true };
 
         void recalc() {
+            m_attack_step_count = std::max(m_attack_new, 1);
+            m_decay_step_count = std::max(m_decay_new, 1);
+            m_release_step_count = std::max(m_release_new, 1);
+
             m_attack_step = 1.0 / m_attack_step_count;
             m_decay_step = 1.0 / m_decay_step_count;
             m_release_step = 1.0 / m_release_step_count;
