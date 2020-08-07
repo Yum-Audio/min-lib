@@ -20,7 +20,8 @@ namespace c74::min::lib {
             decay,
             sustain,
             release,
-            retrigger
+            retrigger,      // start a new envelope while the current one is still active
+            early_release,  // release before the sustain has been reached
         };
 
 
@@ -176,9 +177,17 @@ namespace c74::min::lib {
                     m_attack_current = 0.0;
                 }
                 else {
-                    m_state = adsr_state::release;
-                    m_index = 0;
-                    m_release_current = 0.0;
+                    if (m_state == adsr_state::sustain) {
+                        m_state = adsr_state::release;
+                        m_index = 0;
+                        m_release_current = 0.0;
+                    }
+                    else {
+                        m_state = adsr_state::early_release;
+                        m_index = 0;
+                        m_release_current = 0.0;
+                        m_retrigger_start = m_last_output; // re-using m_retrigger_start for release_start
+                    }
                 }
             }
             else if (active) { // re-trigger when we are already active
@@ -241,6 +250,17 @@ namespace c74::min::lib {
                     }
                     else
                         output = m_release_exp(m_release_current) * (m_end_cached - m_sustain_cached) + m_sustain_cached;
+                    break;
+                case adsr_state::early_release:
+                     m_release_current += m_release_step;
+                    ++m_index;
+                    if (m_index >= m_release_step_count) {
+                        output = m_end_cached;
+                        m_state = adsr_state::inactive;
+                        m_active = false;
+                    }
+                    else
+                        output = m_release_exp(m_release_current) * (m_end_cached - m_retrigger_start) + m_retrigger_start;
                     break;
                 case adsr_state::retrigger:
                     if (m_return_to_zero) {
