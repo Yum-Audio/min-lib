@@ -19,7 +19,8 @@ namespace c74::min::lib {
             attack,
             decay,
             sustain,
-            release
+            release,
+            retrigger
         };
 
 
@@ -151,6 +152,15 @@ namespace c74::min::lib {
         }
 
 
+        /// Set the re-trigger time of the envelope generator.
+        /// @param    retrigger_ms                 The retrigger time in milliseconds.
+        /// @param    sampling_frequency    The sampling frequency of the environment in hertz.
+
+        void retrigger(number retrigger_ms, number sampling_frequency) {
+            m_retrigger_step_count = static_cast<int>( (retrigger_ms / 1000.0) * sampling_frequency );
+        }
+
+
         void trigger(bool active) {
             if (active != m_active) {
                 m_active = active;
@@ -165,6 +175,11 @@ namespace c74::min::lib {
                     m_index = 0;
                     m_release_current = 0.0;
                 }
+            }
+            else if (active) { // re-trigger when we are already active
+                m_state = adsr_state::retrigger;
+                m_index = 0;
+                m_retrigger_start = m_last_output;
             }
         }
 
@@ -222,10 +237,20 @@ namespace c74::min::lib {
                     else
                         output = m_release_exp(m_release_current) * (m_end_cached - m_sustain_cached) + m_sustain_cached;
                     break;
+                case adsr_state::retrigger:
+                    ++m_index;
+                    output = m_retrigger_start - (((m_retrigger_start - m_end_cached) / m_retrigger_step_count) * m_index);
+                    if (m_index >= m_retrigger_step_count) {
+                        m_state = adsr_state::attack;
+                        m_index = 0;
+                        m_attack_current = 0.0;
+                    }
+                    break;
                 case adsr_state::inactive:
                     output = m_end_cached;
                     break;
             }
+            m_last_output = output;
             return output;
         }
 
@@ -256,7 +281,9 @@ namespace c74::min::lib {
 
         bool	        m_active { false };
         envelope_mode   m_envelope_mode { envelope_mode::adsr };
-
+        sample          m_last_output {};
+        sample          m_retrigger_start {};
+        int             m_retrigger_step_count {};
 
         void recalc() {
             m_attack_step = 1.0 / m_attack_step_count;
