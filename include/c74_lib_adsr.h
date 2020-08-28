@@ -14,7 +14,7 @@ namespace c74::min::lib {
     class adsr {
     public:
 
-        enum class adsr_state {
+        enum class adsr_stage {
             inactive,
             attack,
             decay,
@@ -76,7 +76,7 @@ namespace c74::min::lib {
 
 
         sample active() {
-            return m_state != adsr_state::inactive;
+            return m_stage != adsr_stage::inactive;
         }
 
 
@@ -171,18 +171,18 @@ namespace c74::min::lib {
                 m_active = active;
 
                 if (m_active) {
-                    m_state = adsr_state::attack;
+                    m_stage = adsr_stage::attack;
                     m_index = 0;
                     m_attack_current = 0.0;
                 }
                 else {
-                    if (m_state == adsr_state::sustain) {
-                        m_state = adsr_state::release;
+                    if (m_stage == adsr_stage::sustain) {
+                        m_stage = adsr_stage::release;
                         m_index = 0;
                         m_release_current = 0.0;
                     }
                     else {
-                        m_state = adsr_state::early_release;
+                        m_stage = adsr_stage::early_release;
                         m_index = 0;
                         m_release_current = 0.0;
                         m_retrigger_start = m_last_output; // re-using m_retrigger_start for release_start
@@ -190,7 +190,7 @@ namespace c74::min::lib {
                 }
             }
             else if (active) { // re-trigger when we are already active
-                m_state = adsr_state::retrigger;
+                m_stage = adsr_stage::retrigger;
                 m_index = 0;
                 m_retrigger_start = m_last_output;
             }
@@ -199,8 +199,8 @@ namespace c74::min::lib {
         }
 
 
-        adsr_state state() {
-            return m_state;
+        adsr_stage stage() {
+            return m_stage;
         }
 
 
@@ -210,72 +210,72 @@ namespace c74::min::lib {
         sample operator()() {
 			sample output {};
 
-            switch (m_state) {
-                case adsr_state::attack:
+            switch (m_stage) {
+                case adsr_stage::attack:
                     m_attack_current += m_attack_step;
                     ++m_index;
                     if (m_index == m_attack_step_count) {
                         output = m_peak_cached;
-                        m_state = adsr_state::decay;
+                        m_stage = adsr_stage::decay;
                         m_index = 0;
                         m_decay_current = 0.0;
                     }
                     else
                         output = m_attack_exp(m_attack_current) * (m_peak_cached - m_initial_cached) + m_initial_cached;
                     break;
-                case adsr_state::decay:
+                case adsr_stage::decay:
                     m_decay_current += m_decay_step;
                     ++m_index;
                     if (m_index == m_decay_step_count) {
                         output = m_sustain_cached;
                         if (m_envelope_mode == envelope_mode::adsr)
-                            m_state = adsr_state::sustain;
+                            m_stage = adsr_stage::sustain;
                         else
-                            m_state = adsr_state::release;
+                            m_stage = adsr_stage::release;
                         m_index = 0;
                         m_release_current = 0;
                     }
                     else
                         output = m_decay_exp(m_decay_current) * (m_sustain_cached - m_peak_cached) + m_peak_cached;
                     break;
-                case adsr_state::sustain:
+                case adsr_stage::sustain:
                     output = m_sustain_cached;
                     break;
-                case adsr_state::release:
+                case adsr_stage::release:
                     m_release_current += m_release_step;
                     ++m_index;
                     if (m_index >= m_release_step_count) {
                         output = m_end_cached;
-                        m_state = adsr_state::inactive;
+                        m_stage = adsr_stage::inactive;
                         m_active = false;
                     }
                     else
                         output = m_release_exp(m_release_current) * (m_end_cached - m_sustain_cached) + m_sustain_cached;
                     break;
-                case adsr_state::early_release:
+                case adsr_stage::early_release:
                      m_release_current += m_release_step;
                     ++m_index;
                     if (m_index >= m_release_step_count) {
                         output = m_end_cached;
-                        m_state = adsr_state::inactive;
+                        m_stage = adsr_stage::inactive;
                         m_active = false;
                     }
                     else
                         output = m_release_exp(m_release_current) * (m_end_cached - m_retrigger_start) + m_retrigger_start;
                     break;
-                case adsr_state::retrigger:
+                case adsr_stage::retrigger:
                     if (m_return_to_zero) {
                         ++m_index;
                         output = m_retrigger_start - (((m_retrigger_start - m_end_cached) / m_retrigger_step_count) * m_index);
                         if (m_index >= m_retrigger_step_count) {
-                            m_state = adsr_state::attack;
+                            m_stage = adsr_stage::attack;
                             m_index = 0;
                             m_attack_current = 0.0;
                         }
                     }
                     else {
                         if (m_return_to_zero) {
-                            m_state = adsr_state::attack;
+                            m_stage = adsr_stage::attack;
                             m_index = 0;
                             m_attack_current = 0.0;
                             output = m_initial_cached;
@@ -297,7 +297,7 @@ namespace c74::min::lib {
                                 attack_curved = m_attack_exp(attack_current) * (m_peak_cached - m_initial_cached) + m_initial_cached;
                                 is_below = attack_curved < m_last_output;
                                 if (is_below != was_below) { // we found the position from which to retrigger
-                                    m_state = adsr_state::attack;
+                                    m_stage = adsr_stage::attack;
                                     m_index = i;
                                     m_attack_current = attack_current;
                                     output = m_last_output;
@@ -306,7 +306,7 @@ namespace c74::min::lib {
                             }
 
                             if (!found) { // so return to zero
-                                m_state = adsr_state::attack;
+                                m_stage = adsr_stage::attack;
                                 m_index = 0;
                                 m_attack_current = 0.0;
                                 output = m_initial_cached;
@@ -314,7 +314,7 @@ namespace c74::min::lib {
                         }
                     }
                     break;
-                case adsr_state::inactive:
+                case adsr_stage::inactive:
                     output = m_end_cached;
                     break;
             }
@@ -348,7 +348,7 @@ namespace c74::min::lib {
 
         int	m_index { 0xFFFFFF };
 
-        adsr_state m_state { adsr_state::inactive };
+        adsr_stage m_stage { adsr_stage::inactive };
 
         bool	        m_active { false };
         envelope_mode   m_envelope_mode { envelope_mode::adsr };
