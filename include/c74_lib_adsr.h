@@ -31,8 +31,10 @@ namespace c74::min::lib {
 
             void operator = (number percentage) {
                 m_is_linear = std::abs(percentage) < 0.001;
-                if (m_is_linear)
+                if (m_is_linear) {
+                    m_curve = 0.0;
                     m_exp = 1.0;
+                }
                 else {
                     m_curve = percentage / 100.0;
                     if (m_curve > 0)
