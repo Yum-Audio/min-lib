@@ -45,8 +45,9 @@ namespace c74::min::lib {
             }
 
             number operator()(number x) {
-                // Profile this: What's worse? branching or calculating even when linear?
-                if (m_curve > 0.0)
+                if (m_is_linear)
+                    return x;
+                else if (m_curve > 0.0)
                     return 1.0 - pow(std::abs(x - 1.0), m_exp);
                 else
                     return pow(x, m_exp);
