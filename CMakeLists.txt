@@ -13,7 +13,7 @@ if (${CMAKE_GENERATOR} MATCHES "Xcode")
 endif ()
 
 
-#include(${CMAKE_CURRENT_SOURCE_DIR}/script/min-package.cmake)
+# include(${CMAKE_CURRENT_SOURCE_DIR}/script/min-package.cmake)
 
 
 file(GLOB_RECURSE MIN_LIB_HEADERS
