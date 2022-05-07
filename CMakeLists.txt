@@ -25,16 +25,16 @@ add_custom_target( LIB ALL
 
 
 # Add unit tests for the Lib
-if ("${THIS_PACKAGE_NAME}" MATCHES ".*devkit")
+# if ("${THIS_PACKAGE_NAME}" MATCHES ".*devkit")
 
-	enable_testing()
+# 	enable_testing()
 
-	SUBDIRLIST(TESTDIRS ${CMAKE_CURRENT_SOURCE_DIR}/test)
-	foreach(testdir ${TESTDIRS})
-			if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/test/${testdir}/CMakeLists.txt")
-				message("Generating Unit Test: ${testdir}")
-				add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/test/${testdir})
-			endif ()
-	endforeach()
+# 	SUBDIRLIST(TESTDIRS ${CMAKE_CURRENT_SOURCE_DIR}/test)
+# 	foreach(testdir ${TESTDIRS})
+# 			if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/test/${testdir}/CMakeLists.txt")
+# 				message("Generating Unit Test: ${testdir}")
+# 				add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/test/${testdir})
+# 			endif ()
+# 	endforeach()
 
-endif ()
+# endif ()
